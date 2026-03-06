@@ -75,16 +75,47 @@ Berbeda dengan marketplace freelance pada umumnya, platform ini mengusung fitur 
 5. Jalankan server lokal:
    `[Contoh: php artisan serve]`
    
- **📅 Timeline Pengerjaan (8 Minggu Sprints)**
+ ## 📅 Timeline Pengerjaan (8 Minggu Sprints)
 
-Proyek ini dikerjakan secara kolaboratif menggunakan pendekatan *Feature-Based/Modular* oleh 5 orang. Berikut adalah peta jalan (*roadmap*) pengerjaannya:
+Proyek ini dikerjakan secara kolaboratif menggunakan pendekatan *Feature-Based* oleh 5 anggota tim. Berikut adalah peta jalan (*roadmap*) pengerjaannya:
 
-| Minggu | Modul / Fokus Pengerjaan | Target Penyelesaian (Milestones) |
-| **1** | **Perancangan & Setup Awal** | Pembuatan ERD, *Setup Repository* (Github), instalasi *framework*, dan corat-coret *Wireframe* UI. |
-| **2** | **Autentikasi & Profil** | *Slicing* UI & Logika CRUD untuk *Register*, *Login*, dan Manajemen Profil *User*. |
-| **3** | **Katalog Jasa (Core CRUD)** | Form Tambah Jasa (pemisahan tipe *Project/Non-Project*) dan Halaman Beranda/Pencarian. |
-| **4** | **Fitur Unik & State Management**| Implementasi *Toggle* Mode Ujian dan logika *Locking System* (Auto-Busy). |
-| **5** | **Split Checkout & Transaksi** | Form Checkout untuk Non-Project & fitur *Custom Invoice* untuk Project (via WA). |
-| **6** | **Integrasi Payment Gateway** | Implementasi API Midtrans (Snap Token & Webhook) untuk sistem *Escrow*. |
-| **7** | **Penyelesaian & Portofolio** | Fitur *Review*, Kalkulasi Saldo Dompet (*Wallet*), dan *Auto-Generate* PDF Portofolio. |
-| **8** | **QA, Bug Fixing & Deployment** | *Testing End-to-End*, input Data *Dummy*, *Deployment* ke *server*, dan finalisasi Laporan PBL. |
+### 🚀 Sprint 1: Perancangan & Setup Awal (Minggu 1)
+- [ ] Pembuatan skema database (ERD) dan alur sistem (UML).
+- [ ] Setup Repository GitHub dan instalasi framework backend/frontend.
+- [ ] Pembuatan Wireframe dan penentuan palet warna UI.
+
+### 🔐 Sprint 2: Autentikasi & Profil (Minggu 2)
+- [ ] Slicing UI untuk halaman Register, Login, dan Profil.
+- [ ] Implementasi sistem Autentikasi (Hash Password & Session/Token).
+- [ ] Logika CRUD untuk pengaturan profil User dan foto.
+
+### 📦 Sprint 3: Katalog Jasa (Minggu 3)
+- [ ] Pembuatan form Tambah Jasa dengan pemisahan tipe `Project` dan `Non-Project`.
+- [ ] Pembuatan halaman Beranda untuk menampilkan etalase jasa.
+- [ ] Implementasi fitur pencarian dan filter jasa.
+
+### 🚦 Sprint 4: Fitur Unik & State Management (Minggu 4)
+- [ ] Implementasi *toggle* "Mode Ujian" di halaman profil Freelancer.
+- [ ] Pembuatan logika "Auto-Busy" (Locking System) agar tombol pesan nonaktif saat Freelancer mengerjakan pesanan aktif.
+
+### 🛒 Sprint 5: Split Checkout & Transaksi (Minggu 5)
+- [ ] Pembuatan form *checkout* langsung (catatan & link GDrive) untuk jasa Non-Project.
+- [ ] Pembuatan fitur "Custom Invoice" oleh Freelancer untuk jasa Project hasil nego WhatsApp.
+- [ ] Persiapan akun sandbox Payment Gateway (Midtrans).
+
+### 💳 Sprint 6: Integrasi Payment Gateway (Minggu 6)
+- [ ] Menghubungkan sistem pemesanan dengan API Midtrans (mendapatkan Snap Token).
+- [ ] Menampilkan pop-up pembayaran di sisi Klien.
+- [ ] Setup Webhook Midtrans agar status `Pending` otomatis berubah menjadi `Paid`.
+
+### 📄 Sprint 7: Penyelesaian & Portofolio (Minggu 7)
+- [ ] Pembuatan fitur unggah hasil kerja dan tombol "Pesanan Diterima".
+- [ ] Fitur Rating dan Ulasan dari Klien.
+- [ ] Logika penambahan uang ke saldo Wallet Freelancer (Escrow release).
+- [ ] Auto-Generate data pesanan selesai menjadi PDF Portofolio/CV.
+
+### 🎯 Sprint 8: QA, Bug Fixing & Deployment (Minggu 8)
+- [ ] User Acceptance Testing (UAT) dan perbaikan *bug*.
+- [ ] Input data *dummy* yang rapi untuk keperluan demo.
+- [ ] Deployment aplikasi ke server *hosting* atau VPS.
+- [ ] Finalisasi penyusunan dokumen Laporan PBL.
