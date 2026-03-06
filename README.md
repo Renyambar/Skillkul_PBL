@@ -1,59 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+ 🎓 [SkillKul] - Marketplace Jasa Mahasiswa
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[SkillKul] adalah platform _marketplace_ jasa berbasis web yang dirancang khusus untuk memfasilitasi transaksi *freelance* antar mahasiswa. Proyek ini dikembangkan sebagai pemenuhan tugas Project-Based Learning (PBL) D4 Teknik Informatika.
 
-## About Laravel
+Berbeda dengan marketplace freelance pada umumnya, platform ini mengusung fitur spesifik yang menyesuaikan dengan gaya hidup dan batasan waktu mahasiswa, seperti **Mode Ujian (Auto-Busy)**, **Pembuatan Portofolio Otomatis**, dan **Split Checkout** untuk fleksibilitas negosiasi.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+ ✨ Fitur Unggulan (Core Features)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Split Checkout Flow (Project vs Non-Project)**
+   * **Non-Project:** Jasa dengan harga tetap. Klien langsung *checkout*, mengisi formulir instruksi, melampirkan *link* bahan (Google Drive), dan membayar.
+   * **Project:** Jasa dengan spesifikasi kompleks. Klien diarahkan ke WhatsApp untuk negosiasi harga. Setelah *deal*, *Freelancer* membuat **Custom Invoice** di dalam sistem untuk dibayar oleh klien.
+2. **Auto-Busy & Mode Ujian (Concurrency Limit)**
+   Sistem mengunci profil *Freelancer* (tombol pesan dinonaktifkan) jika mereka sedang menyalakan "Mode Ujian" atau sedang mengerjakan 1 pesanan aktif. Ini mencegah *overwork* pada mahasiswa.
+3. **Escrow Payment System (Midtrans Integration)**
+   Keamanan transaksi dijamin. Uang klien ditahan oleh sistem (Admin/Escrow) menggunakan API Midtrans dan baru akan diteruskan ke saldo *Wallet Freelancer* setelah pesanan diselesaikan dan diterima klien.
+4. **Auto-Portfolio Generator (PDF)**
+   Sistem secara otomatis merangkum riwayat pesanan yang berstatus selesai dan mendapat *rating* bintang 4+ menjadi dokumen CV/Portofolio berformat PDF untuk keperluan magang/karir mahasiswa.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🔄 Alur Bisnis (Business Workflow)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Pendaftaran & Buka Jasa
+* Mahasiswa mendaftar dan melengkapi profil.
+* *Freelancer* membuat etalase jasa dan menentukan tipenya: **Project** (Bisa Nego) atau **Non-Project** (Harga Pas).
 
-## Laravel Sponsors
+### 2. Proses Pemesanan
+* **Jalur Non-Project:** Klien mencari jasa -> Klik "Pesan" -> Isi catatan & *link* file bahan -> *Checkout* -> Bayar via Midtrans.
+* **Jalur Project:** Klien mencari jasa -> Klik "Nego via WA" -> Diskusi di WhatsApp -> *Freelancer* membuat *Custom Invoice* di sistem -> Klien mendapat *link checkout* -> Bayar via Midtrans.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Pengerjaan & Penyerahan
+* Uang diamankan oleh sistem (Status: `In Progress`).
+* *Freelancer* otomatis masuk ke mode "Sibuk" agar tidak menerima pesanan lain.
+* Setelah selesai, *Freelancer* mengunggah *link* hasil pekerjaan (Google Drive) ke dalam sistem (Status: `Delivered`).
 
-### Premium Partners
+### 4. Penyelesaian & Pencairan
+* Klien meninjau hasil dan menekan "Pesanan Diterima".
+* Klien memberikan ulasan dan *rating* bintang 1-5.
+* Saldo secara otomatis masuk ke dompet digital (*Wallet*) *Freelancer*.
+* Jika *rating* >= 4, data proyek otomatis masuk ke *Database* Portofolio *Freelancer* untuk dicetak menjadi PDF.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 💻 Tech Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* **Frontend:** [Contoh: HTML, Tailwind CSS, JavaScript]
+* **Backend:** [Contoh: Laravel 11 / Node.js Express]
+* **Database:** [Contoh: MySQL]
+* **Payment Gateway:** Midtrans (Snap & Webhook API)
+* **PDF Generator:** [Contoh: dompdf / puppeteer]
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 👥 Tim Pengembang (Kelompok PBL 3 - TI2F)
 
-## Security Vulnerabilities
+1. **[Reny Ambarwati]** - [244107010066]
+2. **[Mokhamad Rizki Hadiono Singgih]** - [244107020205]
+3. **[Marta Prama Daniswara]** - [244107020198]
+4. **[Destian Dwi Mahardika]** - [244107020203]
+5. **[Ghaisan Rafa Pradipta]** - [NIM]
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🚀 Cara Instalasi (Local Development)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Clone repositori ini:
+   `git clone https://github.com/username/repo-name.git`
+2. Install dependencies:
+   `[Contoh: composer install / npm install]`
+3. Salin `.env.example` menjadi `.env` dan atur koneksi database serta *Keys* Midtrans Anda.
+4. Jalankan migrasi dan seeder:
+   `[Contoh: php artisan migrate --seed]`
+5. Jalankan server lokal:
+   `[Contoh: php artisan serve]`
+   
+ **📅 Timeline Pengerjaan (8 Minggu Sprints)**
+
+Proyek ini dikerjakan secara kolaboratif menggunakan pendekatan *Feature-Based/Modular* oleh 5 orang. Berikut adalah peta jalan (*roadmap*) pengerjaannya:
+
+| Minggu | Modul / Fokus Pengerjaan | Target Penyelesaian (Milestones) |
+| **1** | **Perancangan & Setup Awal** | Pembuatan ERD, *Setup Repository* (Github), instalasi *framework*, dan corat-coret *Wireframe* UI. |
+| **2** | **Autentikasi & Profil** | *Slicing* UI & Logika CRUD untuk *Register*, *Login*, dan Manajemen Profil *User*. |
+| **3** | **Katalog Jasa (Core CRUD)** | Form Tambah Jasa (pemisahan tipe *Project/Non-Project*) dan Halaman Beranda/Pencarian. |
+| **4** | **Fitur Unik & State Management**| Implementasi *Toggle* Mode Ujian dan logika *Locking System* (Auto-Busy). |
+| **5** | **Split Checkout & Transaksi** | Form Checkout untuk Non-Project & fitur *Custom Invoice* untuk Project (via WA). |
+| **6** | **Integrasi Payment Gateway** | Implementasi API Midtrans (Snap Token & Webhook) untuk sistem *Escrow*. |
+| **7** | **Penyelesaian & Portofolio** | Fitur *Review*, Kalkulasi Saldo Dompet (*Wallet*), dan *Auto-Generate* PDF Portofolio. |
+| **8** | **QA, Bug Fixing & Deployment** | *Testing End-to-End*, input Data *Dummy*, *Deployment* ke *server*, dan finalisasi Laporan PBL. |
