@@ -56,8 +56,8 @@ Berbeda dengan marketplace freelance pada umumnya, platform ini mengusung fitur 
 ## 👥 Tim Pengembang (Kelompok PBL 3 - TI2F)
 
 1. **[Reny Ambarwati]** - [244107010066]
-2. **[Mokhamad Rizki Hadiono Singgih]** - [244107020205]
-3. **[Marta Prama Daniswara]** - [244107020198]
+2. **[Mokhamad Rizki Hadiono Singgih]** - [244107020198]
+3. **[Marta Prama Daniswara]** - [244107020205]
 4. **[Destian Dwi Mahardika]** - [244107020203]
 5. **[Ghaisan Rafa Pradipta]** - [NIM]
 
