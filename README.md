@@ -1,4 +1,4 @@
- 🎓 [SkillKul] - Marketplace Jasa Mahasiswa
+## 🎓 [SkillKul] - Marketplace Jasa Mahasiswa
 
 [SkillKul] adalah platform _marketplace_ jasa berbasis web yang dirancang khusus untuk memfasilitasi transaksi *freelance* antar mahasiswa. Proyek ini dikembangkan sebagai pemenuhan tugas Project-Based Learning (PBL) D4 Teknik Informatika.
 
@@ -59,7 +59,6 @@ Berbeda dengan marketplace freelance pada umumnya, platform ini mengusung fitur 
 2. **[Mokhamad Rizki Hadiono Singgih]** - [244107020198]
 3. **[Marta Prama Daniswara]** - [244107020205]
 4. **[Destian Dwi Mahardika]** - [244107020203]
-5. **[Ghaisan Rafa Pradipta]** - [NIM]
 
 ---
 
@@ -77,7 +76,7 @@ Berbeda dengan marketplace freelance pada umumnya, platform ini mengusung fitur 
    
  ## 📅 Timeline Pengerjaan (8 Minggu Sprints)
 
-Proyek ini dikerjakan secara kolaboratif menggunakan pendekatan *Feature-Based* oleh 5 anggota tim. Berikut adalah peta jalan (*roadmap*) pengerjaannya:
+Proyek ini dikerjakan secara kolaboratif menggunakan pendekatan *Feature-Based* oleh 4 anggota tim. Berikut adalah peta jalan (*roadmap*) pengerjaannya:
 
 ### 🚀 Sprint 1: Perancangan & Setup Awal (Minggu 1)
 - [ ] Pembuatan skema database (ERD) dan alur sistem (UML).
