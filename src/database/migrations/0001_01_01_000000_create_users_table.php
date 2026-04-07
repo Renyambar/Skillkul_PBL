@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['client', 'freelancer'])->default('client');
+            $table->string('phone_number', 15)->nullable();
+            $table->text('profile_description')->nullable();
+            $table->boolean('is_exam_mode')->default(false);
+            $table->boolean('is_auto_portfolio')->default(false);
+            $table->decimal('wallet_balance', 15, 2)->default(0.00);
             $table->rememberToken();
             $table->timestamps();
         });
