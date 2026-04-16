@@ -110,8 +110,8 @@
 
                     <div>
                         <label for="password"
-                            class="block text-xs font-bold text-indigo-700 uppercase tracking-wide mb-1">Nomor
-                            Telepon</label>
+                            class="block text-xs font-bold text-indigo-700 uppercase tracking-wide mb-1">Kata
+                            Sandi</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -120,16 +120,20 @@
                                         d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                 </svg>
                             </div>
-                            <input id="password" type="password" name="password" required placeholder="08xx xxxx xxxx"
+                            <input id="password" type="password" name="password" required
+                                autocomplete="current-password" placeholder="Masukkan kata sandi"
                                 class="pl-10 block w-full bg-gray-100 border-0 text-gray-900 rounded-lg focus:ring-[#0c1c81] sm:text-sm py-3 placeholder-gray-400">
                         </div>
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
-                    <div class="flex items-center justify-end">
+                    <div class="flex items-center justify-between gap-4 text-sm">
+                        <p class="text-gray-500">
+                            Gunakan akun yang sama untuk mengakses fitur reset kata sandi.
+                        </p>
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}"
-                                class="text-sm font-medium text-[#0c1c81] hover:underline">
+                                class="font-medium text-[#0c1c81] hover:underline whitespace-nowrap">
                                 Lupa Kata Sandi?
                             </a>
                         @endif
