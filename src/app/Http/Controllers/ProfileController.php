@@ -13,6 +13,16 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
+     * Display the user's profile page.
+     */
+    public function show(Request $request): View
+    {
+        return view('profile.show', [
+            'user' => $request->user(),
+        ]);
+    }
+
+    /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
@@ -49,6 +59,26 @@ class ProfileController extends Controller
         $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    /**
+     * Toggle exam mode for the user.
+     */
+    public function toggleExamMode(Request $request)
+    {
+        $user = auth()->user();
+        $exam_mode = !$user->exam_mode;
+
+        $user->update([
+            'exam_mode' => $exam_mode,
+            'exam_mode_started_at' => $exam_mode ? now() : null,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'exam_mode' => $exam_mode,
+            'message' => $exam_mode ? 'Mode Ujian diaktifkan' : 'Mode Ujian dinonaktifkan',
+        ]);
     }
 
     /**

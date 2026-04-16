@@ -25,6 +25,8 @@ class User extends Authenticatable
         'profile_description',
         'profile_photo_path',
         'role',
+        'exam_mode',
+        'exam_mode_started_at',
     ];
 
     /**
@@ -47,6 +49,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'exam_mode' => 'boolean',
+            'exam_mode_started_at' => 'datetime',
         ];
     }
 }
