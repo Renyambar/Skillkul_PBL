@@ -47,6 +47,18 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="phone_number" value="No. WhatsApp" />
+            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phone_number)" autocomplete="tel" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        </div>
+
+        <div>
+            <x-input-label for="profile_description" value="Bio / Deskripsi Profil" />
+            <textarea id="profile_description" name="profile_description" class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full" rows="4">{{ old('profile_description', $user->profile_description) }}</textarea>
+            <x-input-error class="mt-2" :messages="$errors->get('profile_description')" />
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
