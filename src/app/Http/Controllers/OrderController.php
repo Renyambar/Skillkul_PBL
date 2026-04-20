@@ -8,8 +8,7 @@ class OrderController extends Controller
 {
     public function clientOrders()
     {
-        // Ganti dengan view yang sesuai jika pesanan-saya sudah ada layarnya
-        return redirect()->route('dashboard')->with('info', 'Halaman riwayat pesanan (klien) belum tersedia secara penuh.');
+        return view('orders.index');
     }
 
     public function show($id)

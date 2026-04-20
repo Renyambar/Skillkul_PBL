@@ -91,6 +91,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/users', function () {
         return view('admin.users.index');
     })->name('users.index');
+
+    Route::get('/laporan', function () {
+        return view('admin.laporan.index');
+    })->name('laporan.index');
 });
 
 require __DIR__.'/auth.php';
