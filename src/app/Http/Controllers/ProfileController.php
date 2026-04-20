@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +16,11 @@ class ProfileController extends Controller
     /**
      * Display the user's profile page.
      */
-    public function show(Request $request): View
+    public function show($username): View
     {
-        return view('profile.show', [
-            'user' => $request->user(),
+        $user = User::where('name', $username)->firstOrFail();
+        return view('profile.public', [
+            'user' => $user,
         ]);
     }
 
@@ -66,7 +68,7 @@ class ProfileController extends Controller
      */
     public function toggleExamMode(Request $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
         $exam_mode = !$user->exam_mode;
 
         $user->update([
@@ -74,11 +76,7 @@ class ProfileController extends Controller
             'exam_mode_started_at' => $exam_mode ? now() : null,
         ]);
 
-        return response()->json([
-            'success' => true,
-            'exam_mode' => $exam_mode,
-            'message' => $exam_mode ? 'Mode Ujian diaktifkan' : 'Mode Ujian dinonaktifkan',
-        ]);
+        return Redirect::back()->with('success', $exam_mode ? 'Mode Ujian diaktifkan' : 'Mode Ujian dinonaktifkan');
     }
 
     /**

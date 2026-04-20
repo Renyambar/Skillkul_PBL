@@ -1,61 +1,61 @@
-@extends('layouts.app')
-@section('title', 'Dompet Escrow')
+@extends('layouts.freelancer')
+@section('title', 'Dompet - SkillKul')
 @section('content')
-<div class="bg-slate-50 min-h-screen py-10">
-    <div class="max-w-5xl mx-auto px-6">
-        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-8">Pusat Keuangan</h2>
+<div class="p-8 lg:p-10">
+    <h1 class="text-2xl font-extrabold text-brand-dark tracking-tight mb-8">Pendapatan & Dompet</h1>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-[2rem] p-8 text-white shadow-2xl shadow-indigo-900/20 relative overflow-hidden flex flex-col justify-between h-56">
-                <div class="absolute -right-20 -top-20 w-64 h-64 bg-indigo-500/30 rounded-full blur-3xl"></div>
-                
-                <div class="relative z-10 flex justify-between items-center">
-                    <p class="text-xs font-bold text-indigo-200 uppercase tracking-widest">Saldo Tersedia</p>
-                    <svg class="w-6 h-6 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                </div>
-                
-                <div class="relative z-10 flex justify-between items-end">
-                    <h2 class="text-4xl font-black">Rp 2.890.000</h2>
-                    <button class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all">Tarik Dana</button>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-8 flex flex-col justify-center">
-                <div class="flex items-center gap-2 text-yellow-600 mb-3">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    <p class="text-xs font-bold uppercase tracking-widest">Dana Tertahan Escrow</p>
-                </div>
-                <h3 class="text-3xl font-extrabold text-slate-900 mb-2">Rp 1.500.000</h3>
-                <p class="text-xs text-slate-500 leading-relaxed border-t border-slate-50 pt-3 mt-2">Dana aman. Otomatis cair ke Saldo Tersedia ketika klien mengonfirmasi pesanan "Selesai".</p>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-gradient-to-br from-brand-primary to-[#2a0e88] rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
+            <p class="text-indigo-200 text-[10px] font-extrabold uppercase tracking-widest mb-2">SALDO TERSEDIA</p>
+            <h2 class="text-3xl font-extrabold mb-4">Rp 2.890.000</h2>
+            <button class="bg-brand-accent text-brand-dark px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-green-300 transition-colors shadow-lg">Tarik ke Bank</button>
         </div>
-
-        <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
-            <div class="p-6 md:p-8 border-b border-slate-50">
-                <h3 class="font-bold text-slate-900 text-lg">Riwayat Mutasi</h3>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <tbody class="text-sm divide-y divide-slate-50">
-                        <tr class="hover:bg-slate-50/50 transition-colors group">
-                            <td class="py-5 px-8">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
-                                    <div>
-                                        <p class="font-bold text-slate-900">Pencairan Escrow</p>
-                                        <p class="text-xs text-slate-500">Klien: Budi Santoso</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="py-5 px-8 text-right">
-                                <span class="font-black text-green-600 text-base">+ Rp 1.000.000</span>
-                                <p class="text-[10px] text-slate-400 mt-1">15 Apr 2026</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+            <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">TOTAL PENDAPATAN</p>
+            <h3 class="text-2xl font-extrabold text-brand-dark mb-1">Rp 12.450.000</h3>
+            <p class="text-xs text-gray-500">Sejak bergabung</p>
         </div>
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+            <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">SEDANG DITAHAN (ESCROW)</p>
+            <h3 class="text-2xl font-extrabold text-orange-500 mb-1">Rp 1.250.000</h3>
+            <p class="text-xs text-gray-500">Dari 2 pesanan aktif</p>
+        </div>
+    </div>
+
+    {{-- Transaction History --}}
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h3 class="font-extrabold text-brand-dark text-lg mb-6">Riwayat Transaksi</h3>
+        <table class="w-full text-left text-sm">
+            <thead>
+                <tr class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest border-b border-gray-100">
+                    <th class="pb-3">Tanggal</th>
+                    <th class="pb-3">Keterangan</th>
+                    <th class="pb-3">Tipe</th>
+                    <th class="pb-3 text-right">Jumlah</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                <tr>
+                    <td class="py-4 text-gray-500 text-xs">19 Apr 2024</td>
+                    <td class="py-4 font-semibold text-gray-900">Pembayaran - Tutoring Data Science</td>
+                    <td class="py-4"><span class="bg-green-100 text-green-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">Masuk</span></td>
+                    <td class="py-4 text-right font-bold text-green-600">+ Rp 500.000</td>
+                </tr>
+                <tr>
+                    <td class="py-4 text-gray-500 text-xs">17 Apr 2024</td>
+                    <td class="py-4 font-semibold text-gray-900">Penarikan ke BCA ****4821</td>
+                    <td class="py-4"><span class="bg-red-100 text-red-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">Keluar</span></td>
+                    <td class="py-4 text-right font-bold text-red-500">- Rp 2.000.000</td>
+                </tr>
+                <tr>
+                    <td class="py-4 text-gray-500 text-xs">15 Apr 2024</td>
+                    <td class="py-4 font-semibold text-gray-900">Pembayaran - Re-desain Logo</td>
+                    <td class="py-4"><span class="bg-green-100 text-green-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase">Masuk</span></td>
+                    <td class="py-4 text-right font-bold text-green-600">+ Rp 1.500.000</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection

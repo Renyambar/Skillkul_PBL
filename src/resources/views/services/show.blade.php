@@ -1,53 +1,204 @@
-@extends('layouts.app')
-@section('title', 'Detail Jasa')
+@extends('layouts.public')
+@section('title', 'Detail Jasa - SkillKul')
 @section('content')
-<div class="bg-slate-50 min-h-screen py-12">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        
-        <div class="lg:col-span-8 space-y-8">
-            <div class="bg-white p-8 lg:p-10 rounded-[2.5rem] shadow-[0_2px_20px_rgb(0,0,0,0.02)] border border-slate-100">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">Pengembangan Web</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-8">Aplikasi Web Tingkat Enterprise Kustom dengan Arsitektur Terukur</h1>
-                
-                <div class="aspect-[16/9] bg-slate-100 rounded-3xl overflow-hidden mb-8 border border-slate-100">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c" class="w-full h-full object-cover">
-                </div>
+@php
+    // Dummy data untuk demo UI (nanti diganti data dari controller)
+    $service = (object) [
+        'id' => 1,
+        'title' => 'Penyuntingan & Penyelarasan Akademik Profesional',
+        'type' => 'project', // 'non_project' atau 'project'
+        'price' => 50000,
+        'description' => 'Tingkatkan kualitas penulisan akademik Anda dengan jasa penyelarasan (proofreading) profesional yang disesuaikan dengan standar universitas.',
+        'category' => 'Penulisan',
+        'is_active' => true,
+    ];
+    $freelancer = (object) [
+        'name' => 'Dr. Elena Rodriguez',
+        'phone_number' => '6281234567890',
+        'is_exam_mode' => false, // Ubah ke true untuk testing Auto-Busy
+        'rating' => 4.9,
+        'review_count' => 128,
+    ];
+    $hasActiveOrder = false; // Ubah ke true untuk testing Auto-Busy
+    $isBusy = $freelancer->is_exam_mode || $hasActiveOrder;
+@endphp
 
-                <div class="prose prose-slate max-w-none">
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">Tentang Layanan Ini</h3>
-                    <p class="text-slate-600 leading-relaxed">Saya berspesialisasi dalam membangun aplikasi web yang kompleks dan berperforma tinggi. Kami berfokus pada kode yang bersih, keamanan yang tangguh, dan performa optimal (skor Lighthouse 90+).</p>
+<div class="max-w-7xl mx-auto px-6 lg:px-12 py-10">
+    {{-- Breadcrumb --}}
+    <div class="text-xs text-gray-400 font-medium mb-6 flex items-center gap-2">
+        <a href="{{ route('katalog') }}" class="hover:text-brand-primary">Pasar Layanan</a>
+        <span>›</span>
+        <span class="text-gray-600">{{ $service->category }}</span>
+        <span>›</span>
+        <span class="text-brand-primary font-semibold">{{ Str::limit($service->title, 30) }}</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        {{-- Left Content --}}
+        <div class="lg:col-span-8 space-y-8">
+            {{-- Hero Image --}}
+            <div class="relative rounded-3xl overflow-hidden h-72 md:h-96 bg-gradient-to-br from-teal-400 to-cyan-500">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover mix-blend-overlay opacity-60">
+                <div class="absolute bottom-6 left-6">
+                    @if($service->type === 'project')
+                        <span class="bg-orange-500 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg">Bisa Nego (Project)</span>
+                    @else
+                        <span class="bg-green-500 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg">Harga Pas</span>
+                    @endif
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-white mt-3 drop-shadow-lg max-w-lg leading-tight">{{ $service->title }}</h1>
+                </div>
+            </div>
+
+            {{-- Freelancer Info --}}
+            <div class="flex items-center justify-between bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <img src="https://i.pravatar.cc/150?img=32" class="w-12 h-12 rounded-full border-2 border-indigo-100">
+                    <div>
+                        <h4 class="font-bold text-gray-900">{{ $freelancer->name }}</h4>
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <span class="flex items-center gap-1 text-yellow-500">★ <span class="text-gray-700 font-semibold">{{ $freelancer->rating }}</span></span>
+                            <span>({{ $freelancer->review_count }} Ulasan)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    @if($isBusy)
+                        <span class="bg-red-100 text-red-700 text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider">🔴 Sedang Sibuk</span>
+                    @else
+                        <span class="bg-green-100 text-green-700 text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider">✓ Tersedia</span>
+                    @endif
+                    <span class="text-xs text-gray-400">Waktu respons: ~2 jam</span>
+                </div>
+            </div>
+
+            {{-- Tentang Layanan --}}
+            <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+                <h3 class="text-lg font-extrabold text-brand-primary mb-4">Tentang Layanan Ini</h3>
+                <p class="text-gray-600 leading-relaxed text-sm mb-6">{{ $service->description }}</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-[#f8f9fc] rounded-xl p-4 flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-brand-primary"></div>
+                        <span class="text-sm font-semibold text-gray-700">Koreksi Tata Bahasa & Sintaksis</span>
+                    </div>
+                    <div class="bg-[#f8f9fc] rounded-xl p-4 flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-brand-primary"></div>
+                        <span class="text-sm font-semibold text-gray-700">Penyesuaian Nada Akademik</span>
+                    </div>
+                    <div class="bg-[#f8f9fc] rounded-xl p-4 flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-brand-primary"></div>
+                        <span class="text-sm font-semibold text-gray-700">Konsistensi Referensi</span>
+                    </div>
+                    <div class="bg-[#f8f9fc] rounded-xl p-4 flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-brand-primary"></div>
+                        <span class="text-sm font-semibold text-gray-700">Pengiriman Cepat 24 Jam</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Ulasan Klien --}}
+            <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-extrabold text-brand-primary">Ulasan Klien</h3>
+                    <span class="text-sm font-bold text-gray-400">{{ $freelancer->review_count }} ulasan</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="border border-gray-100 rounded-xl p-5">
+                        <div class="flex gap-1 text-yellow-400 mb-3">★★★★★</div>
+                        <p class="text-sm text-gray-600 leading-relaxed italic mb-4">"Elena melakukan pekerjaan luar biasa pada disertasi saya. Umpan baliknya sangat konstruktif dan benar-benar meningkatkan alur argumen saya."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-brand-primary rounded-full flex items-center justify-center text-white text-xs font-bold">BK</div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">Budi Kusuma</p>
+                                <p class="text-[10px] text-gray-400">• 2 hari yang lalu</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border border-gray-100 rounded-xl p-5">
+                        <div class="flex gap-1 text-yellow-400 mb-3">★★★★<span class="text-gray-300">★</span></div>
+                        <p class="text-sm text-gray-600 leading-relaxed italic mb-4">"Proofreading sangat teliti, hanya sedikit catatan minor. Hasil sangat memuaskan dan tepat waktu."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white text-xs font-bold">DP</div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">Dewi Puspita</p>
+                                <p class="text-[10px] text-gray-400">• 1 minggu yang lalu</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="lg:col-span-4 relative">
-            <div class="sticky top-28 bg-white rounded-[2rem] border border-slate-100 shadow-[0_20px_40px_rgb(0,0,0,0.04)] p-8 overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Estimasi Investasi</p>
-                <h2 class="text-4xl font-extrabold text-slate-900 mb-6">Rp 1.000.000</h2>
-
-                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100 mb-8 space-y-3">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <span class="text-sm font-medium text-slate-700">Perlindungan Escrow 100%</span>
+        {{-- Right Sidebar --}}
+        <div class="lg:col-span-4">
+            <div class="sticky top-24 space-y-6">
+                {{-- Price Card --}}
+                <div class="bg-brand-primary rounded-2xl p-6 text-white shadow-xl">
+                    <p class="text-[10px] font-extrabold uppercase tracking-widest text-indigo-200 mb-1">DETAIL HARGA</p>
+                    <div class="flex items-baseline gap-1 mb-5">
+                        @if($service->type === 'project')
+                            <span class="text-xl font-extrabold">Mulai dari</span>
+                            <span class="text-3xl font-extrabold">Rp {{ number_format($service->price, 0, ',', '.') }}</span>
+                        @else
+                            <span class="text-3xl font-extrabold">Rp {{ number_format($service->price, 0, ',', '.') }}</span>
+                            <span class="text-indigo-200 text-sm">/ halaman</span>
+                        @endif
                     </div>
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="text-sm font-medium text-slate-700">Pengerjaan ~14 Hari</span>
+
+                    @if($service->type === 'non_project')
+                        {{-- Non-Project: Form checkout langsung --}}
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label class="block text-[10px] font-extrabold uppercase tracking-widest text-indigo-200 mb-2">Catatan Pesanan</label>
+                                <input type="text" placeholder="Contoh: Fokus pada bagian metodologi..." class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-indigo-300 outline-none focus:border-white/40 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold uppercase tracking-widest text-indigo-200 mb-2">Tautan Google Drive Bahan</label>
+                                <input type="url" placeholder="https://drive.google.com/..." class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-indigo-300 outline-none focus:border-white/40 transition-colors">
+                            </div>
+                        </div>
+
+                        @if($isBusy)
+                            <button disabled class="block w-full bg-gray-400 text-white font-bold py-3.5 rounded-xl text-center text-sm cursor-not-allowed opacity-70 mb-3">
+                                🔒 Freelancer Sedang Sibuk
+                            </button>
+                            <p class="text-[10px] text-indigo-200 text-center">Freelancer sedang dalam Mode Ujian atau mengerjakan pesanan lain.</p>
+                        @else
+                            <a href="{{ route('checkout', 1) }}" class="block w-full bg-white text-brand-primary font-bold py-3.5 rounded-xl text-center text-sm hover:bg-indigo-50 transition-colors shadow-lg mb-3">
+                                🛒 Pesan Langsung
+                            </a>
+                        @endif
+                    @else
+                        {{-- Project: Nego via WA --}}
+                        @if($isBusy)
+                            <button disabled class="block w-full bg-gray-400 text-white font-bold py-3.5 rounded-xl text-center text-sm cursor-not-allowed opacity-70 mb-3">
+                                🔒 Freelancer Sedang Sibuk
+                            </button>
+                        @else
+                            <a href="https://wa.me/{{ $freelancer->phone_number }}?text={{ urlencode('Halo ' . $freelancer->name . ', saya tertarik dengan jasa "' . $service->title . '" Anda di SkillKul. Bisakah kita diskusikan detail proyeknya?') }}"
+                                target="_blank"
+                                class="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 rounded-xl text-center text-sm transition-colors shadow-lg mb-3">
+                                💬 Nego via WhatsApp
+                            </a>
+                            <p class="text-[10px] text-indigo-200 text-center mb-3">Diskusikan scope & harga via WA, lalu freelancer akan mengirim tagihan.</p>
+                        @endif
+                    @endif
+
+                    <div class="bg-green-400/20 border border-green-400/30 rounded-xl p-3 text-center">
+                        <p class="text-[10px] text-green-200 font-semibold leading-relaxed">💚 Pembayaran aman via Midtrans. Dana akan ditahan sampai pesanan diterima.</p>
                     </div>
                 </div>
 
-                <a href="https://wa.me/081234" class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white bg-[#25D366] hover:bg-[#1EBE57] shadow-lg shadow-green-500/30 transition-all overflow-hidden">
-                    <div class="absolute inset-0 w-full h-full bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
-                    <span class="relative flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                        Konsultasi via WhatsApp
-                    </span>
-                </a>
-                <p class="text-center text-[10px] text-slate-400 mt-4 font-medium">Link Custom Invoice akan dikirim ke Anda setelah harga disepakati.</p>
+                {{-- Info Pengiriman --}}
+                <div class="flex gap-4">
+                    <div class="flex-1 bg-white rounded-xl p-4 border border-gray-100 text-center shadow-sm">
+                        <p class="text-xs text-gray-500 mb-1">⏱ Pengiriman</p>
+                        <p class="font-bold text-brand-dark text-sm">1 Hari</p>
+                    </div>
+                    <div class="flex-1 bg-white rounded-xl p-4 border border-gray-100 text-center shadow-sm">
+                        <p class="text-xs text-gray-500 mb-1">🔄 Revisi</p>
+                        <p class="font-bold text-brand-dark text-sm">Tanpa Batas</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

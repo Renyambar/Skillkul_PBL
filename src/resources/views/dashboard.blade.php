@@ -1,17 +1,50 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+@extends('layouts.client')
+@section('title', 'Dasbor Klien - SkillKul')
+@section('content')
+<div class="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+    {{-- Welcome --}}
+    <div class="bg-brand-primary rounded-3xl p-8 md:p-10 mb-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div class="relative z-10">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Selamat Datang, {{ Auth::user()->name }}! 👋</h1>
+            <p class="text-indigo-200 text-sm max-w-lg">Kelola pesanan Anda, temukan jasa mahasiswa berkualitas, dan pantau semua transaksi dari satu tempat.</p>
         </div>
     </div>
-</x-app-layout>
+
+    {{-- Quick Actions --}}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <a href="{{ route('katalog') }}" class="group bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+            <div class="w-12 h-12 bg-indigo-50 text-brand-primary rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Cari Jasa</h3>
+            <p class="text-sm text-gray-500">Temukan talent mahasiswa terbaik di Pasar Jasa SkillKul</p>
+        </a>
+        <a href="{{ route('pesanan.klien') }}" class="group bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+            <div class="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Pesanan Saya</h3>
+            <p class="text-sm text-gray-500">Pantau status pesanan dan hasil kerja freelancer</p>
+        </a>
+        <a href="{{ route('profile.edit') }}" class="group bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+            <div class="w-12 h-12 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center mb-4 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1">Profil Saya</h3>
+            <p class="text-sm text-gray-500">Kelola informasi akun dan preferensi Anda</p>
+        </a>
+    </div>
+
+    {{-- Escrow Info --}}
+    <div class="bg-green-50 border border-green-100 rounded-2xl p-6 flex items-center gap-5">
+        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        </div>
+        <div>
+            <h4 class="font-bold text-green-800 mb-0.5">Transaksi Anda dilindungi Escrow</h4>
+            <p class="text-sm text-green-700">Semua pembayaran ditahan aman oleh SkillKul dan baru diteruskan ke freelancer setelah Anda menyetujui hasil pekerjaannya.</p>
+        </div>
+    </div>
+</div>
+@endsection
