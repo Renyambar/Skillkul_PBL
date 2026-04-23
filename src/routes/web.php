@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -70,11 +71,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(function () {
     Route::get('/dasbor', [DashboardController::class, 'index'])->name('dasbor');
-    Route::get('/layanan', function () {
-        return view('freelancer.services.index');
-    })->name('jasa.index');
+    Route::get('/layanan', [ServiceController::class, 'myServices'])->name('jasa.index');
     Route::get('/buka-jasa', [ServiceController::class, 'create'])->name('jasa.create');
     Route::post('/buka-jasa', [ServiceController::class, 'store'])->name('jasa.store');
+    Route::get('/jasa/{service}/edit', [ServiceController::class, 'edit'])->name('jasa.edit');
+    Route::put('/jasa/{service}', [ServiceController::class, 'update'])->name('jasa.update');
+    Route::delete('/jasa/{service}', [ServiceController::class, 'destroy'])->name('jasa.destroy');
     Route::get('/buat-tagihan', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::post('/buat-tagihan', [InvoiceController::class, 'store'])->name('invoice.store');
     Route::get('/dompet', [WalletController::class, 'index'])->name('dompet');
@@ -84,7 +86,7 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
 });
 
 // ============================================================
-// 4. RUTE PORTAL ADMIN
+// 4. RUTE PORTAL ADMIN (Hanya Pantau & Toggle Status)
 // ============================================================
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
@@ -95,6 +97,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/laporan', function () {
         return view('admin.laporan.index');
     })->name('laporan.index');
+
+    // ── Pantau Katalog Jasa ──
+    Route::get('/services',              [AdminServiceController::class, 'index'])  ->name('services.index');
+    Route::get('/services/{service}',    [AdminServiceController::class, 'show'])   ->name('services.show');
+    Route::post('/services/{service}/toggle', [AdminServiceController::class, 'toggle'])->name('services.toggle');
 });
 
 require __DIR__.'/auth.php';
+

@@ -3,13 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SkillKul - Jembatan Akademis & Industri</title>
+    <title>SkillKul - Jembatan Akademis &amp; Industri</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        /* Custom smooth scrolling */
         html { scroll-behavior: smooth; }
-        
-        /* Glassmorphism effect for floating card */
         .glass {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
@@ -48,14 +45,47 @@
                 THE CURATED SCHOLASTIC ATELIER
             </span>
             <h1 class="text-5xl md:text-6xl font-extrabold text-brand-primary leading-tight tracking-tighter">
-                Menjembatani Dunia <br>Akademis & Industri
+                Menjembatani Dunia <br>Akademis &amp; Industri
             </h1>
             <p class="text-gray-600 md:text-lg max-w-lg leading-relaxed">
                 Platform kurasi untuk mahasiswa bertalenta dalam membangun portofolio profesional dan karier wirausaha sejak masa kuliah.
             </p>
-            <div class="flex flex-wrap gap-4 pt-4">
+
+            {{-- ── Search Bar Fungsional ── --}}
+            <form method="GET" action="{{ route('katalog') }}" class="flex gap-2 max-w-lg" id="hero-search-form">
+                <div class="flex-1 relative">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" name="search" id="hero-search-input"
+                           placeholder="Cari jasa desain, coding, penulisan…"
+                           class="w-full pl-10 pr-4 py-3.5 text-sm bg-white border border-gray-200 rounded-xl outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/10 transition-all shadow-sm font-medium text-gray-700 placeholder-gray-400">
+                </div>
+                <button type="submit" id="hero-search-btn"
+                        class="bg-brand-primary text-white px-6 py-3.5 rounded-xl text-sm font-bold hover:bg-brand-dark transition-all shadow-lg shadow-indigo-900/20 whitespace-nowrap flex-shrink-0">
+                    Cari Jasa
+                </button>
+            </form>
+
+            {{-- Quick category links --}}
+            <div class="flex flex-wrap gap-2">
+                @foreach($categories->take(4) as $cat)
+                <a href="{{ route('katalog', ['category' => $cat->name]) }}"
+                   class="text-xs font-semibold text-brand-primary bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 px-3 py-1.5 rounded-lg transition-colors">
+                    {{ $cat->name }}
+                </a>
+                @endforeach
+                @if($categories->count() > 4)
+                <a href="{{ route('katalog') }}"
+                   class="text-xs font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 border border-gray-200 px-3 py-1.5 rounded-lg transition-colors">
+                    +{{ $categories->count() - 4 }} lainnya
+                </a>
+                @endif
+            </div>
+
+            <div class="flex flex-wrap gap-4 pt-2">
                 <a href="{{ route('katalog') }}" class="bg-brand-primary text-white px-6 py-4 rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-brand-dark transition-all shadow-lg shadow-indigo-900/20">
-                    Mulai Jelajahi Jasa 
+                    Mulai Jelajahi Jasa
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
                 <a href="{{ route('register') }}" class="bg-gray-200 text-gray-800 px-6 py-4 rounded-xl text-sm font-semibold hover:bg-gray-300 transition-all border border-gray-300">
@@ -162,6 +192,115 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- ── Jasa Terbaru Section ── -->
+    <section class="max-w-7xl mx-auto px-6 md:px-16 py-20 bg-brand-light">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <p class="text-xs font-extrabold text-brand-secondary tracking-widest uppercase mb-1">TERBARU DI SKILLKUL</p>
+                <h2 class="text-3xl font-extrabold text-brand-dark tracking-tight">Jasa Unggulan</h2>
+            </div>
+            <a href="{{ route('katalog') }}"
+               class="text-sm font-bold text-brand-primary hover:text-brand-dark transition-colors flex items-center gap-1">
+                Lihat Semua
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+
+        @if($featuredServices->isEmpty())
+            <div class="text-center py-16">
+                <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    </svg>
+                </div>
+                <p class="text-gray-500 font-semibold">Belum ada jasa yang terdaftar.</p>
+                <a href="{{ route('register') }}" class="mt-4 inline-block text-sm font-bold text-brand-primary hover:underline">Jadilah freelancer pertama!</a>
+            </div>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($featuredServices as $svc)
+                <a href="{{ route('jasa.detail', $svc->id) }}"
+                   class="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all block">
+
+                    {{-- Thumbnail --}}
+                    <div class="relative h-44 overflow-hidden bg-indigo-50">
+                        @if($svc->image)
+                            <img src="{{ Storage::url($svc->image) }}"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                 alt="{{ $svc->title }}">
+                        @else
+                            <div class="w-full h-full bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100 flex items-center justify-center">
+                                <svg class="w-10 h-10 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                </svg>
+                            </div>
+                        @endif
+
+                        {{-- Badge tipe --}}
+                        @if($svc->type === 'project')
+                            <div class="absolute top-3 left-3 bg-orange-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider shadow">Bisa Nego</div>
+                        @else
+                            <div class="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider shadow">Harga Pas</div>
+                        @endif
+
+                        {{-- Kategori --}}
+                        @if($svc->category)
+                            <div class="absolute top-3 right-3 bg-white/90 text-indigo-700 text-[10px] font-extrabold px-2.5 py-1 rounded-lg backdrop-blur-sm shadow">
+                                {{ $svc->category->name }}
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- Body --}}
+                    <div class="p-5">
+                        <h3 class="font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-brand-primary transition-colors leading-snug">
+                            {{ $svc->title }}
+                        </h3>
+
+                        {{-- Freelancer --}}
+                        <div class="flex items-center gap-2 mb-4">
+                            @if($svc->freelancer?->profile_photo_path)
+                                <img src="{{ Storage::url($svc->freelancer->profile_photo_path) }}"
+                                     class="w-6 h-6 rounded-full object-cover">
+                            @else
+                                <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 text-[10px] font-extrabold flex items-center justify-center flex-shrink-0">
+                                    {{ strtoupper(substr($svc->freelancer?->name ?? '?', 0, 1)) }}
+                                </div>
+                            @endif
+                            <span class="text-xs text-gray-500 font-medium truncate">{{ $svc->freelancer?->name ?? 'Freelancer' }}</span>
+                            <span class="flex items-center gap-0.5 text-yellow-500 text-xs ml-auto flex-shrink-0">
+                                ★ <span class="text-gray-600 font-bold">4.8</span>
+                            </span>
+                        </div>
+
+                        {{-- Harga --}}
+                        <div class="flex justify-between items-center border-t border-gray-50 pt-3">
+                            <p class="font-extrabold text-brand-primary">{{ $svc->price_range }}</p>
+                            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-brand-primary group-hover:text-white text-gray-400 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                @endforeach
+            </div>
+
+            <div class="text-center mt-10">
+                <a href="{{ route('katalog') }}"
+                   class="inline-flex items-center gap-2 bg-white border border-gray-200 text-brand-primary font-bold text-sm px-8 py-4 rounded-xl hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all shadow-sm">
+                    Lihat Semua Jasa di Katalog
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+        @endif
     </section>
 
     <!-- Cara Kerja Section -->
