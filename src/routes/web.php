@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/onboarding', [OnboardingController::class, 'store'])->name('onboarding.store');
 
     // Alur Transaksi Klien
+    Route::post('/pesan-jasa/{service_id}', [CheckoutController::class, 'createOrder'])->name('order.create');
     Route::get('/checkout/{order_id}', [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout/{order_id}', [CheckoutController::class, 'process'])->name('checkout.process');
     Route::get('/pesanan-saya', [OrderController::class, 'clientOrders'])->name('pesanan.klien');

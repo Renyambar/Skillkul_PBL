@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Kolom yang boleh diisi secara massal.
      *
      * @var list<string>
      */
@@ -25,12 +25,13 @@ class User extends Authenticatable
         'profile_description',
         'profile_photo_path',
         'role',
-        'exam_mode',
-        'exam_mode_started_at',
+        'is_exam_mode',
+        'is_auto_portfolio',
+        'wallet_balance',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Kolom yang disembunyikan saat serialisasi.
      *
      * @var list<string>
      */
@@ -40,7 +41,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Casting tipe data khusus.
      *
      * @return array<string, string>
      */
@@ -48,9 +49,66 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'exam_mode' => 'boolean',
-            'exam_mode_started_at' => 'datetime',
+            'password'          => 'hashed',
+            'is_exam_mode'      => 'boolean',
+            'is_auto_portfolio' => 'boolean',
+            'wallet_balance'    => 'decimal:2',
         ];
+    }
+
+    // ─── Relasi ──────────────────────────────────────────────
+
+    /**
+     * Layanan (jasa) yang ditawarkan freelancer.
+     */
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'freelancer_id');
+    }
+
+    /**
+     * Pesanan yang dibuat oleh client.
+     */
+    public function clientOrders()
+    {
+        return $this->hasMany(Order::class, 'client_id');
+    }
+
+    /**
+     * Pesanan yang dikerjakan oleh freelancer.
+     */
+    public function freelancerOrders()
+    {
+        return $this->hasMany(Order::class, 'freelancer_id');
+    }
+
+    /**
+     * Review yang diberikan oleh client.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'client_id');
+    }
+
+    /**
+     * Portofolio milik freelancer.
+     */
+    public function portfolios()
+    {
+        return $this->hasMany(Portfolio::class, 'freelancer_id');
+    }
+
+    // ─── Accessors ───────────────────────────────────────────
+
+    /**
+     * Cek apakah freelancer sedang sibuk.
+     * Bernilai true jika mode ujian aktif ATAU ada pesanan yang sedang dikerjakan (in_progress).
+     */
+    public function getIsBusyAttribute(): bool
+    {
+        return $this->is_exam_mode
+            || $this->freelancerOrders()
+                     ->where('status', 'in_progress')
+                     ->exists();
     }
 }

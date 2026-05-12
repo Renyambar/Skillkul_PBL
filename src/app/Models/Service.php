@@ -47,6 +47,14 @@ class Service extends Model
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * Review yang masuk melalui pesanan layanan ini.
+     */
+    public function reviews()
+    {
+        return $this->hasManyThrough(Review::class, Order::class);
+    }
+
     // ─── Scopes ───────────────────────────────────────────────
     public function scopeActive($query)
     {
