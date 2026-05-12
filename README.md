@@ -118,3 +118,42 @@ Proyek ini dikerjakan secara kolaboratif menggunakan pendekatan *Feature-Based* 
 - [ ] Input data *dummy* yang rapi untuk keperluan demo.
 - [ ] Deployment aplikasi ke server *hosting* atau VPS.
 - [ ] Finalisasi penyusunan dokumen Laporan PBL.
+
+
+## 👥 Contribution
+### 1. Reny Ambarwati
+- Membuat controller dan routes
+- Menambahkan main layout untuk navbar dan footer
+- Instalasi Laravel Breeze untuk fitur login dan register
+- Membuat tampilan dashboard admin
+- Membuat fungsionalitas CRUD layanan jasa
+
+### 2. Mokhamad Rizki Hadiono Singgih
+- Melakukan database migration
+- Membuat halama landing page
+- Melakukan update profile
+- Merevisi frontend UI
+
+### 3. Marta Prama Daniswara
+- Membuat seeder dan factory
+- Membuat tampilan login
+- Menambahkan fitur lupa kata sandi
+- Melakukan update untuk upload foto profil
+- Upload gambar use case diagram
+- Upload gambar activity diagram
+- Menambahkan list kontribusi tiap anggota pada file README.md
+
+### 4. Destian Dwi Mahardika
+- Membuat halaman registrasi
+- Membuat tampilan togle ujian
+- Membuat peta navigasi dan struktur route Laravel
+- Membuat tampilan verifikasi identitas mahasiswa (KTM)
+- Membuat tampilankatalog/pencarian pasar jasa
+- Membuat tampilan profil publik freelancer dan portofolio
+- Membuat tampilan detail jasa 
+- Membuat tampilan untuk membuka jasa baru (form UI Sleek)
+- Membuat tampilan form custon invoice
+- Membuat tampilan dompet (E-Wallet Escrow)
+- Membuat tampilan dasbor freelancer (tabel dan mode ujian)
+- Membuat tampilan checkout pembayaran (Midtrans UI)
+- Membuat tampilan detail pesanan (tracker order klien dan rilis dana)
