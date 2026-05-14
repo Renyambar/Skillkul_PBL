@@ -9,6 +9,7 @@ class ReviewFactory extends Factory
 {
     public function definition(): array
     {
+        // 4. Review hanya dibuat untuk order yang berstatus 'completed'
         $order = Order::where('status', 'completed')->inRandomOrder()->first() ?? Order::factory()->create(['status' => 'completed']);
         
         return [

@@ -10,9 +10,13 @@ class ServiceFactory extends Factory
 {
     public function definition(): array
     {
+        // Pastikan freelancer_id mengambil user dengan role 'freelancer'
+        $freelancer = User::where('role', 'freelancer')->inRandomOrder()->first() ?? User::factory()->create(['role' => 'freelancer']);
+        $category = Category::inRandomOrder()->first() ?? Category::factory()->create();
+
         return [
-            'freelancer_id' => User::where('role', 'freelancer')->inRandomOrder()->first()->id ?? User::factory(),
-            'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory(),
+            'freelancer_id' => $freelancer->id,
+            'category_id' => $category->id,
             'title' => fake()->sentence(4),
             'description' => fake()->paragraph(4),
             'price' => fake()->randomFloat(2, 10000, 200000),

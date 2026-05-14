@@ -14,9 +14,12 @@ class OrderFactory extends Factory
         $service = Service::inRandomOrder()->first() ?? Service::factory()->create();
         $freelancerId = $service->freelancer_id;
 
+        // 2. Pastikan client_id mengambil user dengan role 'client'
+        $client = User::where('role', 'client')->inRandomOrder()->first() ?? User::factory()->create(['role' => 'client']);
+
         return [
-            'id' => Str::uuid()->toString(),
-            'client_id' => User::where('role', 'client')->inRandomOrder()->first()->id ?? User::factory(),
+            'id' => Str::uuid()->toString(), // 1. OrderFactory menghasilkan UUID
+            'client_id' => $client->id,
             'freelancer_id' => $freelancerId,
             'service_id' => $service->id,
             'type' => fake()->randomElement(['direct_checkout', 'custom_invoice']),

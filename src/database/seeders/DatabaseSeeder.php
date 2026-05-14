@@ -14,6 +14,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // 3. Tambahkan user admin
+        User::factory()->create([
+            'name' => 'Admin SkillKul',
+            'email' => 'admin@skillkul.com',
+            'role' => 'admin',
+        ]);
+
         $categories = [
             ['name' => 'Desain Presentasi', 'description' => 'Bikin slide PPT keren dan estetik buat tugas akhir atau semhas.'],
             ['name' => 'Joki Tugas Koding', 'description' => 'Bantuan mengerjakan tugas Web, Java, Python, dll.'],
@@ -41,6 +48,7 @@ class DatabaseSeeder extends Seeder
         Service::factory(20)->create();
         Order::factory(30)->create();
 
+        // 4. Review dan Portfolio hanya untuk order berstatus 'completed'
         $completedOrders = Order::where('status', 'completed')->get();
         foreach ($completedOrders as $order) {
             if (rand(1, 100) <= 70) {
