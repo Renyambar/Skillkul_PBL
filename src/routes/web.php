@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\MidtransController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -64,7 +65,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pesanan-saya', [OrderController::class, 'clientOrders'])->name('pesanan.klien');
     Route::get('/pesanan/{id}', [OrderController::class, 'show'])->name('pesanan.detail');
     Route::post('/pesanan/{id}/review', [OrderController::class, 'review'])->name('orders.review');
+
+    // Midtrans: Generate Snap Token (dipanggil via AJAX dari halaman checkout)
+    Route::post('/midtrans/snap-token/{order_id}', [MidtransController::class, 'getSnapToken'])->name('midtrans.snapToken');
 });
+
+// ============================================================
+// 5. WEBHOOK MIDTRANS (Tanpa Auth — Dikecualikan dari CSRF)
+// ============================================================
+
+// PENTING: Tambahkan '/midtrans/notification' ke VerifyCsrfToken $except
+Route::post('/midtrans/notification', [MidtransController::class, 'handleNotification'])->name('midtrans.notification');
 
 // ============================================================
 // 3. RUTE PORTAL FREELANCER
