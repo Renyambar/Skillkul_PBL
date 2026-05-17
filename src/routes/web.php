@@ -64,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout/{order_id}', [CheckoutController::class, 'process'])->name('checkout.process');
     Route::get('/pesanan-saya', [OrderController::class, 'clientOrders'])->name('pesanan.klien');
     Route::get('/pesanan/{id}', [OrderController::class, 'show'])->name('pesanan.detail');
-    Route::post('/pesanan/{id}/review', [OrderController::class, 'review'])->name('orders.review');
+    Route::post('/pesanan/{id}/terima', [OrderController::class, 'acceptOrder'])->name('orders.accept');
 
     // Midtrans: Generate Snap Token (dipanggil via AJAX dari halaman checkout)
     Route::post('/midtrans/snap-token/{order_id}', [MidtransController::class, 'getSnapToken'])->name('midtrans.snapToken');
@@ -92,9 +92,8 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
     Route::get('/buat-tagihan', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::post('/buat-tagihan', [InvoiceController::class, 'store'])->name('invoice.store');
     Route::get('/dompet', [WalletController::class, 'index'])->name('dompet');
-    Route::get('/pesanan', function () {
-        return view('freelancer.orders.index');
-    })->name('pesanan');
+    Route::get('/pesanan', [OrderController::class, 'freelancerOrders'])->name('pesanan');
+    Route::post('/pesanan/{id}/kirim-hasil', [OrderController::class, 'submitResult'])->name('pesanan.submitResult');
 });
 
 // ============================================================
