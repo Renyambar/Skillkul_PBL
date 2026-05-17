@@ -2,88 +2,85 @@
 @section('title', 'Pesanan Saya - SkillKul')
 @section('content')
 @php
-    // Status config sesuai enum di database schema
+    // Status config sesuai dengan instruksi badge Tailwind
     $statusConfig = [
-        'pending'     => ['label' => 'Menunggu Pembayaran', 'bg' => 'bg-yellow-100', 'text' => 'text-yellow-700'],
-        'paid'        => ['label' => 'Dibayar', 'bg' => 'bg-blue-100', 'text' => 'text-blue-700'],
-        'in_progress' => ['label' => 'Dalam Proses', 'bg' => 'bg-blue-100', 'text' => 'text-blue-700'],
-        'delivered'   => ['label' => 'Terkirim', 'bg' => 'bg-purple-100', 'text' => 'text-purple-700'],
-        'completed'   => ['label' => 'Selesai', 'bg' => 'bg-green-100', 'text' => 'text-green-700'],
-        'canceled'    => ['label' => 'Dibatalkan', 'bg' => 'bg-red-100', 'text' => 'text-red-700'],
-    ];
-    // Dummy data untuk demo UI
-    $orders = [
-        (object) ['id' => 'ORD-2401', 'title' => 'Pembuatan Landing Page', 'freelancer' => 'Alex Chandra', 'avatar' => 'https://i.pravatar.cc/150?img=33', 'status' => 'in_progress', 'type' => 'direct_checkout', 'total_price' => 1500000],
-        (object) ['id' => 'ORD-2402', 'title' => 'Proofreading Jurnal Ilmiah', 'freelancer' => 'Dr. Elena R.', 'avatar' => 'https://i.pravatar.cc/150?img=32', 'status' => 'completed', 'type' => 'direct_checkout', 'total_price' => 150000],
-        (object) ['id' => 'ORD-2403', 'title' => 'Desain Poster Acara Kampus', 'freelancer' => 'Budi Santoso', 'avatar' => 'https://i.pravatar.cc/150?img=12', 'status' => 'delivered', 'type' => 'custom_invoice', 'total_price' => 75000],
-        (object) ['id' => 'ORD-2404', 'title' => 'Website Portofolio Pribadi', 'freelancer' => 'Siti Aisyah', 'avatar' => 'https://i.pravatar.cc/150?img=47', 'status' => 'pending', 'type' => 'direct_checkout', 'total_price' => 2500000],
-        (object) ['id' => 'ORD-2405', 'title' => 'Script Python Automation', 'freelancer' => 'Ricky A.', 'avatar' => 'https://i.pravatar.cc/150?img=14', 'status' => 'canceled', 'type' => 'direct_checkout', 'total_price' => 300000],
+        'pending'     => ['label' => 'Menunggu Pembayaran', 'bg' => 'bg-yellow-100', 'text' => 'text-yellow-800'],
+        'paid'        => ['label' => 'Dibayar', 'bg' => 'bg-sky-100', 'text' => 'text-sky-800'],
+        'in_progress' => ['label' => 'Dalam Proses', 'bg' => 'bg-blue-100', 'text' => 'text-blue-800'],
+        'delivered'   => ['label' => 'Terkirim', 'bg' => 'bg-purple-100', 'text' => 'text-purple-800'],
+        'completed'   => ['label' => 'Selesai', 'bg' => 'bg-green-100', 'text' => 'text-green-800'],
+        'canceled'    => ['label' => 'Dibatalkan', 'bg' => 'bg-red-100', 'text' => 'text-red-800'],
     ];
 @endphp
 
-<div class="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     {{-- Header --}}
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
             <h1 class="text-2xl font-extrabold text-brand-dark tracking-tight">Pesanan Saya</h1>
             <p class="text-sm text-gray-500 mt-1">Pantau status pesanan dan hasil kerja freelancer.</p>
         </div>
-        <div class="flex items-center gap-3">
-            <span class="bg-indigo-50 text-brand-primary text-xs font-bold px-4 py-2 rounded-lg">{{ count($orders) }} Pesanan</span>
-        </div>
     </div>
 
-    {{-- Status Filter Tabs --}}
-    <div class="flex flex-wrap gap-2 mb-6">
-        <button class="px-4 py-2 text-xs font-bold rounded-lg bg-brand-primary text-white">Semua</button>
-        <button class="px-4 py-2 text-xs font-bold rounded-lg bg-white text-gray-600 border border-gray-200 hover:bg-gray-50">Menunggu</button>
-        <button class="px-4 py-2 text-xs font-bold rounded-lg bg-white text-gray-600 border border-gray-200 hover:bg-gray-50">Dalam Proses</button>
-        <button class="px-4 py-2 text-xs font-bold rounded-lg bg-white text-gray-600 border border-gray-200 hover:bg-gray-50">Terkirim</button>
-        <button class="px-4 py-2 text-xs font-bold rounded-lg bg-white text-gray-600 border border-gray-200 hover:bg-gray-50">Selesai</button>
-        <button class="px-4 py-2 text-xs font-bold rounded-lg bg-white text-gray-600 border border-gray-200 hover:bg-gray-50">Dibatalkan</button>
-    </div>
-
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-                <thead>
-                    <tr class="text-[10px] font-extrabold text-gray-500 uppercase tracking-widest border-b border-gray-100 bg-gray-50">
-                        <th class="px-6 py-4">ID Pesanan</th>
-                        <th class="px-6 py-4">Layanan</th>
-                        <th class="px-6 py-4">Freelancer</th>
-                        <th class="px-6 py-4">Tipe</th>
-                        <th class="px-6 py-4">Status</th>
-                        <th class="px-6 py-4">Total</th>
-                        <th class="px-6 py-4 text-right">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-50">
-                    @foreach($orders as $i => $o)
-                    @php $st = $statusConfig[$o->status]; @endphp
-                    <tr class="hover:bg-gray-50/50 transition-colors {{ $o->status === 'canceled' ? 'bg-red-50/20' : '' }}">
-                        <td class="px-6 py-5 font-mono text-xs text-gray-500">#{{ $o->id }}</td>
-                        <td class="px-6 py-5 font-bold text-gray-900">{{ $o->title }}</td>
-                        <td class="px-6 py-5">
-                            <div class="flex items-center gap-2">
-                                <img src="{{ $o->avatar }}" class="w-6 h-6 rounded-full">
-                                <span class="text-gray-600">{{ $o->freelancer }}</span>
-                            </div>
-                        </td>
-                        <td class="px-6 py-5">
-                            @if($o->type === 'custom_invoice')
-                                <span class="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Invoice</span>
-                            @else
-                                <span class="bg-indigo-100 text-indigo-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Langsung</span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-5"><span class="{{ $st['bg'] }} {{ $st['text'] }} text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider">{{ $st['label'] }}</span></td>
-                        <td class="px-6 py-5 font-bold text-brand-primary">Rp {{ number_format($o->total_price, 0, ',', '.') }}</td>
-                        <td class="px-6 py-5 text-right"><a href="{{ route('pesanan.detail', $i + 1) }}" class="text-brand-primary font-bold text-xs hover:underline">Lihat Detail →</a></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    @if($orders->isEmpty())
+        {{-- Empty State --}}
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 text-center">
+            <svg class="mx-auto h-16 w-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Belum ada pesanan</h3>
+            <p class="text-sm text-gray-500">Anda belum membuat pesanan apapun. Silakan telusuri layanan yang tersedia di pasar layanan.</p>
+            <a href="{{ route('katalog') }}" class="mt-6 inline-flex items-center px-5 py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl hover:bg-indigo-700 transition-colors">
+                Cari Layanan
+            </a>
         </div>
-    </div>
+    @else
+        {{-- Card List --}}
+        <div class="grid grid-cols-1 gap-6">
+            @foreach($orders as $order)
+                @php 
+                    $st = $statusConfig[$order->status] ?? ['label' => 'Unknown', 'bg' => 'bg-gray-100', 'text' => 'text-gray-800']; 
+                @endphp
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-md transition-all duration-200">
+                    
+                    {{-- Order Info --}}
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-mono text-gray-500">#{{ substr($order->id, 0, 8) }}</span>
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider {{ $st['bg'] }} {{ $st['text'] }}">
+                                {{ $st['label'] }}
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">{{ $order->service->title ?? 'Layanan tidak ditemukan' }}</h3>
+                        <p class="text-sm text-gray-500 mb-2">
+                            Freelancer: <span class="font-medium text-gray-700">{{ $order->freelancer->name ?? 'User tidak ditemukan' }}</span>
+                        </p>
+                        <p class="text-xs text-gray-400 flex items-center gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            {{ $order->created_at->format('d M Y') }}
+                        </p>
+                    </div>
+
+                    {{-- Price and Action --}}
+                    <div class="flex flex-col md:items-end w-full md:w-auto gap-4 md:gap-3 border-t md:border-t-0 pt-4 md:pt-0 border-gray-100">
+                        <div class="text-left md:text-right">
+                            <p class="text-xs text-gray-500 mb-0.5">Total Harga</p>
+                            <p class="text-lg font-extrabold text-indigo-600">Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
+                        </div>
+                        <a href="{{ route('pesanan.detail', $order->id) }}" class="inline-flex justify-center items-center px-5 py-2.5 bg-white border border-gray-200 text-gray-700 text-sm font-bold rounded-xl hover:bg-gray-50 hover:text-indigo-600 transition-colors focus:ring-4 focus:ring-gray-100 w-full md:w-auto">
+                            Lihat Detail
+                        </a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        {{-- Pagination --}}
+        <div class="mt-8">
+            {{ $orders->links() }}
+        </div>
+    @endif
 </div>
 @endsection
