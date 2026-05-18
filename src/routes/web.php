@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\MidtransController;
 use Illuminate\Support\Facades\Route;
 
@@ -101,9 +102,9 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
 // ============================================================
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/users', function () {
-        return view('admin.users.index');
-    })->name('users.index');
+    // ── Manajemen User ──
+    Route::get('/users',                   [AdminUserController::class, 'index'])  ->name('users.index');
+    Route::post('/users/{user}/toggle',    [AdminUserController::class, 'toggle']) ->name('users.toggle');
 
     Route::get('/laporan', function () {
         return view('admin.laporan.index');
