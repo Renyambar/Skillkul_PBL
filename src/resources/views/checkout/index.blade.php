@@ -1,42 +1,54 @@
 @extends('layouts.client')
 @section('title', 'Checkout & Pembayaran - SkillKul')
+
 @section('content')
 <div class="max-w-6xl mx-auto px-6 lg:px-12 py-10">
     <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-primary tracking-widest uppercase mb-4">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
         CHECKOUT AMAN
     </span>
-    <h1 class="text-2xl md:text-3xl font-extrabold text-brand-dark tracking-tight mb-8">Proyek Kustom: Pengembangan Web – Penawaran Khusus</h1>
+    <h1 class="text-2xl md:text-3xl font-extrabold text-brand-dark tracking-tight mb-8">
+        {{ $order->service->title ?? 'Detail Pesanan' }}
+    </h1>
+
+    {{-- ── Pesan Status Pembayaran (ditampilkan via JS) ── --}}
+    <div id="payment-status-banner" class="hidden mb-6 rounded-xl px-5 py-4 flex items-start gap-3 text-sm font-semibold border"></div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        {{-- Left: Order Details --}}
+        {{-- ──────────────────────────────────────────────────────────────
+             LEFT: Detail Pesanan
+        ────────────────────────────────────────────────────────────── --}}
         <div class="lg:col-span-7 space-y-6">
+
             {{-- Deliverables Card --}}
             <div class="bg-[#080c35] rounded-2xl p-8 text-white">
                 <div class="space-y-4 mb-6">
                     <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10">
-                        <div class="w-5 h-5 rounded bg-brand-primary flex items-center justify-center shrink-0"><svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
-                        <div>
-                            <p class="text-sm font-bold">Front-End</p>
-                            <p class="text-[10px] text-indigo-300">Est. 5 halaman UI/UX responsif custom design</p>
+                        <div class="w-5 h-5 rounded bg-brand-primary flex items-center justify-center shrink-0">
+                            <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                         </div>
-                        <svg class="w-4 h-4 text-indigo-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <div>
+                            <p class="text-sm font-bold">Layanan Dipesan</p>
+                            <p class="text-[10px] text-indigo-300">{{ $order->service->title ?? '-' }}</p>
+                        </div>
                     </div>
                     <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10">
-                        <div class="w-5 h-5 rounded bg-white/10 flex items-center justify-center shrink-0"><span class="text-xs text-indigo-300">☐</span></div>
-                        <div>
-                            <p class="text-sm font-bold">Back-End</p>
-                            <p class="text-[10px] text-indigo-300">API, Database, Authentication</p>
+                        <div class="w-5 h-5 rounded bg-white/10 flex items-center justify-center shrink-0">
+                            <svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         </div>
-                        <svg class="w-4 h-4 text-indigo-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <div>
+                            <p class="text-sm font-bold">Freelancer</p>
+                            <p class="text-[10px] text-indigo-300">{{ $order->freelancer->name ?? '-' }}</p>
+                        </div>
                     </div>
                     <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10">
-                        <div class="w-5 h-5 rounded bg-white/10 flex items-center justify-center shrink-0"><span class="text-xs text-indigo-300">☐</span></div>
-                        <div>
-                            <p class="text-sm font-bold">BotTrinity</p>
-                            <p class="text-[10px] text-indigo-300">Miku Zero Point</p>
+                        <div class="w-5 h-5 rounded bg-white/10 flex items-center justify-center shrink-0">
+                            <svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                         </div>
-                        <div class="ml-auto text-[10px] text-indigo-300 bg-white/5 px-2 py-1 rounded flex items-center gap-1">✓</div>
+                        <div>
+                            <p class="text-sm font-bold">ID Pesanan</p>
+                            <p class="text-[10px] text-indigo-300 font-mono">{{ $order->id }}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="h-1 bg-brand-primary rounded-full w-3/4 mb-2"></div>
@@ -45,20 +57,29 @@
             {{-- Project Info --}}
             <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
                 <div class="flex items-center gap-3 mb-1">
-                    <div class="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-white"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg></div>
+                    <div class="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-white">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
                     <div>
-                        <h4 class="font-bold text-sm text-gray-900">Portal Akademik Entrepreneur</h4>
-                        <span class="text-[10px] font-extrabold text-brand-primary tracking-wider uppercase">BERBASIS PROYEK</span>
+                        <h4 class="font-bold text-sm text-gray-900">{{ $order->service->title ?? 'Detail Jasa' }}</h4>
+                        <span class="text-[10px] font-extrabold text-brand-primary tracking-wider uppercase">
+                            {{ $order->type === 'direct_checkout' ? 'HARGA TETAP' : 'BERBASIS PROYEK' }}
+                        </span>
                     </div>
                 </div>
-                <p class="text-xs text-gray-500 mt-2 leading-relaxed">Aplikasi web full-stack dengan integrasi pembayaran aman dan dashboard mahasiswa.</p>
+                <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                    {{ $order->service->description ?? 'Tidak ada deskripsi.' }}
+                </p>
             </div>
 
-            {{-- Payment Method --}}
+            {{-- Metode Pembayaran --}}
             <div>
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold text-gray-900">Metode Pembayaran</h3>
-                    <span class="text-[10px] text-gray-400 font-semibold flex items-center gap-1">DIDUKUNG OLEH <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Midtrans_Logo.svg/320px-Midtrans_Logo.svg.png" class="h-3 opacity-60"></span>
+                    <span class="text-[10px] text-gray-400 font-semibold flex items-center gap-1">
+                        DIDUKUNG OLEH
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Midtrans_Logo.svg/320px-Midtrans_Logo.svg.png" class="h-3 opacity-60" alt="Midtrans">
+                    </span>
                 </div>
                 <div class="grid grid-cols-3 gap-4">
                     <button class="bg-white rounded-xl p-4 border-2 border-brand-primary text-center shadow-sm">
@@ -80,45 +101,273 @@
                         <span class="text-xs font-semibold text-gray-600">E-Wallet</span>
                     </button>
                 </div>
+                <p class="text-[10px] text-gray-400 mt-3">* Pilihan metode ditentukan di popup Midtrans Snap.</p>
             </div>
         </div>
 
-        {{-- Right: Summary --}}
+        {{-- ──────────────────────────────────────────────────────────────
+             RIGHT: Ringkasan & Tombol Bayar
+        ────────────────────────────────────────────────────────────── --}}
         <div class="lg:col-span-5">
             <div class="sticky top-24 bg-white rounded-2xl border border-gray-100 p-8 shadow-xl">
                 <h3 class="font-extrabold text-lg text-brand-dark mb-6">Ringkasan Pesanan</h3>
+
                 <div class="space-y-3 mb-6 text-sm">
-                    <div class="flex justify-between"><span class="text-gray-500">Subtotal</span><span class="font-bold">IDR 1,200,000</span></div>
-                    <div class="flex justify-between"><span class="text-gray-500">Biaya Admin (5%)</span><span class="font-bold">IDR 60,000</span></div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Subtotal Jasa</span>
+                        <span class="font-bold">
+                            IDR {{ number_format($order->total_price, 0, ',', '.') }}
+                        </span>
+                    </div>
+                    {{-- Catatan: jika ada biaya admin, tambahkan perhitungannya di controller --}}
                     <div class="border-t border-gray-100 pt-3 flex justify-between">
                         <span class="font-extrabold text-brand-dark">Total</span>
-                        <span class="font-extrabold text-xl text-brand-primary">IDR 1,260,000</span>
+                        <span class="font-extrabold text-xl text-brand-primary">
+                            IDR {{ number_format($order->total_price, 0, ',', '.') }}
+                        </span>
                     </div>
                 </div>
 
+                {{-- Jaminan Escrow --}}
                 <div class="bg-green-50 border border-green-100 rounded-xl p-4 mb-6 flex items-start gap-3">
-                    <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
+                    <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                        <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
                     <div>
                         <h4 class="text-sm font-bold text-green-800">Jaminan Escrow</h4>
-                        <p class="text-[10px] text-green-700 leading-relaxed">Seluruh biaya di tahan Escrow SkillKul. Freelancer baru akan menerima pembayaran setelah Anda menyetujui hasil kerja.</p>
+                        <p class="text-[10px] text-green-700 leading-relaxed">
+                            Seluruh biaya ditahan Escrow SkillKul. Freelancer baru menerima pembayaran setelah Anda menyetujui hasil kerja.
+                        </p>
                     </div>
                 </div>
 
-                <form action="{{ route('checkout.process', 1) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-2">
-                        Bayar Sekarang <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </button>
-                </form>
+                {{-- ── Tombol Bayar ── --}}
+                {{-- Tombol ini men-trigger getSnapToken via AJAX, lalu membuka popup Midtrans Snap --}}
+                <button
+                    id="btn-pay"
+                    data-order-id="{{ $order->id }}"
+                    data-snap-url="{{ route('midtrans.snapToken', $order->id) }}"
+                    data-redirect-url="{{ route('pesanan.detail', ['id' => $order->id]) }}"
+                    onclick="initiateMidtransPayment(this)"
+                    class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                    @if($order->status !== 'pending' && $order->status !== 'waiting_payment') disabled @endif
+                >
+                    {{-- State: Default --}}
+                    <span id="btn-pay-text" class="flex items-center gap-2">
+                        Bayar Sekarang
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </span>
+                    {{-- State: Loading spinner (tersembunyi secara default) --}}
+                    <span id="btn-pay-loading" class="hidden items-center gap-2">
+                        <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                        Memuat...
+                    </span>
+                </button>
 
-                <p class="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-wider font-semibold">Pembayaran aman via Midtrans ID 120..41°</p>
+                @if($order->status === 'paid')
+                    <p class="text-center text-xs text-green-600 font-bold mt-3">✓ Pesanan ini sudah dibayar.</p>
+                @elseif($order->status === 'cancelled')
+                    <p class="text-center text-xs text-red-500 font-bold mt-3">✗ Pesanan ini telah dibatalkan.</p>
+                @endif
+
+                <p class="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-wider font-semibold">
+                    Pembayaran aman via Midtrans &bull; Order #{{ substr($order->id, 0, 8) }}
+                </p>
 
                 <div class="mt-6 pt-4 border-t border-gray-100 flex items-center gap-2 text-gray-400 text-xs">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    <span>Penjual Akademik Terverifikasi</span>
+                    <span>Freelancer Akademik Terverifikasi</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+{{-- ============================================================
+     SCRIPT MIDTRANS SNAP
+     Dimuat di akhir <body> via @stack('scripts') di layout client.
+     data-client-key wajib diisi agar popup Snap bisa terbuka.
+============================================================ --}}
+@push('scripts')
+{{-- 1. Load Snap.js dari Midtrans (Sandbox / Production tergantung config) --}}
+<script
+    src="{{ config('midtrans.snap_url') }}"
+    data-client-key="{{ config('midtrans.client_key') }}"
+></script>
+
+<script>
+    /**
+     * initiateMidtransPayment
+     *
+     * Fungsi utama yang dipanggil saat tombol "Bayar Sekarang" diklik.
+     * Alur:
+     *  1. Set tombol ke state loading
+     *  2. Fetch Snap Token dari backend via POST AJAX
+     *  3. Buka popup Midtrans Snap dengan token yang didapat
+     *  4. Handle callback: onSuccess, onPending, onError, onClose
+     *
+     * @param {HTMLButtonElement} btn - Elemen tombol yang diklik
+     */
+    async function initiateMidtransPayment(btn) {
+        // Ambil data dari atribut data- pada tombol
+        const snapUrl     = btn.dataset.snapUrl;
+        const redirectUrl = btn.dataset.redirectUrl;
+
+        // Ubah tampilan tombol ke state loading
+        setButtonLoading(true);
+        hideBanner();
+
+        try {
+            // ── Langkah 1: Request Snap Token dari backend ──────────────
+            const response = await fetch(snapUrl, {
+                method: 'POST',
+                headers: {
+                    // CSRF token diambil dari meta tag di layout
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                    'Accept':       'application/json',
+                },
+            });
+
+            const data = await response.json();
+
+            // Jika backend mengembalikan error
+            if (! data.success) {
+                showBanner('error', '⚠️ ' + (data.message ?? 'Gagal mendapatkan token pembayaran.'));
+                setButtonLoading(false);
+                return;
+            }
+
+            const snapToken = data.snap_token;
+
+            // ── Langkah 2: Buka popup Midtrans Snap ─────────────────────
+            window.snap.pay(snapToken, {
+
+                /**
+                 * onSuccess — Pembayaran berhasil & sudah dikonfirmasi Midtrans.
+                 * Redirect ke halaman detail pesanan.
+                 *
+                 * @param {object} result - Hasil transaksi dari Midtrans
+                 */
+                onSuccess: function (result) {
+                    showBanner('success', '✓ Pembayaran berhasil! Mengalihkan ke halaman pesanan...');
+                    // Delay singkat agar user bisa melihat pesan sukses
+                    setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 1500);
+                },
+
+                /**
+                 * onPending — Pembayaran sedang menunggu konfirmasi
+                 * (misal: transfer bank belum dibayar, QRIS belum di-scan).
+                 *
+                 * @param {object} result - Hasil transaksi dari Midtrans
+                 */
+                onPending: function (result) {
+                    showBanner(
+                        'pending',
+                        '🕐 Menunggu pembayaran. Selesaikan pembayaran sesuai instruksi yang dikirimkan.'
+                    );
+                    setButtonLoading(false);
+                },
+
+                /**
+                 * onError — Terjadi error saat proses pembayaran.
+                 *
+                 * @param {object} result - Detail error dari Midtrans
+                 */
+                onError: function (result) {
+                    console.error('[SkillKul] Midtrans payment error:', result);
+                    showBanner(
+                        'error',
+                        '✗ Pembayaran gagal: ' + (result.status_message ?? 'Terjadi kesalahan. Silakan coba lagi.')
+                    );
+                    setButtonLoading(false);
+                },
+
+                /**
+                 * onClose — User menutup popup Snap tanpa menyelesaikan pembayaran.
+                 * Tidak lakukan apa-apa; biarkan tombol aktif kembali agar bisa coba lagi.
+                 */
+                onClose: function () {
+                    // Kembalikan tombol ke state normal agar user bisa mencoba lagi
+                    setButtonLoading(false);
+                },
+            });
+
+        } catch (error) {
+            // Error jaringan atau server tidak merespons
+            console.error('[SkillKul] Fetch error:', error);
+            showBanner('error', '✗ Koneksi gagal. Periksa jaringan Anda dan coba lagi.');
+            setButtonLoading(false);
+        }
+    }
+
+    /**
+     * setButtonLoading
+     *
+     * Toggle tampilan tombol antara state normal dan state loading.
+     *
+     * @param {boolean} isLoading
+     */
+    function setButtonLoading(isLoading) {
+        const btn     = document.getElementById('btn-pay');
+        const txtNormal  = document.getElementById('btn-pay-text');
+        const txtLoading = document.getElementById('btn-pay-loading');
+
+        btn.disabled = isLoading;
+
+        if (isLoading) {
+            txtNormal.classList.add('hidden');
+            txtLoading.classList.remove('hidden');
+            txtLoading.classList.add('flex');
+        } else {
+            txtLoading.classList.add('hidden');
+            txtLoading.classList.remove('flex');
+            txtNormal.classList.remove('hidden');
+        }
+    }
+
+    /**
+     * showBanner
+     *
+     * Tampilkan banner notifikasi status pembayaran di atas konten.
+     *
+     * @param {'success'|'pending'|'error'} type
+     * @param {string} message
+     */
+    function showBanner(type, message) {
+        const banner = document.getElementById('payment-status-banner');
+
+        // Reset class sebelumnya
+        banner.className = 'mb-6 rounded-xl px-5 py-4 flex items-start gap-3 text-sm font-semibold border';
+
+        const styles = {
+            success: 'bg-green-50 border-green-200 text-green-800',
+            pending: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+            error:   'bg-red-50   border-red-200   text-red-800',
+        };
+
+        banner.classList.add(...(styles[type] ?? styles.error).split(' '));
+        banner.textContent = message;
+        banner.classList.remove('hidden');
+
+        // Scroll ke banner agar terlihat
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    /**
+     * hideBanner
+     *
+     * Sembunyikan banner notifikasi.
+     */
+    function hideBanner() {
+        const banner = document.getElementById('payment-status-banner');
+        banner.classList.add('hidden');
+    }
+</script>
+@endpush
