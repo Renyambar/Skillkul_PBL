@@ -12,6 +12,7 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\MidtransController;
+use App\Http\Controllers\PortfolioController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -95,6 +96,11 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
     Route::get('/dompet', [WalletController::class, 'index'])->name('dompet');
     Route::get('/pesanan', [OrderController::class, 'freelancerOrders'])->name('pesanan');
     Route::post('/pesanan/{id}/kirim-hasil', [OrderController::class, 'submitResult'])->name('pesanan.submitResult');
+
+    // ── Portfolio & Auto-Generate PDF ──
+    Route::get('/portfolio',          [PortfolioController::class, 'index'])   ->name('portfolio.index');
+    Route::post('/portfolio/generate',[PortfolioController::class, 'generate'])->name('portfolio.generate');
+    Route::get('/portfolio/{id}/download', [PortfolioController::class, 'download'])->name('portfolio.download');
 });
 
 // ============================================================
