@@ -170,73 +170,144 @@ class MidtransController extends Controller
     /**
      * Menerima dan memproses notifikasi webhook dari Midtrans.
      *
-     * Midtrans akan melakukan POST request ke endpoint ini setiap kali
-     * status transaksi berubah (paid, failed, expired, dll).
+     * Midtrans melakukan HTTP POST ke endpoint ini setiap kali status transaksi berubah.
+     * Alur:
+     *  1. Baca payload JSON dari request body
+     *  2. Verifikasi signature key secara manual dengan SHA512
+     *  3. Petakan transaction_status Midtrans ke status internal SkillKul
+     *  4. Update order secara atomic menggunakan DB::transaction()
+     *  5. Return HTTP 200 agar Midtrans tidak mengirim ulang notifikasi
      *
-     * PENTING: Route ini HARUS dikecualikan dari CSRF verification
-     * (tambahkan ke $except di VerifyCsrfToken middleware).
+     * PENTING: Route ini sudah dikecualikan dari CSRF di bootstrap/app.php.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function handleNotification(Request $request): JsonResponse
     {
+        // ── 1. Baca payload JSON dari Midtrans ───────────────────────────
+        $payload = $request->json()->all();
+
+        // Log seluruh payload masuk untuk audit trail & debugging
+        Log::info('[Midtrans] Notifikasi webhook diterima.', [
+            'order_id'           => $payload['order_id']           ?? null,
+            'transaction_status' => $payload['transaction_status'] ?? null,
+            'fraud_status'       => $payload['fraud_status']       ?? null,
+            'gross_amount'       => $payload['gross_amount']       ?? null,
+            'status_code'        => $payload['status_code']        ?? null,
+            'payment_type'       => $payload['payment_type']       ?? null,
+        ]);
+
+        // ── 2. Verifikasi Signature Key secara manual ────────────────────
+        // Formula resmi Midtrans:
+        //   SHA512(order_id + status_code + gross_amount + server_key)
+        // Referensi: https://docs.midtrans.com/docs/verifying-data-and-signature
+        $orderId      = $payload['order_id']           ?? '';
+        $statusCode   = $payload['status_code']        ?? '';
+        $grossAmount  = $payload['gross_amount']        ?? '';
+        $receivedSign = $payload['signature_key']       ?? '';
+
+        $expectedSign = hash(
+            'sha512',
+            $orderId . $statusCode . $grossAmount . config('midtrans.server_key')
+        );
+
+        // Tolak request jika signature tidak cocok (kemungkinan pemalsuan)
+        if (! hash_equals($expectedSign, $receivedSign)) {
+            Log::warning('[Midtrans] Signature tidak valid — kemungkinan request palsu.', [
+                'order_id'       => $orderId,
+                'received_sign'  => substr($receivedSign, 0, 16) . '...', // jangan log full hash
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Signature tidak valid.',
+            ], 403);
+        }
+
+        // ── 3. Ambil order dari DB (edge case: order tidak ditemukan) ────
+        $order = Order::find($orderId);
+
+        if (! $order) {
+            Log::error('[Midtrans] Order tidak ditemukan di database.', ['order_id' => $orderId]);
+
+            // Tetap return 200 agar Midtrans tidak terus mengirim ulang
+            return response()->json([
+                'success' => false,
+                'message' => 'Order tidak ditemukan.',
+            ], 200);
+        }
+
+        // ── 4. Petakan status Midtrans → status internal SkillKul ────────
+        // Referensi lengkap: https://docs.midtrans.com/docs/getting-notified
+        $transactionStatus = $payload['transaction_status'] ?? '';
+        $fraudStatus       = $payload['fraud_status']       ?? '';
+        $transactionId     = $payload['transaction_id']     ?? null;
+
+        $newStatus = match(true) {
+
+            // settlement: transfer bank / e-wallet berhasil dikonfirmasi
+            $transactionStatus === 'settlement'
+                => 'in_progress',
+
+            // capture: kartu kredit berhasil di-capture, cek fraud status
+            $transactionStatus === 'capture' && $fraudStatus === 'accept'
+                => 'in_progress',
+
+            // capture tapi terdeteksi fraud
+            $transactionStatus === 'capture' && $fraudStatus === 'challenge'
+                => 'waiting_payment', // tahan dulu, tunggu review manual Midtrans
+
+            // expire / cancel / deny: pembayaran gagal/kedaluwarsa
+            in_array($transactionStatus, ['expire', 'cancel', 'deny'])
+                => 'canceled',
+
+            // pending: menunggu pembayaran dari user (transfer belum masuk, dsb.)
+            $transactionStatus === 'pending'
+                => 'waiting_payment',
+
+            // Status tidak dikenali — pertahankan status lama
+            default => $order->status,
+        };
+
+        // ── 5. Update order secara atomic menggunakan DB::transaction() ──
+        // Mencegah kondisi race condition jika ada notifikasi ganda dari Midtrans
         try {
-            // Verifikasi notifikasi menggunakan Midtrans SDK
-            // SDK otomatis memvalidasi signature key dari Midtrans
-            $notification = new \Midtrans\Notification();
+            \Illuminate\Support\Facades\DB::transaction(function () use ($order, $newStatus, $transactionId) {
 
-            $transactionStatus = $notification->transaction_status;
-            $fraudStatus       = $notification->fraud_status;
-            $orderId           = $notification->order_id; // UUID order kita
+                // Lock row agar tidak ada proses lain yang mengubah bersamaan
+                $order->lockForUpdate()->find($order->id);
 
-            // Cari order di database berdasarkan UUID
-            $order = Order::findOrFail($orderId);
+                $order->update([
+                    'status'                  => $newStatus,
+                    'midtrans_transaction_id' => $transactionId,
+                ]);
+            });
 
-            // ── Petakan status Midtrans ke status internal SkillKul ──────
-            // Referensi: https://docs.midtrans.com/docs/getting-notified
-            if ($transactionStatus === 'capture') {
-                // Pembayaran kartu kredit berhasil di-capture
-                $newStatus = ($fraudStatus === 'accept') ? 'paid' : 'fraud';
-
-            } elseif ($transactionStatus === 'settlement') {
-                // Pembayaran berhasil (transfer bank, e-wallet, dll)
-                $newStatus = 'paid';
-
-            } elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
-                // Pembayaran dibatalkan / ditolak / kedaluwarsa
-                $newStatus = 'cancelled';
-
-            } elseif ($transactionStatus === 'pending') {
-                // Menunggu pembayaran dari customer
-                $newStatus = 'waiting_payment';
-
-            } else {
-                // Status tidak dikenali — biarkan apa adanya
-                $newStatus = $order->status;
-            }
-
-            // Simpan ID transaksi Midtrans & perbarui status order
-            $order->update([
-                'midtrans_transaction_id' => $notification->transaction_id,
-                'status'                  => $newStatus,
+            Log::info('[Midtrans] Status order berhasil diperbarui.', [
+                'order_id'           => $orderId,
+                'transaction_status' => $transactionStatus,
+                'new_order_status'   => $newStatus,
+                'transaction_id'     => $transactionId,
             ]);
 
-            Log::info('Notifikasi Midtrans diterima.', [
-                'order_id'          => $orderId,
-                'transaction_status'=> $transactionStatus,
-                'new_order_status'  => $newStatus,
-            ]);
-
-            return response()->json(['success' => true, 'message' => 'Notifikasi diproses.']);
+            // Return 200 agar Midtrans tidak mengirim ulang notifikasi yang sama
+            return response()->json([
+                'success' => true,
+                'message' => 'Notifikasi berhasil diproses.',
+            ], 200);
 
         } catch (\Exception $e) {
-            Log::error('Gagal memproses notifikasi Midtrans.', [
-                'error' => $e->getMessage(),
-                'body'  => $request->all(),
+            Log::error('[Midtrans] Gagal update order di database.', [
+                'order_id' => $orderId,
+                'error'    => $e->getMessage(),
             ]);
 
-            return response()->json(['success' => false, 'message' => 'Gagal memproses notifikasi.'], 500);
+            // Return 500 agar Midtrans mencoba kirim notifikasi ulang
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memperbarui order.',
+            ], 500);
         }
     }
 }
