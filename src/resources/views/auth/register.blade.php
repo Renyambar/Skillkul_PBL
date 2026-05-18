@@ -62,7 +62,7 @@
                     <div>
                         <label for="email" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Email</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required
-                            placeholder="example@gmail.com"
+                            placeholder="contoh@gmail.com"
                             class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400">
                         <x-input-error :messages="$errors->get('email')" class="mt-1" />
                     </div>
@@ -71,7 +71,7 @@
                         <div>
                             <label for="phone_number" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Nomor Telepon</label>
                             <input id="phone_number" type="text" name="phone_number" value="{{ old('phone_number') }}" required
-                                placeholder="08xx xxxx xxxx"
+                                placeholder="08xxxxxxxxxx"
                                 class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400">
                             <x-input-error :messages="$errors->get('phone_number')" class="mt-1" />
                         </div>
@@ -80,7 +80,7 @@
                             <label for="role" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Daftar Sebagai</label>
                             <select id="role" name="role" required
                                 class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium">
-                                <option value="" disabled selected>Pilih role</option>
+                                <option value="" disabled selected>Pilih peran</option>
                                 <option value="client">Klien</option>
                                 <option value="freelancer">Freelancer</option>
                             </select>
@@ -90,7 +90,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label for="password" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Password</label>
+                            <label for="password" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Kata Sandi</label>
                             <input id="password" type="password" name="password" required autocomplete="new-password"
                                 placeholder="••••••••"
                                 class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400">
@@ -98,7 +98,7 @@
                         </div>
 
                         <div>
-                            <label for="password_confirmation" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Konfirmasi</label>
+                            <label for="password_confirmation" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Konfirmasi Kata Sandi</label>
                             <input id="password_confirmation" type="password" name="password_confirmation" required
                                 placeholder="••••••••"
                                 class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400">
@@ -107,7 +107,7 @@
 
                     <div class="pt-3">
                         <button type="submit" class="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-2xl shadow-lg shadow-indigo-900/20 text-sm font-bold text-white bg-brand-primary hover:bg-brand-dark hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary">
-                            Daftar Akun Baru <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            Daftar<svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </button>
                     </div>
 
@@ -124,18 +124,7 @@
         </div>
     </div>
 
-    <footer class="bg-brand-light py-6 border-t border-gray-100 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-            <div class="mb-4 md:mb-0 flex flex-col items-center md:items-start gap-1">
-                <p class="font-bold text-brand-primary text-sm">SkillKul</p>
-                <p>&copy; 2024 SkillKul: The Academic Entrepreneur. Bridging academia and industry.</p>
-            </div>
-            <div class="flex gap-6 font-semibold">
-                <a href="#" class="hover:text-brand-primary transition-colors">Syarat & Ketentuan</a>
-                <a href="#" class="hover:text-brand-primary transition-colors">Kebijakan Privasi</a>
-                <a href="#" class="hover:text-brand-primary transition-colors">Kontak Kami</a>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer -->
+    @include('layouts.footer')
 </body>
 </html>

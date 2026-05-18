@@ -27,7 +27,7 @@
                 </div>
                 <h3 class="text-2xl font-extrabold text-brand-primary mb-4">Misi Kami</h3>
                 <ul class="text-gray-600 leading-relaxed space-y-3">
-                    <li class="flex items-start gap-2"><span class="text-brand-accent font-bold mt-0.5">✓</span> Menyediakan marketplace jasa mahasiswa yang aman dengan sistem escrow</li>
+                    <li class="flex items-start gap-2"><span class="text-brand-accent font-bold mt-0.5">✓</span> Menyediakan pasar jasa mahasiswa yang aman dengan sistem escrow</li>
                     <li class="flex items-start gap-2"><span class="text-brand-accent font-bold mt-0.5">✓</span> Memverifikasi identitas akademik untuk menjamin kualitas layanan</li>
                     <li class="flex items-start gap-2"><span class="text-brand-accent font-bold mt-0.5">✓</span> Membantu mahasiswa membangun portofolio profesional secara otomatis</li>
                     <li class="flex items-start gap-2"><span class="text-brand-accent font-bold mt-0.5">✓</span> Menciptakan lingkungan kerja yang adil dan transparan bagi semua pihak</li>
@@ -55,8 +55,8 @@
             </div>
             <div class="text-center">
                 <div class="w-16 h-16 bg-brand-primary text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-extrabold shadow-lg shadow-indigo-900/20">3</div>
-                <h4 class="text-lg font-bold text-brand-dark mb-2">Terima & Review</h4>
-                <p class="text-sm text-gray-500 leading-relaxed">Konfirmasi hasil kerja, berikan review, dan dana otomatis diteruskan ke freelancer.</p>
+                <h4 class="text-lg font-bold text-brand-dark mb-2">Terima & Ulas</h4>
+                <p class="text-sm text-gray-500 leading-relaxed">Konfirmasi hasil kerja, berikan ulasan, dan dana otomatis diteruskan ke freelancer.</p>
             </div>
         </div>
     </section>

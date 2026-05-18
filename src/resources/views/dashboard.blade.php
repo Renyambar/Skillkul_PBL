@@ -6,7 +6,7 @@
     <div class="bg-brand-primary rounded-3xl p-8 md:p-10 mb-8 relative overflow-hidden">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
         <div class="relative z-10">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Selamat Datang, {{ Auth::user()->name }}! 👋</h1>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Selamat Datang, {{ Auth::user()->name }}!</h1>
             <p class="text-indigo-200 text-sm max-w-lg">Kelola pesanan Anda, temukan jasa mahasiswa berkualitas, dan pantau semua transaksi dari satu tempat.</p>
         </div>
     </div>

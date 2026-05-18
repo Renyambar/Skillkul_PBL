@@ -28,7 +28,7 @@
                     <svg class="w-7 h-7 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
                 </div>
                 <h3 class="text-xl font-extrabold text-brand-primary mb-3">Verifikasi KTM</h3>
-                <p class="text-sm text-gray-600 leading-relaxed">Setiap freelancer wajib memverifikasi Kartu Tanda Mahasiswa (KTM) mereka sebelum dapat menerbitkan jasa. Admin memvalidasi data identitas secara manual.</p>
+                <p class="text-sm text-gray-600 leading-relaxed">Setiap freelancer wajib memverifikasi Kartu Tanda Mahasiswa (KTM) mereka sebelum dapat menawarkan layanan. Admin memvalidasi data identitas manual.</p>
             </div>
             <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
                 <div class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 border border-orange-100">
@@ -51,11 +51,11 @@
                 </div>
                 <div class="border border-gray-100 rounded-2xl p-6">
                     <h4 class="font-bold text-brand-dark mb-2">Bagaimana proses verifikasi mahasiswa?</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed">Freelancer wajib mengunggah foto KTM, NIM, universitas, dan jurusan. Admin akan memverifikasi data dalam 1-3 hari kerja sebelum akun freelancer dapat mempublikasikan jasa.</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">Freelancer wajib mengunggah foto KTM, NIM, universitas, dan jurusan. Admin akan memverifikasi data dalam 1-3 hari kerja sebelum akun freelancer dapat menawarkan jasa.</p>
                 </div>
                 <div class="border border-gray-100 rounded-2xl p-6">
                     <h4 class="font-bold text-brand-dark mb-2">Bagaimana jika ada sengketa antara klien dan freelancer?</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed">Tim SkillKul akan menengahi sengketa dan membuat keputusan berdasarkan bukti komunikasi dan deliverables. Dana escrow dilindungi selama proses mediasi.</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">Tim SkillKul akan menengahi sengketa dan membuat keputusan berdasarkan bukti komunikasi dan hasil kerja. Dana escrow dilindungi selama proses mediasi.</p>
                 </div>
             </div>
         </div>
