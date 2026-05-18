@@ -110,9 +110,12 @@
                         </button>
                         <p class="text-[10px] text-indigo-200 text-center">Freelancer sedang dalam Mode Ujian atau mengerjakan pesanan lain.</p>
                     @else
-                        <a href="{{ route('checkout', 1) }}" id="btn-pesan-langsung" class="block w-full bg-white text-brand-primary font-bold py-3.5 rounded-xl text-center text-sm hover:bg-indigo-50 transition-all shadow-lg mb-3 hover:scale-[1.02]">
-                            🛒 Pesan & Bayar Sekarang
-                        </a>
+                        <form action="{{ route('order.create', $service->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" id="btn-pesan-langsung" class="block w-full bg-white text-brand-primary font-bold py-3.5 rounded-xl text-center text-sm hover:bg-indigo-50 transition-all shadow-lg mb-3 hover:scale-[1.02]">
+                                🛒 Pesan & Bayar Sekarang
+                            </button>
+                        </form>
                         <p class="text-[10px] text-indigo-200 text-center mb-3">Anda akan diarahkan ke halaman pembayaran Midtrans.</p>
                     @endif
 

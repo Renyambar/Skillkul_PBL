@@ -46,10 +46,10 @@ class ServiceController extends Controller
     // ─── Detail jasa (publik) ─────────────────────────────────
     public function show($id)
     {
-        $service = Service::with(['freelancer', 'category'])->findOrFail($id);
+        $service = Service::with(['freelancer', 'category', 'reviews'])->findOrFail($id);
 
-        // Cek apakah freelancer sedang dalam mode ujian
-        $isBusy = $service->freelancer?->exam_mode ?? false;
+        // Cek apakah freelancer sedang sibuk (mode ujian / ada order in_progress)
+        $isBusy = $service->freelancer?->is_busy ?? false;
 
         return view('services.show', compact('service', 'isBusy'));
     }

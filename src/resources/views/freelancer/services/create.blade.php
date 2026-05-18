@@ -68,19 +68,19 @@
                         <label class="text-base font-bold text-brand-dark">Model Bisnis & Harga</label>
                     </div>
                     <div class="grid grid-cols-2 gap-4" id="type-selector">
-                        <label class="cursor-pointer border-2 border-brand-primary bg-indigo-50/50 rounded-2xl p-5 transition-all" data-type="non_project">
+                        <label class="cursor-pointer border-2 rounded-2xl p-5 transition-all" data-type="non_project">
                             <input type="radio" name="type" value="non_project" class="sr-only" {{ old('type', 'non_project') === 'non_project' ? 'checked' : '' }}>
                             <div class="flex justify-between items-start mb-1">
-                                <span class="text-xs font-black text-brand-primary tracking-widest uppercase">Non-Project</span>
-                                <div class="w-5 h-5 rounded-full border-2 border-brand-primary flex items-center justify-center bg-brand-primary"><div class="w-2 h-2 rounded-full bg-white"></div></div>
+                                <span class="type-label text-xs font-black tracking-widest uppercase">Non-Project</span>
+                                <div class="radio-dot w-5 h-5 rounded-full border-2 flex items-center justify-center"></div>
                             </div>
                             <p class="text-[11px] text-gray-500 font-medium leading-relaxed">Layanan dengan harga pasti. Cocok untuk jasa standar.</p>
                         </label>
-                        <label class="cursor-pointer border-2 border-gray-100 bg-gray-50/50 rounded-2xl p-5 hover:border-gray-300 transition-all" data-type="project">
+                        <label class="cursor-pointer border-2 rounded-2xl p-5 transition-all" data-type="project">
                             <input type="radio" name="type" value="project" class="sr-only" {{ old('type') === 'project' ? 'checked' : '' }}>
                             <div class="flex justify-between items-start mb-1">
-                                <span class="text-xs font-black text-gray-700 tracking-widest uppercase">Project Based</span>
-                                <div class="w-5 h-5 rounded-full border-2 border-gray-300 bg-white"></div>
+                                <span class="type-label text-xs font-black tracking-widest uppercase">Project Based</span>
+                                <div class="radio-dot w-5 h-5 rounded-full border-2 flex items-center justify-center"></div>
                             </div>
                             <p class="text-[11px] text-gray-500 font-medium leading-relaxed">Nego via WhatsApp. Untuk pekerjaan kompleks.</p>
                         </label>
@@ -180,16 +180,61 @@
 </div>
 
 <script>
-    // Toggle price_max visibility based on type selection
-    document.querySelectorAll('#type-selector input[name="type"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            const maxContainer = document.getElementById('price-max-container');
-            if (this.value === 'project') {
+    document.addEventListener('DOMContentLoaded', function () {
+        const radios = document.querySelectorAll('#type-selector input[name="type"]');
+        const maxContainer = document.getElementById('price-max-container');
+
+        /**
+         * Update tampilan visual radio label (border, bg, indicator dot)
+         * dan toggle visibility field harga maksimal.
+         */
+        function updateTypeUI() {
+            radios.forEach(radio => {
+                const label = radio.closest('label');
+                const indicator = label.querySelector('.radio-dot');
+                const typeLabel = label.querySelector('.type-label');
+
+                if (radio.checked) {
+                    // State: Aktif
+                    label.classList.remove('border-gray-100', 'bg-gray-50/50');
+                    label.classList.add('border-brand-primary', 'bg-indigo-50/50', 'shadow-sm');
+                    if (indicator) {
+                        indicator.classList.remove('border-gray-300', 'bg-white');
+                        indicator.classList.add('border-brand-primary', 'bg-brand-primary');
+                        indicator.innerHTML = '<div class="w-2 h-2 rounded-full bg-white"></div>';
+                    }
+                    if (typeLabel) {
+                        typeLabel.classList.remove('text-gray-700');
+                        typeLabel.classList.add('text-brand-primary');
+                    }
+                } else {
+                    // State: Tidak aktif
+                    label.classList.remove('border-brand-primary', 'bg-indigo-50/50', 'shadow-sm');
+                    label.classList.add('border-gray-100', 'bg-gray-50/50');
+                    if (indicator) {
+                        indicator.classList.remove('border-brand-primary', 'bg-brand-primary');
+                        indicator.classList.add('border-gray-300', 'bg-white');
+                        indicator.innerHTML = '';
+                    }
+                    if (typeLabel) {
+                        typeLabel.classList.remove('text-brand-primary');
+                        typeLabel.classList.add('text-gray-700');
+                    }
+                }
+            });
+
+            // Toggle field harga maksimal (hanya tampil untuk Project Based)
+            const checkedRadio = document.querySelector('#type-selector input[name="type"]:checked');
+            if (checkedRadio && checkedRadio.value === 'project') {
                 maxContainer.classList.remove('hidden');
             } else {
                 maxContainer.classList.add('hidden');
             }
-        });
+        }
+
+        // Pasang event listener dan jalankan sekali saat halaman dimuat
+        radios.forEach(radio => radio.addEventListener('change', updateTypeUI));
+        updateTypeUI();
     });
 </script>
 @endsection
