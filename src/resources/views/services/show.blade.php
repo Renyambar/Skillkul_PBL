@@ -99,7 +99,7 @@
                             <input type="text" placeholder="Contoh: Fokus pada bagian metodologi..." class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-indigo-300 outline-none focus:border-white/40 transition-colors">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-extrabold uppercase tracking-widest text-indigo-200 mb-2">Tautan Google Drive Bahan</label>
+                            <label class="block text-[10px] font-extrabold uppercase tracking-widest text-indigo-200 mb-2">Tautan Google Drive Materi</label>
                             <input type="url" placeholder="https://drive.google.com/..." class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-indigo-300 outline-none focus:border-white/40 transition-colors">
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                         <button disabled class="block w-full bg-gray-400 text-white font-bold py-3.5 rounded-xl text-center text-sm cursor-not-allowed opacity-70 mb-3">
                             🔒 Freelancer Sedang Sibuk
                         </button>
-                        <p class="text-[10px] text-indigo-200 text-center">Freelancer sedang dalam Mode Ujian atau mengerjakan pesanan lain.</p>
+                        <p class="text-[10px] text-indigo-200 text-center">Freelancer sedang dalam Mode Ujian atau menyelesaikan pesanan lain.</p>
                     @else
                         <form action="{{ route('order.create', $service->id) }}" method="POST">
                             @csrf
@@ -167,7 +167,7 @@
                         <button disabled class="block w-full bg-gray-400 text-white font-bold py-3.5 rounded-xl text-center text-sm cursor-not-allowed opacity-70 mb-3">
                             🔒 Freelancer Sedang Sibuk
                         </button>
-                        <p class="text-[10px] text-indigo-200 text-center">Freelancer sedang dalam Mode Ujian atau mengerjakan pesanan lain.</p>
+                        <p class="text-[10px] text-indigo-200 text-center">Freelancer sedang dalam Mode Ujian atau menyelesaikan pesanan lain.</p>
                     @else
                         @php
                             $waName  = $service->freelancer?->name ?? 'Freelancer';
@@ -193,7 +193,7 @@
                 {{-- Info Pengiriman --}}
                 <div class="flex gap-4">
                     <div class="flex-1 bg-white rounded-xl p-4 border border-gray-100 text-center shadow-sm">
-                        <p class="text-xs text-gray-500 mb-1">⏱ Pengiriman</p>
+                        <p class="text-xs text-gray-500 mb-1">⏱ Waktu Pengerjaan</p>
                         <p class="font-bold text-brand-dark text-sm">1 Hari</p>
                     </div>
                     <div class="flex-1 bg-white rounded-xl p-4 border border-gray-100 text-center shadow-sm">

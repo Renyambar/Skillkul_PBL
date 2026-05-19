@@ -8,7 +8,7 @@
         <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px]"></div>
         <div class="max-w-4xl mx-auto relative z-10 text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-8 tracking-tight">
-                Apa yang ingin Anda cari, {{ Auth::user()->name }}?
+                Apa yang ingin Anda cari, {{ Auth::user()?->name ?? 'Pengunjung' }}?
             </h1>
 
             {{-- ── Search Form ── --}}
@@ -22,7 +22,7 @@
                     </div>
                     <input type="text" name="search" id="katalog-search-input" value="{{ request('search') }}"
                         placeholder="Cari jasa pemrograman, desain, atau pemeriksaan ejaan..."
-                        class="w-full bg-transparent py-4 px-4 text-white placeholder-white/50 border-0 outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 font-medium">
+                        class="w-full bg-transparent py-4 px-4 text-sm text-white placeholder:text-sm placeholder-white/50 border-0 outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 font-medium">
                     {{-- Pertahankan filter tipe jika sudah dipilih --}}
                     @if(request('type'))
                         <input type="hidden" name="type" value="{{ request('type') }}">
@@ -40,19 +40,19 @@
                 <div class="flex flex-wrap justify-center gap-3 mt-6">
                     <a href="{{ route('katalog', array_merge(request()->except('type', 'page'), [])) }}" id="filter-semua"
                         class="px-5 py-2 rounded-full text-sm font-semibold transition-colors
-                                  {{ !request('type') ? 'bg-white text-brand-primary' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
+                                      {{ !request('type') ? 'bg-white text-brand-primary' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
                         🔍 Semua Jenis
                     </a>
                     <a href="{{ route('katalog', array_merge(request()->except('type', 'page'), ['type' => 'non_project'])) }}"
                         id="filter-non-project"
                         class="px-5 py-2 rounded-full text-sm font-semibold transition-colors flex items-center gap-1.5
-                                  {{ request('type') == 'non_project' ? 'bg-white text-green-700' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
+                                      {{ request('type') == 'non_project' ? 'bg-white text-green-700' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
                         💰 Non-Project (Harga Pas)
                     </a>
                     <a href="{{ route('katalog', array_merge(request()->except('type', 'page'), ['type' => 'project'])) }}"
                         id="filter-project"
                         class="px-5 py-2 rounded-full text-sm font-semibold transition-colors flex items-center gap-1.5
-                                  {{ request('type') == 'project' ? 'bg-white text-orange-700' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
+                                      {{ request('type') == 'project' ? 'bg-white text-orange-700' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
                         🤝 Project (Bisa Nego)
                     </a>
                 </div>
@@ -62,16 +62,19 @@
             <div class="flex flex-wrap justify-center gap-3">
                 <a href="{{ route('katalog', array_merge(request()->except('category', 'page'), [])) }}"
                     class="px-5 py-2 rounded-full text-sm font-semibold transition-colors
-                              {{ !request('category') ? 'bg-white/20 text-white border border-white/40' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
+                                  {{ !request('category') ? 'bg-white/20 text-white border border-white/40' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
                     Semua Kategori
                 </a>
-                @foreach($categories as $cat)
-                    <a href="{{ route('katalog', array_merge(request()->except('category', 'page'), ['category' => $cat->name])) }}"
-                        class="px-5 py-2 rounded-full text-sm font-semibold transition-colors
-                                          {{ request('category') == $cat->name ? 'bg-white/20 text-white border border-white/40' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
-                        {{ $cat->name }}
-                    </a>
-                @endforeach
+                @forelse($categories as $cat)
+                    @if($cat->name)
+                        <a href="{{ route('katalog', array_merge(request()->except('category', 'page'), ['category' => $cat->name])) }}"
+                            class="px-5 py-2 rounded-full text-sm font-semibold transition-colors
+                                                          {{ request('category') == $cat->name ? 'bg-white/20 text-white border border-white/40' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
+                            {{ $cat->name }}
+                        </a>
+                    @endif
+                @empty
+                @endforelse
             </div>
         </div>
     </section>
@@ -95,19 +98,22 @@
                     <h2 class="text-2xl font-black text-brand-dark tracking-tight">Layanan Unggulan</h2>
                 @endif
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                 @if(request('search') || request('type') || request('category'))
                     <a href="{{ route('katalog') }}"
-                        class="text-xs font-semibold text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="px-4 py-2 bg-gradient-to-r from-red-50 to-pink-50 text-red-600 hover:from-red-100 hover:to-pink-100 font-bold text-sm rounded-lg border border-red-200 hover:border-red-400 transition-all duration-300 flex items-center gap-1.5 shadow-sm hover:shadow-md hover:scale-105">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                         Reset Filter
                     </a>
                 @endif
-                <span class="text-sm text-gray-400 font-semibold">
-                    {{ $services->total() }} jasa ditemukan
-                </span>
+                <div class="px-4 py-2 bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 font-bold text-sm rounded-lg border border-indigo-200 shadow-sm flex items-center gap-2">
+                    <span>
+                        <span class="text-sm font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">{{ $services->total() }}</span>
+                        <span class="text-indigo-600 ml-1">jasa ditemukan</span>
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -164,7 +170,7 @@
                             @endif
 
                             {{-- Kategori badge --}}
-                            @if($service->category)
+                            @if($service->category?->name)
                                 <div
                                     class="absolute top-3 right-3 bg-white/90 text-indigo-700 text-[10px] font-extrabold px-2.5 py-1 rounded-lg backdrop-blur-sm shadow">
                                     {{ $service->category->name }}
@@ -181,17 +187,25 @@
 
                             {{-- Freelancer --}}
                             <div class="flex items-center gap-2 mb-4">
-                                @if($service->freelancer?->profile_photo_path)
-                                    <img src="{{ Storage::url($service->freelancer->profile_photo_path) }}"
-                                        class="w-6 h-6 rounded-full object-cover">
+                                @if($service->freelancer)
+                                    @if($service->freelancer->profile_photo_path)
+                                        <img src="{{ Storage::url($service->freelancer->profile_photo_path) }}"
+                                            class="w-6 h-6 rounded-full object-cover">
+                                    @else
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 text-[10px] font-extrabold flex items-center justify-center flex-shrink-0">
+                                            {{ strtoupper(substr($service->freelancer->name ?? '?', 0, 1)) }}
+                                        </div>
+                                    @endif
+                                    <span
+                                        class="text-xs text-gray-500 font-medium truncate">{{ $service->freelancer->name ?? 'Freelancer' }}</span>
                                 @else
                                     <div
-                                        class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 text-[10px] font-extrabold flex items-center justify-center flex-shrink-0">
-                                        {{ strtoupper(substr($service->freelancer?->name ?? '?', 0, 1)) }}
+                                        class="w-6 h-6 rounded-full bg-gray-200 text-gray-400 text-[10px] font-extrabold flex items-center justify-center flex-shrink-0">
+                                        ?
                                     </div>
+                                    <span class="text-xs text-gray-400 font-medium">Freelancer Tidak Ditemukan</span>
                                 @endif
-                                <span
-                                    class="text-xs text-gray-500 font-medium truncate">{{ $service->freelancer?->name ?? 'Freelancer' }}</span>
                                 <span class="flex items-center gap-0.5 text-yellow-500 text-xs ml-auto flex-shrink-0">
                                     ★ <span class="text-gray-600 font-bold">4.8</span>
                                 </span>

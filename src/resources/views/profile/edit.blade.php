@@ -74,7 +74,7 @@
             {{-- Phone & Bio --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                    <label for="phone_number" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">No. WhatsApp</label>
+                    <label for="phone_number" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Nomor WhatsApp</label>
                     <input id="phone_number" name="phone_number" type="text" value="{{ old('phone_number', $user->phone_number) }}"
                         placeholder="08xx xxxx xxxx"
                         class="block w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium">
@@ -167,13 +167,13 @@
                 <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.072 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>
             </div>
             <div>
-                <h2 class="text-lg font-bold text-red-700">Zona Berbahaya</h2>
-                <p class="text-xs text-gray-500">Tindakan ini tidak dapat dibatalkan. Semua data akan dihapus permanen.</p>
+                <h2 class="text-lg font-bold text-red-700">Area Berbahaya</h2>
+                <p class="text-xs text-gray-500">Tindakan ini tidak dapat dibatalkan. Semua data akan dihapus secara permanen.</p>
             </div>
         </div>
 
         <div class="bg-red-50/50 rounded-xl p-4 border border-red-100 mb-4">
-            <p class="text-sm text-red-700 leading-relaxed">Setelah akun Anda dihapus, semua data dan informasi terkait akan dihapus secara permanen. Pastikan Anda telah mengunduh data penting sebelum melanjutkan.</p>
+            <p class="text-sm text-red-700 leading-relaxed">Jika akun dihapus, seluruh data dan informasi di dalamnya akan hilang secara permanen. Pastikan Anda telah mengunduh data penting sebelum melanjutkan.</p>
         </div>
 
         <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"

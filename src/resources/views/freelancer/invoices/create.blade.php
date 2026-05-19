@@ -6,9 +6,9 @@
     <div class="mb-8">
         <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-primary tracking-widest uppercase mb-3">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            CUSTOM INVOICE
+            TAGIHAN KHUSUS
         </span>
-        <h1 class="text-3xl font-extrabold text-brand-dark tracking-tight mb-2">Buat Tagihan Kustom</h1>
+        <h1 class="text-3xl font-extrabold text-brand-dark tracking-tight mb-2">Buat Tagihan Khusus</h1>
         <p class="text-gray-500 text-sm max-w-2xl">Setelah deal via WhatsApp, buat tagihan untuk klien agar dapat membayar melalui sistem pembayaran aman SkillKul.</p>
     </div>
 
@@ -43,7 +43,7 @@
                     <label for="service_id" class="block text-sm font-bold text-gray-900 mb-2">Pilih Jasa</label>
                     <select id="service_id" name="service_id"
                         class="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-brand-primary focus:ring-2 focus:ring-indigo-100 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-900 transition-all outline-none appearance-none @error('service_id') border-red-400 bg-red-50 @enderror">
-                        <option value="">— Pilih jasa yang akan ditagihkan —</option>
+                        <option value="">— Pilih jasa yang ingin ditagih —</option>
                         @foreach($services as $service)
                             <option value="{{ $service->id }}" data-title="{{ $service->title }}"
                                 {{ old('service_id') == $service->id ? 'selected' : '' }}>
@@ -58,7 +58,7 @@
                     @if($services->isEmpty())
                         <p class="text-xs text-amber-600 mt-2 flex items-center gap-1">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Anda belum memiliki jasa aktif. <a href="{{ route('freelancer.jasa.create') }}" class="underline font-bold">Buat jasa baru</a>
+                            Anda belum memiliki jasa yang aktif. <a href="{{ route('freelancer.jasa.create') }}" class="underline font-bold">Buat jasa baru</a>
                         </p>
                     @endif
                 </div>
@@ -82,7 +82,7 @@
                 <div>
                     <label for="order_notes" class="block text-sm font-bold text-gray-900 mb-2">Catatan / Deskripsi Pekerjaan</label>
                     <textarea id="order_notes" name="order_notes" rows="4"
-                        placeholder="Jelaskan scope pekerjaan yang telah disepakati..."
+                        placeholder="Jelaskan ruang lingkup pekerjaan yang telah disepakati..."
                         class="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-brand-primary focus:ring-2 focus:ring-indigo-100 rounded-xl px-5 py-4 text-sm font-medium text-gray-700 transition-all outline-none resize-none @error('order_notes') border-red-400 bg-red-50 @enderror">{{ old('order_notes') }}</textarea>
                     @error('order_notes')
                         <p class="text-xs text-red-500 mt-1.5">{{ $message }}</p>
@@ -93,7 +93,7 @@
                 <button type="submit" class="w-full bg-[#0b0c54] text-white py-4 rounded-xl font-bold shadow-lg hover:bg-brand-dark transition-all flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     {{ $services->isEmpty() ? 'disabled' : '' }}>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    Buat Invoice &amp; Kirim ke Klien
+                    Buat Tagihan &amp; Kirim ke Klien
                 </button>
             </form>
         </div>
@@ -106,10 +106,10 @@
                     <div class="border-b border-gray-100 pb-4 mb-4">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h4 class="font-extrabold text-brand-dark">SkillKul Invoice</h4>
-                                <p class="text-[10px] text-gray-400 mt-1">DRAFT—belum dikirim</p>
+                                <h4 class="font-extrabold text-brand-dark">SkillKul Tagihan</h4>
+                                <p class="text-[10px] text-gray-400 mt-1">DRAF—belum dikirim</p>
                             </div>
-                            <span class="bg-yellow-100 text-yellow-700 text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider">Draft</span>
+                            <span class="bg-yellow-100 text-yellow-700 text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider">Draf</span>
                         </div>
                     </div>
                     <div class="space-y-3 text-sm mb-6">
@@ -123,11 +123,11 @@
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-500">Tipe</span>
-                            <span class="font-medium">Custom Invoice</span>
+                            <span class="font-medium">Tagihan Khusus</span>
                         </div>
                     </div>
                     <div class="bg-[#0b0c54] text-white p-4 rounded-xl">
-                        <p class="text-[10px] text-indigo-300 font-bold uppercase">Total Tagihan Escrow</p>
+                        <p class="text-[10px] text-indigo-300 font-bold uppercase">Total Tagihan Rekening Bersama (Escrow)</p>
                         <h3 id="previewPrice" class="text-2xl font-black mt-1">Rp –</h3>
                     </div>
                 </div>
@@ -137,11 +137,11 @@
             <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5">
                 <h4 class="text-sm font-bold text-brand-dark mb-2">Bagaimana Cara Kerjanya?</h4>
                 <ol class="text-[11px] text-gray-600 leading-relaxed space-y-2 list-decimal list-inside">
-                    <li>Anda membuat tagihan setelah deal harga via WA</li>
-                    <li>Klien melihat tagihan di halaman pesanan mereka</li>
-                    <li>Klien membayar via Midtrans, dana masuk escrow</li>
-                    <li>Anda kerjakan, kirim hasil, klien konfirmasi</li>
-                    <li>Dana cair ke dompet Anda (potong 5% fee platform)</li>
+                    <li>Anda membuat tagihan setelah menyepakati harga melalui WhatsApp.</li>
+                    <li>Klien melihat tagihan di halaman pesanan mereka.</li>
+                    <li>Klien membayar melalui Midtrans, lalu dana akan masuk ke rekening bersama (escrow).</li>
+                    <li>Anda mengerjakan pesanan, kirim hasil, dan klien melakukan konfirmasi.</li>
+                    <li>Dana cair ke dompet digital Anda (dikenakan potongan biaya platform sebesar 5%).</li>
                 </ol>
             </div>
         </div>

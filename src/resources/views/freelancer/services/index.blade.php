@@ -6,11 +6,11 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
             <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight mb-1">Manajemen Layanan Saya</h1>
-            <p class="text-sm text-gray-500">Kelola semua jasa yang Anda tawarkan di marketplace SkillKul.</p>
+            <p class="text-sm text-gray-500">Kelola semua layanan yang Anda tawarkan di Pasar Layanan SkillKul.</p>
         </div>
         <a href="{{ route('freelancer.jasa.create') }}" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-6 py-3 rounded-xl transition-all shadow-md">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-            Buka Jasa Baru
+            Buka Layanan Jasa Baru
         </a>
     </div>
 
@@ -75,7 +75,7 @@
                     </svg>
                 </div>
                 <h3 class="text-lg font-bold text-gray-900 mb-1">Belum ada jasa yang Anda buat.</h3>
-                <p class="text-sm text-gray-500 mb-6">Mulai tawarkan keahlian Anda dengan membuka jasa baru.</p>
+                <p class="text-sm text-gray-500 mb-6">Mulai tawarkan keahlian Anda dengan membuka layanan jasa baru.</p>
                 <a href="{{ route('freelancer.jasa.create') }}" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-6 py-3 rounded-xl transition-all shadow-md">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                     Buka Jasa Baru

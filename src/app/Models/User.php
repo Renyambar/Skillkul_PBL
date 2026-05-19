@@ -26,6 +26,7 @@ class User extends Authenticatable
         'profile_photo_path',
         'role',
         'is_exam_mode',
+        'exam_mode',
         'is_auto_portfolio',
         'wallet_balance',
     ];
@@ -49,10 +50,10 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
-            'is_exam_mode'      => 'boolean',
+            'password' => 'hashed',
+            'is_exam_mode' => 'boolean',
             'is_auto_portfolio' => 'boolean',
-            'wallet_balance'    => 'decimal:2',
+            'wallet_balance' => 'decimal:2',
         ];
     }
 
@@ -108,7 +109,24 @@ class User extends Authenticatable
     {
         return $this->is_exam_mode
             || $this->freelancerOrders()
-                     ->where('status', 'in_progress')
-                     ->exists();
+                ->where('status', 'in_progress')
+                ->exists();
+    }
+
+    /**
+     * Accessor for `exam_mode` to keep backward compatibility with views/controllers
+     * that reference `exam_mode` while the DB column is `is_exam_mode`.
+     */
+    public function getExamModeAttribute(): bool
+    {
+        return (bool) ($this->attributes['is_exam_mode'] ?? false);
+    }
+
+    /**
+     * Mutator to map `exam_mode` attribute to `is_exam_mode` column.
+     */
+    public function setExamModeAttribute($value): void
+    {
+        $this->attributes['is_exam_mode'] = (bool) $value;
     }
 }
