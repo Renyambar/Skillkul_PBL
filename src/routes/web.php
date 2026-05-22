@@ -91,6 +91,7 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
     Route::get('/jasa/{service}/edit', [ServiceController::class, 'edit'])->name('jasa.edit');
     Route::put('/jasa/{service}', [ServiceController::class, 'update'])->name('jasa.update');
     Route::delete('/jasa/{service}', [ServiceController::class, 'destroy'])->name('jasa.destroy');
+    Route::post('/jasa/{service}/toggle', [ServiceController::class, 'toggle'])->name('jasa.toggle');
     Route::get('/buat-tagihan', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::post('/buat-tagihan', [InvoiceController::class, 'store'])->name('invoice.store');
     Route::get('/dompet', [WalletController::class, 'index'])->name('dompet');
@@ -98,8 +99,8 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
     Route::post('/pesanan/{id}/kirim-hasil', [OrderController::class, 'submitResult'])->name('pesanan.submitResult');
 
     // ── Portfolio & Auto-Generate PDF ──
-    Route::get('/portfolio',          [PortfolioController::class, 'index'])   ->name('portfolio.index');
-    Route::post('/portfolio/generate',[PortfolioController::class, 'generate'])->name('portfolio.generate');
+    Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
+    Route::post('/portfolio/generate', [PortfolioController::class, 'generate'])->name('portfolio.generate');
     Route::get('/portfolio/{id}/download', [PortfolioController::class, 'download'])->name('portfolio.download');
 });
 
@@ -109,18 +110,18 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     // ── Manajemen User ──
-    Route::get('/users',                   [AdminUserController::class, 'index'])  ->name('users.index');
-    Route::post('/users/{user}/toggle',    [AdminUserController::class, 'toggle']) ->name('users.toggle');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::post('/users/{user}/toggle', [AdminUserController::class, 'toggle'])->name('users.toggle');
 
     Route::get('/laporan', function () {
         return view('admin.laporan.index');
     })->name('laporan.index');
 
     // ── Pantau Katalog Jasa ──
-    Route::get('/services',              [AdminServiceController::class, 'index'])  ->name('services.index');
-    Route::get('/services/{service}',    [AdminServiceController::class, 'show'])   ->name('services.show');
+    Route::get('/services', [AdminServiceController::class, 'index'])->name('services.index');
+    Route::get('/services/{service}', [AdminServiceController::class, 'show'])->name('services.show');
     Route::post('/services/{service}/toggle', [AdminServiceController::class, 'toggle'])->name('services.toggle');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 

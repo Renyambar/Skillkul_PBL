@@ -59,7 +59,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
-                            {{ $order->created_at->format('d M Y') }}
+                            {{ $order->created_at->locale('id')->isoFormat('D MMMM YYYY, HH.mm') }}
                         </p>
                     </div>
 
@@ -70,7 +70,7 @@
                             <p class="text-lg font-extrabold text-indigo-600">Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
                         </div>
                         <a href="{{ route('pesanan.detail', $order->id) }}" class="inline-flex justify-center items-center px-5 py-2.5 bg-white border border-gray-200 text-gray-700 text-sm font-bold rounded-xl hover:bg-gray-50 hover:text-indigo-600 transition-colors focus:ring-4 focus:ring-gray-100 w-full md:w-auto">
-                            Lihat Detail
+                            Lihat Rincian
                         </a>
                     </div>
                 </div>

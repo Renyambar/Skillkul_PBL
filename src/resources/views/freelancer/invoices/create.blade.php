@@ -9,7 +9,7 @@
             TAGIHAN KHUSUS
         </span>
         <h1 class="text-3xl font-extrabold text-brand-dark tracking-tight mb-2">Buat Tagihan Khusus</h1>
-        <p class="text-gray-500 text-sm max-w-2xl">Setelah deal via WhatsApp, buat tagihan untuk klien agar dapat membayar melalui sistem pembayaran aman SkillKul.</p>
+        <p class="text-gray-500 text-sm max-w-2xl">Setelah mencapai kesepakatan melalui WhatsApp, buat tagihan untuk klien agar mereka dapat membayar melalui sistem pembayaran aman SkillKul.
     </div>
 
     {{-- Notifikasi Error --}}

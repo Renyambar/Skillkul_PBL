@@ -17,7 +17,7 @@
     
     // Timeline steps
     $steps = [
-        'pending' => 'Pending',
+        'pending' => 'Menunggu',
         'paid' => 'Dibayar',
         'in_progress' => 'Dikerjakan',
         'delivered' => 'Dikirim',
@@ -37,7 +37,7 @@
     <div class="mb-8">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <span class="text-xs font-mono text-gray-500 uppercase tracking-widest">ORDER #{{ substr($order->id, 0, 8) }}</span>
+                <span class="text-xs font-mono text-gray-500 uppercase tracking-widest">KODE PESANAN #{{ substr($order->id, 0, 8) }}</span>
                 <h1 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $order->service->title ?? 'Layanan tidak ditemukan' }}</h1>
             </div>
             <span class="{{ $s['bg'] }} {{ $s['text'] }} text-sm font-extrabold px-5 py-2.5 rounded-xl uppercase tracking-wider shadow-sm border border-white/50 text-center">{{ $s['label'] }}</span>
@@ -84,13 +84,13 @@
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <p class="text-xs text-gray-500 mb-1">Tanggal Pesanan</p>
-                    <p class="font-bold text-gray-900">{{ $order->created_at->format('d M Y, H:i') }}</p>
+                    <p class="font-bold text-gray-900">{{ $order->created_at->locale('id')->isoFormat('D MMMM YYYY, HH.mm') }}</p>
                 </div>
                 <div>
                     <p class="text-xs text-gray-500 mb-1">Tipe Pesanan</p>
                     <p class="font-bold text-gray-900">
                         @if($order->type === 'custom_invoice')
-                            <span class="text-orange-600 bg-orange-50 px-2 py-0.5 rounded text-xs uppercase tracking-wider">Custom Invoice</span>
+                            <span class="text-orange-600 bg-orange-50 px-2 py-0.5 rounded text-xs uppercase tracking-wider">Tagihan Khusus</span>
                         @else
                             <span class="text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded text-xs uppercase tracking-wider">Direct Checkout</span>
                         @endif
@@ -172,7 +172,7 @@
                         <span class="font-medium">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between items-center text-gray-600">
-                        <span>Biaya Admin (5%)</span>
+                        <span>Biaya Administrasi (5%)</span>
                         <span class="font-medium">Rp {{ number_format($adminFee, 0, ',', '.') }}</span>
                     </div>
                     <div class="border-t border-gray-100 pt-3 mt-3 flex justify-between items-center">
@@ -185,7 +185,7 @@
                 <div class="mt-6 bg-green-50 border border-green-100 rounded-xl p-4">
                     <h4 class="text-xs font-bold text-green-800 mb-1 flex items-center gap-1.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                        Perlindungan Escrow
+                        Perlindungan Rekening Bersama (Escrow)
                     </h4>
                     <p class="text-[10px] text-green-700 leading-relaxed">Dana Anda ditahan dengan aman oleh SkillKul dan baru diteruskan ke freelancer jika pesanan telah Anda terima.</p>
                 </div>
