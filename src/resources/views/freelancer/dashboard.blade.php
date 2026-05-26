@@ -20,10 +20,10 @@
                     <p class="text-[10px] text-orange-600 mt-0.5">Aktifkan fitur ini untuk berhenti menerima pesanan baru
                         agar tetap fokus ujian.</p>
                 </div>
-                <input id="exam-toggle-checkbox" name="exam_mode_checkbox" type="checkbox" class="sr-only" {{ auth()->user()->exam_mode ? 'checked' : '' }}>
+                <input id="exam-toggle-checkbox" name="exam_mode_checkbox" type="checkbox" class="sr-only" {{ auth()->user()->is_exam_mode ? 'checked' : '' }}>
                 <label for="exam-toggle-checkbox" id="exam-toggle-label"
-                    class="w-12 h-7 {{ auth()->user()->exam_mode ? 'bg-brand-accent' : 'bg-gray-300' }} rounded-full relative inline-block p-[3px] transition-colors duration-200 shadow-inner shrink-0 cursor-pointer">
-                    <span id="exam-toggle-knob" class="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 {{ auth()->user()->exam_mode ? 'translate-x-5' : '' }}"></span>
+                    class="w-12 h-7 {{ auth()->user()->is_exam_mode ? 'bg-brand-accent' : 'bg-gray-300' }} rounded-full relative inline-block p-[3px] transition-colors duration-200 shadow-inner shrink-0 cursor-pointer">
+                    <span id="exam-toggle-knob" class="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 {{ auth()->user()->is_exam_mode ? 'translate-x-5' : '' }}"></span>
                 </label>
             </form>
         </div>
@@ -32,17 +32,17 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
                 <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">TOTAL PENDAPATAN</p>
-                <h3 class="text-2xl font-extrabold text-brand-dark">Rp 12.450.000</h3>
-                <p class="text-xs text-green-600 font-semibold mt-1 flex items-center gap-1">📈 +12% dari bulan lalu</p>
+                <h3 class="text-2xl font-extrabold text-brand-dark">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</h3>
+                <p class="text-xs text-green-600 font-semibold mt-1 flex items-center gap-1">📈 Pencapaian Anda</p>
             </div>
             <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
                 <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">PESANAN AKTIF</p>
-                <h3 class="text-2xl font-extrabold text-brand-dark">04</h3>
-                <p class="text-xs text-gray-500 mt-1">Batas pengerjaan berikutnya: Hari ini, 17:00</p>
+                <h3 class="text-2xl font-extrabold text-brand-dark">{{ str_pad($pesananAktifCount, 2, '0', STR_PAD_LEFT) }}</h3>
+                <p class="text-xs text-gray-500 mt-1">Status: Sedang Dikerjakan / Revisi</p>
             </div>
             <div class="bg-brand-accent/10 rounded-2xl p-6 border border-brand-accent/20 shadow-sm">
                 <p class="text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-2">SALDO DOMPET</p>
-                <h3 class="text-2xl font-extrabold text-brand-dark">Rp 2.890.000</h3>
+                <h3 class="text-2xl font-extrabold text-brand-dark">Rp {{ number_format($saldoDompet, 0, ',', '.') }}</h3>
                 <a href="{{ route('freelancer.dompet') }}"
                     class="mt-3 inline-block bg-brand-accent text-brand-dark text-xs font-bold px-5 py-2 rounded-lg hover:bg-green-300 transition-colors">Tarik
                     ke Bank</a>
@@ -68,32 +68,36 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
+                        @forelse($activeOrders as $order)
                         <tr>
-                            <td class="py-4 font-semibold text-gray-900">Tutoring Data Science</td>
-                            <td class="py-4 text-gray-600">Michael Chen</td>
-                            <td class="py-4"><span
-                                    class="bg-yellow-100 text-yellow-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Dalam
-                                    Proses</span></td>
-                            <td class="py-4 text-right"><a href="#"
-                                    class="text-brand-primary font-bold text-xs hover:underline">Kirim Pekerjaan</a></td>
-                        </tr>
-                        <tr>
-                            <td class="py-4 font-semibold text-gray-900">Prototipe Web App</td>
-                            <td class="py-4 text-gray-600">Loomis Co.</td>
-                            <td class="py-4"><span
-                                    class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Terkirim</span>
+                            <td class="py-4 font-semibold text-gray-900">
+                                <a href="{{ route('pesanan.detail', $order->id) }}" class="hover:text-brand-primary transition-colors">
+                                    {{ $order->service->title }}
+                                </a>
                             </td>
-                            <td class="py-4 text-right"><span class="text-gray-400 text-xs">Menunggu Review</span></td>
+                            <td class="py-4 text-gray-600">{{ $order->client->name }}</td>
+                            <td class="py-4">
+                                @if($order->status === 'paid' || $order->status === 'in_progress')
+                                    <span class="bg-yellow-100 text-yellow-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Dalam Proses</span>
+                                @elseif($order->status === 'revision')
+                                    <span class="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Revisi</span>
+                                @elseif($order->status === 'delivered')
+                                    <span class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Terkirim</span>
+                                @endif
+                            </td>
+                            <td class="py-4 text-right">
+                                @if(in_array($order->status, ['paid', 'in_progress', 'revision']))
+                                    <a href="{{ route('pesanan.detail', $order->id) }}" class="text-brand-primary font-bold text-xs hover:underline border border-brand-primary px-3 py-1.5 rounded-lg">Kirim Pekerjaan</a>
+                                @else
+                                    <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Menunggu Klien</span>
+                                @endif
+                            </td>
                         </tr>
+                        @empty
                         <tr>
-                            <td class="py-4 font-semibold text-gray-900">Scripting Python</td>
-                            <td class="py-4 text-gray-600">Sarah J.</td>
-                            <td class="py-4"><span
-                                    class="bg-yellow-100 text-yellow-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Dalam
-                                    Proses</span></td>
-                            <td class="py-4 text-right"><a href="#"
-                                    class="text-brand-primary font-bold text-xs hover:underline">Kirim Pekerjaan</a></td>
+                            <td colspan="4" class="py-10 text-center text-gray-500 text-sm">Tidak ada pesanan aktif saat ini.</td>
                         </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

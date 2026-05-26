@@ -56,6 +56,7 @@ class Service extends Model
     }
 
     // ─── Scopes ───────────────────────────────────────────────
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
@@ -66,7 +67,33 @@ class Service extends Model
         return $query->where('is_active', false);
     }
 
+    /**
+     * Scope: Jasa yang tersedia di katalog publik.
+     *
+     * Kondisi yang harus terpenuhi:
+     * 1. Jasa harus aktif (is_active = true)
+     * 2. Freelancer pemilik tidak sedang dalam mode ujian (is_exam_mode = false)
+     * 3. Tidak ada pesanan 'in_progress' untuk jasa ini (kapasitas 1-on-1)
+     *
+     * Digunakan di ServiceController::index() untuk memastikan hanya jasa
+     * yang benar-benar tersedia yang tampil di marketplace.
+     */
+    public function scopeAvailableInCatalog($query)
+    {
+        return $query
+            ->where('is_active', true)
+            ->whereHas('freelancer', function ($q) {
+                $q->where('is_exam_mode', false)
+                  ->where('is_active', true); // Freelancer tidak disuspend
+            })
+            ->whereDoesntHave('orders', function ($q) {
+                // Kapasitas 1-on-1: blokir jika ada order yang sedang berjalan
+                $q->whereIn('status', ['in_progress', 'delivered', 'revision']);
+            });
+    }
+
     // ─── Accessors ────────────────────────────────────────────
+
     public function getPriceRangeAttribute(): string
     {
         if ($this->type === 'project' && $this->price_max) {
@@ -74,5 +101,16 @@ class Service extends Model
                    ' – Rp ' . number_format($this->price_max, 0, ',', '.');
         }
         return 'Rp ' . number_format($this->price, 0, ',', '.');
+    }
+
+    /**
+     * Cek apakah jasa ini sedang dikerjakan (sudah ada order aktif).
+     * Digunakan untuk menampilkan badge "Sedang Dikerjakan" di dashboard freelancer.
+     */
+    public function getHasActiveOrderAttribute(): bool
+    {
+        return $this->orders()
+            ->whereIn('status', ['in_progress', 'delivered', 'revision'])
+            ->exists();
     }
 }

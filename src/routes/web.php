@@ -67,6 +67,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pesanan-saya', [OrderController::class, 'clientOrders'])->name('pesanan.klien');
     Route::get('/pesanan/{id}', [OrderController::class, 'show'])->name('pesanan.detail');
     Route::post('/pesanan/{id}/terima', [OrderController::class, 'acceptOrder'])->name('orders.accept');
+    Route::post('/pesanan/{id}/minta-revisi', [OrderController::class, 'requestRevision'])->name('orders.requestRevision');
+
+    // Laporan Klien
+    Route::get('/laporan/buat', [\App\Http\Controllers\ReportController::class, 'create'])->name('laporan.buat');
+    Route::post('/laporan', [\App\Http\Controllers\ReportController::class, 'store'])->name('laporan.store');
 
     // Midtrans: Generate Snap Token (dipanggil via AJAX dari halaman checkout)
     Route::post('/midtrans/snap-token/{order_id}', [MidtransController::class, 'getSnapToken'])->name('midtrans.snapToken');
@@ -83,7 +88,7 @@ Route::post('/midtrans/notification', [MidtransController::class, 'handleNotific
 // 3. RUTE PORTAL FREELANCER
 // ============================================================
 
-Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(function () {
+Route::middleware(['auth', 'role:freelancer'])->prefix('freelancer')->name('freelancer.')->group(function () {
     Route::get('/dasbor', [DashboardController::class, 'index'])->name('dasbor');
     Route::get('/layanan', [ServiceController::class, 'myServices'])->name('jasa.index');
     Route::get('/buka-jasa', [ServiceController::class, 'create'])->name('jasa.create');
@@ -97,6 +102,7 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
     Route::get('/dompet', [WalletController::class, 'index'])->name('dompet');
     Route::get('/pesanan', [OrderController::class, 'freelancerOrders'])->name('pesanan');
     Route::post('/pesanan/{id}/kirim-hasil', [OrderController::class, 'submitResult'])->name('pesanan.submitResult');
+    Route::post('/pesanan/{id}/kirim-revisi', [OrderController::class, 'submitResult'])->name('pesanan.submitRevision'); // Re-submit after revision
 
     // ── Portfolio & Auto-Generate PDF ──
     Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
@@ -108,14 +114,15 @@ Route::middleware(['auth'])->prefix('freelancer')->name('freelancer.')->group(fu
 // 4. RUTE PORTAL ADMIN (Hanya Pantau & Toggle Status)
 // ============================================================
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     // ── Manajemen User ──
     Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
     Route::post('/users/{user}/toggle', [AdminUserController::class, 'toggle'])->name('users.toggle');
 
-    Route::get('/laporan', function () {
-        return view('admin.laporan.index');
-    })->name('laporan.index');
+    // ── Manajemen Laporan ──
+    Route::get('/laporan', [\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/{report}', [\App\Http\Controllers\Admin\ReportController::class, 'show'])->name('laporan.show');
+    Route::post('/laporan/{report}/resolve', [\App\Http\Controllers\Admin\ReportController::class, 'resolve'])->name('laporan.resolve');
 
     // ── Pantau Katalog Jasa ──
     Route::get('/services', [AdminServiceController::class, 'index'])->name('services.index');

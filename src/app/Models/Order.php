@@ -41,6 +41,9 @@ class Order extends Model
         'type',
         'status',
         'order_notes',
+        'deadline',
+        'revision_count',
+        'revision_limit',
         'client_gdrive_link',
         'freelancer_result_link',
         'total_price',
@@ -56,7 +59,10 @@ class Order extends Model
     protected function casts(): array
     {
         return [
-            'total_price' => 'decimal:2',
+            'total_price'    => 'decimal:2',
+            'deadline'       => 'datetime',
+            'revision_count' => 'integer',
+            'revision_limit' => 'integer',
         ];
     }
 
@@ -100,5 +106,76 @@ class Order extends Model
     public function portfolio()
     {
         return $this->hasOne(Portfolio::class);
+    }
+
+    /**
+     * Pembayaran (Midtrans) terkait pesanan ini.
+     * Satu pesanan dapat memiliki beberapa percobaan pembayaran.
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Pembayaran sukses terbaru untuk pesanan ini.
+     */
+    public function latestPayment()
+    {
+        return $this->hasOne(Payment::class)->latestOfMany();
+    }
+
+    /**
+     * Laporan yang dibuat berdasarkan pesanan ini.
+     */
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    // ─── Accessors ───────────────────────────────────────────
+
+    /**
+     * Cek apakah client masih bisa meminta revisi.
+     * Digunakan di view untuk menampilkan/menyembunyikan tombol revisi.
+     */
+    public function getCanRequestRevisionAttribute(): bool
+    {
+        return $this->status === 'delivered'
+            && $this->revision_count < $this->revision_limit;
+    }
+
+    /**
+     * Label status order dalam Bahasa Indonesia.
+     */
+    public function getStatusLabelAttribute(): string
+    {
+        return match($this->status) {
+            'pending'         => 'Menunggu Pembayaran',
+            'waiting_payment' => 'Menunggu Pembayaran',
+            'paid'            => 'Dibayar',
+            'in_progress'     => 'Sedang Dikerjakan',
+            'delivered'       => 'Terkirim, Menunggu Konfirmasi',
+            'revision'        => 'Revisi Diminta',
+            'completed'       => 'Selesai',
+            'canceled'        => 'Dibatalkan',
+            default           => ucfirst($this->status),
+        };
+    }
+
+    /**
+     * Warna badge status untuk tampilan UI.
+     */
+    public function getStatusColorAttribute(): string
+    {
+        return match($this->status) {
+            'pending', 'waiting_payment' => 'yellow',
+            'paid'                       => 'blue',
+            'in_progress', 'revision'    => 'indigo',
+            'delivered'                  => 'orange',
+            'completed'                  => 'green',
+            'canceled'                   => 'red',
+            default                      => 'gray',
+        };
     }
 }

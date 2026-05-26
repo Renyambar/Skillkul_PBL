@@ -3,12 +3,14 @@
 @section('content')
 @php
     $statusConfig = [
-        'pending'     => ['label' => 'Menunggu Pembayaran', 'bg' => 'bg-yellow-100', 'text' => 'text-yellow-800'],
-        'paid'        => ['label' => 'Dibayar', 'bg' => 'bg-sky-100', 'text' => 'text-sky-800'],
-        'in_progress' => ['label' => 'Dalam Proses', 'bg' => 'bg-blue-100', 'text' => 'text-blue-800'],
-        'delivered'   => ['label' => 'Terkirim', 'bg' => 'bg-purple-100', 'text' => 'text-purple-800'],
-        'completed'   => ['label' => 'Selesai', 'bg' => 'bg-green-100', 'text' => 'text-green-800'],
-        'canceled'    => ['label' => 'Dibatalkan', 'bg' => 'bg-red-100', 'text' => 'text-red-800'],
+        'pending'         => ['label' => 'Menunggu Pembayaran', 'bg' => 'bg-yellow-100', 'text' => 'text-yellow-800'],
+        'waiting_payment' => ['label' => 'Menunggu Pembayaran', 'bg' => 'bg-yellow-100', 'text' => 'text-yellow-800'],
+        'paid'            => ['label' => 'Dibayar', 'bg' => 'bg-sky-100', 'text' => 'text-sky-800'],
+        'in_progress'     => ['label' => 'Dalam Proses', 'bg' => 'bg-blue-100', 'text' => 'text-blue-800'],
+        'revision'        => ['label' => 'Revisi Diminta', 'bg' => 'bg-purple-100', 'text' => 'text-purple-800'],
+        'delivered'       => ['label' => 'Terkirim', 'bg' => 'bg-orange-100', 'text' => 'text-orange-800'],
+        'completed'       => ['label' => 'Selesai', 'bg' => 'bg-green-100', 'text' => 'text-green-800'],
+        'canceled'        => ['label' => 'Dibatalkan', 'bg' => 'bg-red-100', 'text' => 'text-red-800'],
     ];
     $s = $statusConfig[$order->status] ?? ['label' => 'Unknown', 'bg' => 'bg-gray-100', 'text' => 'text-gray-800'];
     
@@ -200,11 +202,56 @@
                         Bayar Sekarang
                     </button>
                 @elseif($order->status === 'delivered')
+                    {{-- Revision Counter --}}
+                    @if($order->revision_limit > 0)
+                    <div class="mb-3 bg-orange-50 border border-orange-100 rounded-xl p-3">
+                        <p class="text-xs font-bold text-orange-700 mb-1">Revisi Tersedia</p>
+                        <div class="flex items-center gap-2">
+                            @for($r = 1; $r <= $order->revision_limit; $r++)
+                                <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
+                                    {{ $r <= $order->revision_count ? 'bg-orange-500 text-white' : 'bg-orange-100 text-orange-600' }}">
+                                    {{ $r }}
+                                </div>
+                            @endfor
+                            <span class="text-xs text-gray-500 ml-1">{{ $order->revision_count }}/{{ $order->revision_limit }} digunakan</span>
+                        </div>
+                    </div>
+                    @endif
+
+                    {{-- Auto-complete countdown info --}}
+                    @php
+                        $hoursLeft = $order->updated_at ? now()->diffInHours($order->updated_at->addHours(48), false) : null;
+                    @endphp
+                    @if($hoursLeft !== null && $hoursLeft > 0)
+                    <div class="mb-3 bg-amber-50 border border-amber-100 rounded-xl p-3">
+                        <p class="text-xs text-amber-700">
+                            ⏰ Auto-selesai dalam <strong>{{ $hoursLeft }} jam</strong> jika tidak ada aksi.
+                        </p>
+                    </div>
+                    @endif
+
                     <div x-data="{ showReviewModal: false }">
                         <button @click="showReviewModal = true" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             Pesanan Diterima
                         </button>
+
+                        {{-- Tombol Minta Revisi --}}
+                        @if($order->revision_count < $order->revision_limit)
+                        <form action="{{ route('orders.requestRevision', $order->id) }}" method="POST" class="mt-3">
+                            @csrf
+                            <button type="submit"
+                                    onclick="return confirm('Yakin ingin meminta revisi? Freelancer akan kembali mengerjakan.')"
+                                    class="w-full bg-orange-50 border border-orange-200 text-orange-700 hover:bg-orange-100 font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                Minta Revisi ({{ $order->revision_limit - $order->revision_count }} sisa)
+                            </button>
+                        </form>
+                        @else
+                        <div class="mt-3 bg-gray-50 border border-gray-200 rounded-xl p-3 text-center">
+                            <p class="text-xs text-gray-500">Batas revisi ({{ $order->revision_limit }}x) sudah tercapai.</p>
+                        </div>
+                        @endif
 
                         {{-- Modal Review --}}
                         <div x-show="showReviewModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
@@ -225,7 +272,7 @@
                                                     <h3 class="text-lg leading-6 font-bold text-gray-900" id="modal-title">Terima Pesanan & Beri Ulasan</h3>
                                                     <div class="mt-2">
                                                         <p class="text-sm text-gray-500 mb-4">Dengan menerima pesanan, dana escrow akan diteruskan ke freelancer. Berikan ulasan untuk membantu freelancer ini.</p>
-                                                        
+
                                                         <div x-data="{ rating: 5 }" class="mb-4">
                                                             <label class="block text-xs font-bold text-gray-700 mb-2">Rating</label>
                                                             <div class="flex gap-1">

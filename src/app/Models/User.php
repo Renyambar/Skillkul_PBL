@@ -19,15 +19,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nim',
         'email',
         'password',
         'phone_number',
         'profile_description',
         'profile_photo_path',
         'role',
-        'is_exam_mode',
-        'exam_mode',
+        'is_exam_mode',      // Satu-satunya kolom mode ujian (kolom 'exam_mode' dihapus via migrasi fix)
         'is_auto_portfolio',
+        'is_active',         // Flag suspensi akun oleh admin
         'wallet_balance',
     ];
 
@@ -50,10 +51,11 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'is_exam_mode' => 'boolean',
+            'password'          => 'hashed',
+            'is_exam_mode'      => 'boolean',
             'is_auto_portfolio' => 'boolean',
-            'wallet_balance' => 'decimal:2',
+            'is_active'         => 'boolean',
+            'wallet_balance'    => 'decimal:2',
         ];
     }
 
@@ -99,11 +101,32 @@ class User extends Authenticatable
         return $this->hasMany(Portfolio::class, 'freelancer_id');
     }
 
+    /**
+     * Laporan yang dibuat oleh user ini (sebagai pelapor).
+     */
+    public function reportsMade()
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
+    }
+
+    /**
+     * Laporan yang ditujukan kepada user ini (sebagai yang dilaporkan).
+     */
+    public function reportsReceived()
+    {
+        return $this->hasMany(Report::class, 'reported_id');
+    }
+
     // ─── Accessors ───────────────────────────────────────────
 
     /**
      * Cek apakah freelancer sedang sibuk.
-     * Bernilai true jika mode ujian aktif ATAU ada pesanan yang sedang dikerjakan (in_progress).
+     *
+     * Bernilai true jika:
+     *  - Mode ujian aktif (is_exam_mode = true), ATAU
+     *  - Ada pesanan yang sedang dikerjakan (in_progress)
+     *
+     * Digunakan di CheckoutController dan ServiceController untuk memblokir order baru.
      */
     public function getIsBusyAttribute(): bool
     {
@@ -111,22 +134,5 @@ class User extends Authenticatable
             || $this->freelancerOrders()
                 ->where('status', 'in_progress')
                 ->exists();
-    }
-
-    /**
-     * Accessor for `exam_mode` to keep backward compatibility with views/controllers
-     * that reference `exam_mode` while the DB column is `is_exam_mode`.
-     */
-    public function getExamModeAttribute(): bool
-    {
-        return (bool) ($this->attributes['is_exam_mode'] ?? false);
-    }
-
-    /**
-     * Mutator to map `exam_mode` attribute to `is_exam_mode` column.
-     */
-    public function setExamModeAttribute($value): void
-    {
-        $this->attributes['is_exam_mode'] = (bool) $value;
     }
 }

@@ -16,6 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'midtrans/notification',
         ]);
+
+        // Daftarkan alias middleware untuk role-based access control.
+        // Penggunaan di routes: ->middleware('role:freelancer') atau ->middleware('role:admin')
+        $middleware->alias([
+            'role' => \App\Http\Middleware\EnsureRole::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

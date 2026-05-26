@@ -15,7 +15,7 @@ class CategoryFactory extends Factory
 
         return [
             'name' => fake()->unique()->randomElement($categories),
-            'description' => fake()->sentence(),
+            'description' => 'Kategori layanan profesional untuk bidang ' . strtolower(fake()->randomElement($categories)),
         ];
     }
 }

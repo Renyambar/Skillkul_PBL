@@ -65,18 +65,26 @@ class ProfileController extends Controller
 
     /**
      * Toggle exam mode for the user.
+     *
+     * Hanya mengubah kolom `is_exam_mode` — satu-satunya sumber kebenaran
+     * untuk mode ujian. Ketika aktif, semua jasa freelancer disembunyikan
+     * dari katalog publik dan tidak bisa menerima pesanan baru.
      */
     public function toggleExamMode(Request $request)
     {
         $user = $request->user();
-        $exam_mode = !$user->exam_mode;
+
+        $newState = ! $user->is_exam_mode;
 
         $user->update([
-            'exam_mode' => $exam_mode,
-            'exam_mode_started_at' => $exam_mode ? now() : null,
+            'is_exam_mode' => $newState,
         ]);
 
-        return Redirect::back()->with('success', $exam_mode ? 'Mode Ujian diaktifkan' : 'Mode Ujian dinonaktifkan');
+        $message = $newState
+            ? 'Mode Ujian diaktifkan. Semua jasa Anda disembunyikan sementara.'
+            : 'Mode Ujian dinonaktifkan. Jasa Anda kembali tersedia di katalog.';
+
+        return Redirect::back()->with('success', $message);
     }
 
     /**

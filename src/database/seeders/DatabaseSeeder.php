@@ -14,53 +14,86 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 3. Tambahkan user admin
+        // ─── 1. Akun Admin ────────────────────────────────────────────────────
+        // Admin menggunakan email internal — dikecualikan dari validasi .ac.id
+        // karena admin dibuat via seeder, bukan registrasi publik.
         User::factory()->create([
-            'name' => 'Admin SkillKul',
-            'email' => 'admin@skillkul.com',
-            'role' => 'admin',
+            'name'      => 'Admin SkillKul',
+            'email'     => 'admin@skillkul.com',
+            'role'      => 'admin',
+            'nim'       => null,
+            'is_active' => true,
         ]);
 
+        // ─── 2. Akun Test (login mudah untuk development) ─────────────────────
+        User::factory()->create([
+            'name'      => 'Test Freelancer',
+            'email'     => 'freelancer@polinema.ac.id',
+            'role'      => 'freelancer',
+            'nim'       => '2241760001',
+            'is_active' => true,
+        ]);
+
+        User::factory()->create([
+            'name'      => 'Test Client',
+            'email'     => 'client@polinema.ac.id',
+            'role'      => 'client',
+            'nim'       => null,
+            'is_active' => true,
+        ]);
+
+        // ─── 3. Kategori Jasa ─────────────────────────────────────────────────
         $categories = [
-            ['name' => 'Desain Presentasi', 'description' => 'Bikin slide PPT keren dan estetik buat tugas akhir atau semhas.'],
-            ['name' => 'Joki Tugas Koding', 'description' => 'Bantuan mengerjakan tugas Web, Java, Python, dll.'],
-            ['name' => 'Ketikan & Makalah', 'description' => 'Pembuatan makalah, merangkum materi, dan terjemahan.'],
-            ['name' => 'Video Editing', 'description' => 'Edit video tugas kelompok agar terlihat profesional.'],
+            ['name' => 'Desain Presentasi',  'description' => 'Bikin slide PPT keren dan estetik buat tugas akhir atau semhas.'],
+            ['name' => 'Joki Tugas Koding',  'description' => 'Bantuan mengerjakan tugas Web, Java, Python, dll.'],
+            ['name' => 'Ketikan & Makalah',  'description' => 'Pembuatan makalah, merangkum materi, dan terjemahan.'],
+            ['name' => 'Video Editing',      'description' => 'Edit video tugas kelompok agar terlihat profesional.'],
+            ['name' => 'Desain Grafis',      'description' => 'Poster, banner, infografis, dan aset visual lainnya.'],
+            ['name' => 'Terjemahan',         'description' => 'Alih bahasa dokumen Indonesia-Inggris dan sebaliknya.'],
         ];
         foreach ($categories as $cat) {
             Category::create($cat);
         }
 
-        User::factory(10)->create(['role' => 'freelancer']);
-        User::factory(10)->create(['role' => 'client']);
+        // ─── 4. Freelancer & Client Acak ──────────────────────────────────────
+        // UserFactory kini menghasilkan email .ac.id otomatis
+        User::factory(15)->freelancer()->create();
+        User::factory(15)->client()->create();
 
-        User::factory()->create([
-            'name' => 'Test Freelancer',
-            'email' => 'freelancer@skillkul.com',
-            'role' => 'freelancer',
-        ]);
-        User::factory()->create([
-            'name' => 'Test Client',
-            'email' => 'client@skillkul.com',
-            'role' => 'client',
-        ]);
+        // ─── 5. Layanan (Jasa) ────────────────────────────────────────────────
+        Service::factory(25)->create();
 
-        Service::factory(20)->create();
-        Order::factory(30)->create();
+        // ─── 6. Pesanan ───────────────────────────────────────────────────────
+        // OrderFactory kini menghasilkan deadline, revision_count, revision_limit
+        Order::factory(40)->create();
 
-        // 4. Review dan Portfolio hanya untuk order berstatus 'completed'
+        // ─── 7. Review & Portfolio untuk pesanan 'completed' ──────────────────
         $completedOrders = Order::where('status', 'completed')->get();
+
         foreach ($completedOrders as $order) {
+            // 70% chance client memberikan review
             if (rand(1, 100) <= 70) {
                 Review::factory()->create([
-                    'order_id' => $order->id,
+                    'order_id'  => $order->id,
                     'client_id' => $order->client_id,
                 ]);
             }
+
+            // Portfolio otomatis untuk semua completed order (sebagai showcase freelancer)
             Portfolio::factory()->create([
-                 'order_id' => $order->id,
-                 'freelancer_id' => $order->freelancer_id,
+                'order_id'      => $order->id,
+                'freelancer_id' => $order->freelancer_id,
             ]);
         }
+
+        $this->command->info('✅ Seeding selesai!');
+        $this->command->table(
+            ['Role', 'Email', 'Password'],
+            [
+                ['Admin',      'admin@skillkul.com',      'password'],
+                ['Freelancer', 'freelancer@polinema.ac.id', 'password'],
+                ['Client',     'client@polinema.ac.id',   'password'],
+            ]
+        );
     }
 }

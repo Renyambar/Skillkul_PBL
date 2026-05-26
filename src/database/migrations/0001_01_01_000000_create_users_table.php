@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['client', 'freelancer'])->default('client');
+            $table->enum('role', ['client', 'freelancer', 'admin'])->default('client');
             $table->string('phone_number', 15)->nullable();
             $table->text('profile_description')->nullable();
             $table->boolean('is_exam_mode')->default(false);

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('freelancer_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
             $table->enum('type', ['direct_checkout', 'custom_invoice'])->default('direct_checkout');
-            $table->enum('status', ['pending', 'paid', 'in_progress', 'delivered', 'completed', 'canceled'])->default('pending');
+            $table->enum('status', ['pending', 'waiting_payment', 'paid', 'in_progress', 'revision', 'delivered', 'completed', 'canceled'])->default('pending');
             $table->text('order_notes')->nullable();
             $table->string('client_gdrive_link')->nullable();
             $table->string('freelancer_result_link')->nullable();

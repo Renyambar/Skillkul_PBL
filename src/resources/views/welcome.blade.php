@@ -40,42 +40,62 @@
                         class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('katalog') || request()->routeIs('jasa.detail') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
                         Layanan
                     </a>
-                    <a href="{{ route('pesanan.klien') }}"
-                        class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('pesanan.*') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
-                        Pesanan Saya
+                    <a href="{{ route('tentang') }}"
+                        class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('tentang') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
+                        Tentang
                     </a>
-                    <a href="{{ route('dashboard') }}"
-                        class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
-                        Beranda
+                    <a href="{{ route('keamanan') }}"
+                        class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('keamanan') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
+                        Keamanan
                     </a>
+                    @auth
+                        <a href="{{ route('pesanan.klien') }}"
+                            class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('pesanan.*') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
+                            Pesanan Saya
+                        </a>
+                        <a href="{{ route('dashboard') }}"
+                            class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
+                            Beranda
+                        </a>
+                    @endauth
                 </div>
                 <div class="flex items-center gap-4">
-                    {{-- Notification Bell --}}
-                    <button class="relative p-2 text-gray-400 hover:text-brand-primary transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
-                            </path>
-                        </svg>
-                    </button>
-                    {{-- User Avatar Dropdown --}}
-                    <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="flex items-center gap-2 focus:outline-none">
-                            <img src="{{ $photo }}" alt="{{ $user?->name }}"
-                                class="w-9 h-9 rounded-full object-cover border-2 border-indigo-100">
+                    @auth
+                        {{-- Notification Bell --}}
+                        <button class="relative p-2 text-gray-400 hover:text-brand-primary transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                                </path>
+                            </svg>
                         </button>
-                        <div x-show="open" @click.away="open = false" x-transition
-                            class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
-                            <a href="{{ route('profile.edit') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-medium">Profil
-                                Saya</a>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit"
-                                    class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-medium">Keluar</button>
-                            </form>
+                        {{-- User Avatar Dropdown --}}
+                        <div x-data="{ open: false }" class="relative">
+                            <button @click="open = !open" class="flex items-center gap-2 focus:outline-none">
+                                <img src="{{ $photo }}" alt="{{ $user?->name }}"
+                                    class="w-9 h-9 rounded-full object-cover border-2 border-indigo-100">
+                            </button>
+                            <div x-show="open" @click.away="open = false" x-transition
+                                class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                                <a href="{{ route('profile.edit') }}"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-medium">Profil
+                                    Saya</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-medium">Keluar</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        {{-- Guest Actions --}}
+                        <a href="{{ route('login') }}" class="text-sm font-semibold text-gray-600 hover:text-brand-primary px-3 py-2 rounded-lg transition-colors">
+                            Masuk
+                        </a>
+                        <a href="{{ route('register') }}" class="bg-brand-primary text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors shadow-sm">
+                            Daftar
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>

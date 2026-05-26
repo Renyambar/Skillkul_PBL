@@ -48,7 +48,7 @@
                 <h2 class="text-3xl font-bold text-brand-primary mb-2 tracking-tight">Buat Akun Baru</h2>
                 <p class="text-gray-500 text-sm mb-6">Silakan daftar untuk memulai perjalanan profesional Anda.</p>
 
-                <form method="POST" action="{{ route('register') }}" class="space-y-5">
+                <form method="POST" action="{{ route('register') }}" class="space-y-5" x-data="{ selectedRole: '{{ old('role') }}' }">
                     @csrf
 
                     <div>
@@ -60,10 +60,11 @@
                     </div>
 
                     <div>
-                        <label for="email" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Email</label>
+                        <label for="email" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Email Kampus</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required
-                            placeholder="contoh@gmail.com"
+                            placeholder="nama@mahasiswa.polinema.ac.id"
                             class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400">
+                        <p class="mt-1 text-[10px] text-indigo-500 font-medium">⚠ Harus menggunakan email kampus (.ac.id)</p>
                         <x-input-error :messages="$errors->get('email')" class="mt-1" />
                     </div>
 
@@ -78,7 +79,7 @@
 
                         <div>
                             <label for="role" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">Daftar Sebagai</label>
-                            <select id="role" name="role" required
+                            <select id="role" name="role" required x-model="selectedRole"
                                 class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium">
                                 <option value="" disabled selected>Pilih peran</option>
                                 <option value="client">Klien</option>
@@ -86,6 +87,18 @@
                             </select>
                             <x-input-error :messages="$errors->get('role')" class="mt-1" />
                         </div>
+                    </div>
+
+                    {{-- NIM: hanya tampil untuk Freelancer --}}
+                    <div x-show="selectedRole === 'freelancer'" x-transition style="display:none;">
+                        <label for="nim" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">
+                            NIM <span class="text-gray-400 font-normal normal-case tracking-normal">(Nomor Induk Mahasiswa)</span>
+                        </label>
+                        <input id="nim" type="text" name="nim" value="{{ old('nim') }}"
+                            placeholder="Contoh: 2241760001"
+                            class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400">
+                        <p class="mt-1 text-[10px] text-gray-400">Opsional — dapat dilengkapi nanti melalui profil Anda.</p>
+                        <x-input-error :messages="$errors->get('nim')" class="mt-1" />
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

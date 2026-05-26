@@ -58,12 +58,8 @@ class UserController extends Controller
     /**
      * Toggle status aktif / nonaktif akun user.
      *
-     * Menggunakan kolom email_verified_at sebagai penanda aktif:
-     * - Ada nilai  = akun aktif (terverifikasi)
-     * - null       = akun dinonaktifkan oleh admin
-     *
-     * Catatan: Jika proyek membutuhkan kolom is_active terpisah,
-     * tambahkan migrasi & sesuaikan logika di sini.
+     * Menggunakan kolom `is_active` (boolean) sebagai penanda aktif/suspend.
+     * Admin tidak bisa menonaktifkan sesama admin atau dirinya sendiri.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
@@ -75,12 +71,17 @@ class UserController extends Controller
             return back()->with('error', 'Akun admin tidak dapat dinonaktifkan.');
         }
 
-        // Toggle: jika sudah verified → null (nonaktif), jika null → now() (aktif)
+        // Admin tidak bisa menonaktifkan dirinya sendiri
+        if ($user->id === auth()->id()) {
+            return back()->with('error', 'Anda tidak dapat menonaktifkan akun Anda sendiri.');
+        }
+
+        // Toggle is_active
         $user->update([
-            'email_verified_at' => $user->email_verified_at ? null : now(),
+            'is_active' => ! $user->is_active,
         ]);
 
-        $statusLabel = $user->email_verified_at ? 'diaktifkan' : 'dinonaktifkan';
+        $statusLabel = $user->is_active ? 'diaktifkan' : 'dinonaktifkan';
 
         return back()->with('success', "Akun \"{$user->name}\" berhasil {$statusLabel}.");
     }
