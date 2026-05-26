@@ -12,10 +12,23 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+    // ── Registrasi: Halaman pilihan role ──────────────────────────────────────
+    Route::get('register', [RegisteredUserController::class, 'choose'])
         ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // ── Registrasi: Alur Client ───────────────────────────────────────────────
+    Route::get('register/client', [RegisteredUserController::class, 'createClient'])
+        ->name('register.client');
+    Route::post('register/client', [RegisteredUserController::class, 'storeClient'])
+        ->name('register.client.store');
+
+    // ── Registrasi: Alur Freelancer ───────────────────────────────────────────
+    Route::get('register/freelancer', [RegisteredUserController::class, 'createFreelancer'])
+        ->name('register.freelancer');
+    Route::post('register/freelancer/college', [RegisteredUserController::class, 'storeFreelancerCollege'])
+        ->name('register.freelancer.college');
+    Route::post('register/freelancer/nim', [RegisteredUserController::class, 'storeFreelancerNim'])
+        ->name('register.freelancer.nim');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');

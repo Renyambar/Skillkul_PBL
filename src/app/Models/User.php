@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -26,6 +26,7 @@ class User extends Authenticatable
         'profile_description',
         'profile_photo_path',
         'role',
+        'verification_type', // Metode verifikasi: college_email | nim | none
         'is_exam_mode',      // Satu-satunya kolom mode ujian (kolom 'exam_mode' dihapus via migrasi fix)
         'is_auto_portfolio',
         'is_active',         // Flag suspensi akun oleh admin
@@ -57,6 +58,45 @@ class User extends Authenticatable
             'is_active'         => 'boolean',
             'wallet_balance'    => 'decimal:2',
         ];
+    }
+
+    // ─── Role Helpers ─────────────────────────────────────────
+
+    /**
+     * Cek apakah user adalah admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Cek apakah user adalah freelancer.
+     */
+    public function isFreelancer(): bool
+    {
+        return $this->role === 'freelancer';
+    }
+
+    /**
+     * Cek apakah user adalah client.
+     */
+    public function isClient(): bool
+    {
+        return $this->role === 'client';
+    }
+
+    /**
+     * Dapatkan named route dashboard sesuai role.
+     * Digunakan oleh AuthenticatedSessionController untuk redirect setelah login.
+     */
+    public function getDashboardRoute(): string
+    {
+        return match ($this->role) {
+            'admin'      => 'admin.users.index',
+            'freelancer' => 'freelancer.dasbor',
+            default      => 'dashboard',
+        };
     }
 
     // ─── Relasi ──────────────────────────────────────────────

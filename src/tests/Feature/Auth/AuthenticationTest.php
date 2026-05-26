@@ -8,8 +8,8 @@ test('login screen can be rendered', function () {
     $response->assertStatus(200);
 });
 
-test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
+test('clients can authenticate and are redirected to dashboard', function () {
+    $user = User::factory()->client()->create();
 
     $response = $this->post('/login', [
         'email' => $user->email,
@@ -20,8 +20,32 @@ test('users can authenticate using the login screen', function () {
     $response->assertRedirect(route('dashboard', absolute: false));
 });
 
+test('freelancers can authenticate and are redirected to freelancer dasbor', function () {
+    $user = User::factory()->freelancer()->create();
+
+    $response = $this->post('/login', [
+        'email' => $user->email,
+        'password' => 'password',
+    ]);
+
+    $this->assertAuthenticated();
+    $response->assertRedirect(route('freelancer.dasbor', absolute: false));
+});
+
+test('admins can authenticate and are redirected to admin users index', function () {
+    $user = User::factory()->create(['role' => 'admin']);
+
+    $response = $this->post('/login', [
+        'email' => $user->email,
+        'password' => 'password',
+    ]);
+
+    $this->assertAuthenticated();
+    $response->assertRedirect(route('admin.users.index', absolute: false));
+});
+
 test('users can not authenticate with invalid password', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->client()->create();
 
     $this->post('/login', [
         'email' => $user->email,
@@ -32,7 +56,7 @@ test('users can not authenticate with invalid password', function () {
 });
 
 test('users can logout', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->client()->create();
 
     $response = $this->actingAs($user)->post('/logout');
 

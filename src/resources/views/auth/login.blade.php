@@ -67,23 +67,13 @@
                 </h2>
                 <p class="text-gray-500 text-sm mb-6">Silakan masuk untuk melanjutkan perjalanan profesional Anda.</p>
 
-                <!-- Role Tabs -->
-                <div class="flex bg-gray-100 rounded-xl p-1.5 mb-6">
-                    <button type="button" id="btn-client" onclick="switchRole('client')"
-                        class="flex-1 py-2.5 text-sm font-bold text-white bg-brand-primary rounded-lg shadow-sm transition-all duration-200">
-                        Klien (Pesan Jasa)
-                    </button>
-                    <button type="button" id="btn-freelancer" onclick="switchRole('freelancer')"
-                        class="flex-1 py-2.5 text-sm font-bold text-gray-500 hover:text-gray-700 rounded-lg transition-all duration-200">
-                        Freelancer (Jual Jasa)
-                    </button>
-                </div>
+
 
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
                 <form method="POST" action="{{ route('login') }}" class="space-y-5">
                     @csrf
-                    <input type="hidden" name="role" id="input-role" value="client">
+
 
                     <div>
                         <label for="email"
@@ -158,22 +148,7 @@
     <!-- Footer -->
     @include('layouts.footer')
 
-    <script>
-        function switchRole(role) {
-            document.getElementById('input-role').value = role;
-            const btnClient = document.getElementById('btn-client');
-            const btnFreelancer = document.getElementById('btn-freelancer');
-            const activeClasses = 'flex-1 py-2.5 text-sm font-bold text-white bg-brand-primary rounded-lg shadow-sm transition-all duration-200';
-            const inactiveClasses = 'flex-1 py-2.5 text-sm font-bold text-gray-500 hover:text-gray-700 rounded-lg transition-all duration-200';
-            if (role === 'client') {
-                btnClient.className = activeClasses;
-                btnFreelancer.className = inactiveClasses;
-            } else {
-                btnFreelancer.className = activeClasses;
-                btnClient.className = inactiveClasses;
-            }
-        }
-    </script>
+
 </body>
 
 </html>

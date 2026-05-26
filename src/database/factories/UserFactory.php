@@ -27,6 +27,7 @@ class UserFactory extends Factory
             'email_verified_at'   => now(),
             'password'            => static::$password ??= Hash::make('password'),
             'role'                => $role,
+            'verification_type'   => $role === 'freelancer' ? 'college_email' : 'none',
             'phone_number'        => fake()->numerify('08##########'),
             'profile_description' => fake()->boolean(70) ? fake()->randomElement([
                 'Mahasiswa tingkat akhir yang senang berkreasi dan memecahkan masalah. Berpengalaman dalam organisasi dan siap membantu proyek Anda.',
@@ -50,8 +51,9 @@ class UserFactory extends Factory
     public function freelancer(): static
     {
         return $this->state(fn(array $attributes) => [
-            'role' => 'freelancer',
-            'nim'  => fake()->unique()->numerify('22417#####'),
+            'role'              => 'freelancer',
+            'nim'               => fake()->unique()->numerify('22417#####'),
+            'verification_type' => 'college_email',
         ]);
     }
 
@@ -61,8 +63,9 @@ class UserFactory extends Factory
     public function client(): static
     {
         return $this->state(fn(array $attributes) => [
-            'role' => 'client',
-            'nim'  => null,
+            'role'              => 'client',
+            'nim'               => null,
+            'verification_type' => 'none',
         ]);
     }
 

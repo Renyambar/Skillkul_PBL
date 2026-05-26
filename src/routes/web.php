@@ -38,7 +38,8 @@ Route::get('/jasa/{id}', [ServiceController::class, 'show'])->name('jasa.detail'
 Route::get('/profil/{username}', [ProfileController::class, 'show'])->name('profil.publik');
 
 Route::middleware(['auth'])->group(function () {
-    // Dashboard Klien
+    // Dashboard umum — tidak memerlukan 'verified' agar user
+    // dapat melihat notifikasi "harap verifikasi email Anda".
     Route::get('/dashboard', function () {
         $user = auth()->user();
         if ($user->role === 'freelancer') {
@@ -49,7 +50,9 @@ Route::middleware(['auth'])->group(function () {
         }
         return view('dashboard');
     })->name('dashboard');
+});
 
+Route::middleware(['auth', 'verified'])->group(function () {
     // Profile Management
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -88,7 +91,7 @@ Route::post('/midtrans/notification', [MidtransController::class, 'handleNotific
 // 3. RUTE PORTAL FREELANCER
 // ============================================================
 
-Route::middleware(['auth', 'role:freelancer'])->prefix('freelancer')->name('freelancer.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:freelancer'])->prefix('freelancer')->name('freelancer.')->group(function () {
     Route::get('/dasbor', [DashboardController::class, 'index'])->name('dasbor');
     Route::get('/layanan', [ServiceController::class, 'myServices'])->name('jasa.index');
     Route::get('/buka-jasa', [ServiceController::class, 'create'])->name('jasa.create');
@@ -115,6 +118,8 @@ Route::middleware(['auth', 'role:freelancer'])->prefix('freelancer')->name('free
 // ============================================================
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // ── Admin Dashboard Alias ──
+    Route::get('/dashboard', fn () => redirect()->route('admin.users.index'))->name('dashboard');
     // ── Manajemen User ──
     Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
     Route::post('/users/{user}/toggle', [AdminUserController::class, 'toggle'])->name('users.toggle');

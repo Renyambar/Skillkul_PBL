@@ -21,6 +21,11 @@ class AuthenticatedSessionController extends Controller
 
     /**
      * Handle an incoming authentication request.
+     *
+     * Setelah login berhasil, redirect user ke dashboard sesuai role:
+     *  - admin      → /admin/users
+     *  - freelancer → /freelancer/dasbor
+     *  - client     → /dashboard
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -28,7 +33,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        return redirect()->intended(route($user->getDashboardRoute(), absolute: false));
     }
 
     /**
