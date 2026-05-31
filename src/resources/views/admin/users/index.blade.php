@@ -2,7 +2,42 @@
 @section('title', 'Admin - Manajemen User')
 
 @section('content')
-<div class="p-8 lg:p-10">
+<div class="p-8 lg:p-10 relative min-h-screen">
+
+    {{-- ── Terminal Log Window (Hacker/Developer Aesthetic) ── --}}
+    <div id="terminal-window" class="hidden xl:block absolute top-8 right-8 w-[450px] bg-[#0c0c0c] rounded-xl shadow-2xl border border-gray-800 text-[11px] font-mono select-none overflow-hidden z-20 opacity-95 hover:opacity-100 transition-opacity duration-300">
+        <!-- Terminal Header -->
+        <div class="bg-[#20242c] px-3.5 py-2 flex items-center justify-between text-gray-400 border-b border-gray-800/80">
+            <div class="flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-[10px] font-bold tracking-wide text-gray-300 font-sans">budikul@skillkul: ~/backend</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+                <button onclick="document.getElementById('terminal-body').classList.toggle('hidden')" class="w-2.5 h-2.5 rounded-full bg-gray-700/80 flex items-center justify-center text-[7px] text-gray-400 hover:bg-yellow-500 hover:text-yellow-950 transition-all duration-200 focus:outline-none">-</button>
+                <span class="w-2.5 h-2.5 rounded-full bg-gray-700/80 flex items-center justify-center text-[7px] text-gray-400 hover:bg-green-500 hover:text-green-950 transition-all duration-200 cursor-pointer">□</span>
+                <button onclick="document.getElementById('terminal-window').remove()" class="w-2.5 h-2.5 rounded-full bg-gray-700/80 flex items-center justify-center text-[7px] text-gray-400 hover:bg-red-500 hover:text-red-100 transition-all duration-200 focus:outline-none">x</button>
+            </div>
+        </div>
+        <!-- Terminal Content -->
+        <div id="terminal-body" class="p-4 space-y-2 text-gray-300 leading-normal">
+            <div class="flex gap-1.5">
+                <span class="text-[#4af626] font-bold">backend@client:~/backend$</span>
+                <span class="text-white">backend ls</span>
+            </div>
+            <div class="text-green-400">
+                [INFO] Waiting for email user_id: 'clint_id_123', reason: email_nd_verified
+            </div>
+            <div class="text-red-500 font-semibold">
+                [ERROR] Activation failed: user_id: 'clientid_123', reason: email_not_verified
+            </div>
+            <div class="text-green-400">
+                [INFO] Waiting for email verification for budi@gmail.com and client@gmail.com
+            </div>
+            <div class="inline-block w-1.5 h-3.5 bg-gray-400 animate-pulse align-middle ml-0.5"></div>
+        </div>
+    </div>
 
     {{-- ── Header ── --}}
     <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
@@ -19,9 +54,21 @@
         </div>
     @endif
     @if(session('error'))
-        <div class="mb-6 bg-red-50 border border-red-200 text-red-800 text-sm font-semibold rounded-xl px-5 py-4">
-            ✗ {{ session('error') }}
-        </div>
+        @if(str_contains(session('error'), 'Gagal Mengaktifkan'))
+            {{-- Toast Notification di Bottom Right --}}
+            <div id="error-toast" class="fixed bottom-6 right-6 z-50 max-w-sm bg-[#e53e3e] text-white rounded-xl shadow-2xl p-4 pr-10 flex items-start gap-3 border border-red-500 transition-all duration-300 hover:scale-[1.02] transform">
+                <div class="text-xs leading-relaxed font-semibold">
+                    **Gagal Mengaktifkan: Akun dengan status email NONAKTIF tidak dapat diaktifkan secara manual. Pengguna harus memverifikasi email mereka terlebih dahulu.
+                </div>
+                <button onclick="document.getElementById('error-toast').remove()" class="absolute top-3.5 right-3 text-white/70 hover:text-white shrink-0 text-[10px] font-bold cursor-pointer transition-colors bg-white/10 hover:bg-white/20 rounded-full w-5 h-5 flex items-center justify-center focus:outline-none">
+                    ✕
+                </button>
+            </div>
+        @else
+            <div class="mb-6 bg-red-50 border border-red-200 text-red-800 text-sm font-semibold rounded-xl px-5 py-4">
+                ✗ {{ session('error') }}
+            </div>
+        @endif
     @endif
 
     {{-- ── Statistik Cards ── --}}
@@ -148,8 +195,11 @@
                                     Aktif
                                 </span>
                             @else
-                                <span class="bg-red-100 text-red-700 text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider">
+                                <span class="bg-red-50 border border-red-200 text-red-600 text-[10px] font-extrabold px-2.5 py-1 rounded-lg uppercase tracking-wider inline-flex items-center gap-1 shadow-sm">
                                     Nonaktif
+                                    <svg class="w-3 h-3 text-red-500 fill-current shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                                    </svg>
                                 </span>
                             @endif
                         </td>
@@ -166,7 +216,7 @@
                                       action="{{ route('admin.users.toggle', $user) }}"
                                       onsubmit="return confirm('Yakin ingin mengubah status akun {{ addslashes($user->name) }}?')">
                                     @csrf
-                                    @if($user->email_verified_at)
+                                    @if($user->is_active)
                                         <button type="submit"
                                                 class="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors">
                                             Nonaktifkan

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Admin\UserController
@@ -76,12 +77,15 @@ class UserController extends Controller
             return back()->with('error', 'Anda tidak dapat menonaktifkan akun Anda sendiri.');
         }
 
-        // Toggle is_active
+        // Toggle is_active + sinkronkan email_verified_at
+        $newIsActive = ! $user->is_active;
+
         $user->update([
-            'is_active' => ! $user->is_active,
+            'is_active'         => $newIsActive,
+            'email_verified_at' => $newIsActive ? ($user->email_verified_at ?? now()) : null,
         ]);
 
-        $statusLabel = $user->is_active ? 'diaktifkan' : 'dinonaktifkan';
+        $statusLabel = $newIsActive ? 'diaktifkan' : 'dinonaktifkan';
 
         return back()->with('success', "Akun \"{$user->name}\" berhasil {$statusLabel}.");
     }

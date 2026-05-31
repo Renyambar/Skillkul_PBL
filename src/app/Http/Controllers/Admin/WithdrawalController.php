@@ -54,12 +54,14 @@ class WithdrawalController extends Controller
     /**
      * Admin menyetujui withdrawal request.
      */
-    public function approve(int $id): RedirectResponse
+    public function approve(Request $request, int $id): RedirectResponse
     {
         $withdrawal = Withdrawal::findOrFail($id);
 
         try {
-            $this->withdrawalService->approve($withdrawal, auth()->user());
+            /** @var User $admin */
+            $admin = $request->user();
+            $this->withdrawalService->approve($withdrawal, $admin);
             $withdrawal->user->notify(new WithdrawalApprovedNotification($withdrawal));
 
             return redirect()->back()
@@ -85,7 +87,9 @@ class WithdrawalController extends Controller
         ]);
 
         try {
-            $this->withdrawalService->reject($withdrawal, auth()->user(), $request->admin_note);
+            /** @var User $admin */
+            $admin = $request->user();
+            $this->withdrawalService->reject($withdrawal, $admin, $request->admin_note);
             $withdrawal->user->notify(new WithdrawalRejectedNotification($withdrawal->fresh()));
 
             return redirect()->back()
@@ -100,12 +104,14 @@ class WithdrawalController extends Controller
      * Admin mengkonfirmasi transfer selesai → saldo user dikurangi.
      * Hanya bisa dilakukan jika status = 'approved'.
      */
-    public function complete(int $id): RedirectResponse
+    public function complete(Request $request, int $id): RedirectResponse
     {
         $withdrawal = Withdrawal::with('user')->findOrFail($id);
 
         try {
-            $this->withdrawalService->complete($withdrawal, auth()->user());
+            /** @var User $admin */
+            $admin = $request->user();
+            $this->withdrawalService->complete($withdrawal, $admin);
             $withdrawal->user->notify(new WithdrawalCompletedNotification($withdrawal->fresh()));
 
             return redirect()->back()

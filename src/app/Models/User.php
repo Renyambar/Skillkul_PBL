@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_exam_mode',      // Satu-satunya kolom mode ujian (kolom 'exam_mode' dihapus via migrasi fix)
         'is_auto_portfolio',
         'is_active',         // Flag suspensi akun oleh admin
+        'email_verified_at', // Waktu verifikasi email
         'wallet_balance',
     ];
 

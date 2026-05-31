@@ -92,11 +92,11 @@
                     <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[30px]"></div>
 
                     {{-- Badge --}}
-                    <div class="absolute top-5 right-5 z-10 bg-brand-primary text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow">
+                    <div class="absolute top-4 right-4 z-20 bg-brand-primary text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow">
                         Khusus Mahasiswa
                     </div>
 
-                    <div class="relative z-10">
+                    <div class="relative z-10 pt-4">
                         {{-- Icon --}}
                         <div class="w-20 h-20 bg-indigo-100 group-hover:bg-brand-primary rounded-3xl flex items-center justify-center mb-6 mx-auto transition-colors duration-300 shadow-md">
                             <svg class="w-10 h-10 text-brand-primary group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
