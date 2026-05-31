@@ -6,12 +6,16 @@ use App\Http\Requests\AcceptOrderRequest;
 use App\Http\Requests\SubmitResultRequest;
 use App\Models\Order;
 use App\Models\Review;
+use App\Notifications\FreelancerSubmitNotification;
+use App\Notifications\OrderCompletedNotification;
+use App\Services\EscrowService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class OrderController extends Controller
 {
+    public function __construct(protected EscrowService $escrowService) {}
     // ─── Portal Klien ────────────────────────────────────────
 
     /**
@@ -112,7 +116,11 @@ class OrderController extends Controller
 
         DB::transaction(function () use ($order, $validated) {
             // 1. Update status order menjadi completed
-            $order->update(['status' => 'completed']);
+            $order->update([
+                'status'       => 'completed',
+                'completed_at' => now(),
+                'escrow_released_at' => now(), // guard: sudah dilepas
+            ]);
 
             // 2. Simpan review dari client (hanya jika belum ada review)
             if (! $order->review) {
@@ -124,9 +132,12 @@ class OrderController extends Controller
                 ]);
             }
 
-            // 3. Lepas dana escrow ke wallet freelancer (potong 5% fee platform)
-            $freelancerEarning = $order->total_price * 0.95;
-            $order->freelancer->increment('wallet_balance', $freelancerEarning);
+            // 3. Lepas dana escrow ke wallet freelancer via EscrowService
+            //    (potong 8% fee platform, catat ledger, idempotent)
+            $this->escrowService->releaseToFreelancer($order, 'manual_accept');
+
+            // 4. Notifikasi ke freelancer: order selesai + dana masuk
+            $order->freelancer->notify(new OrderCompletedNotification($order));
         });
 
         return redirect()->route('pesanan.detail', ['id' => $order->id])
@@ -173,11 +184,15 @@ class OrderController extends Controller
 
         $validated = $request->validated();
 
-        // Update link hasil dan ubah status ke delivered
+        // Update link hasil, ubah status ke delivered, catat submitted_at
         $order->update([
             'freelancer_result_link' => $validated['freelancer_result_link'],
             'status'                 => 'delivered',
+            'submitted_at'           => now(), // acuan waktu 48-jam auto-complete
         ]);
+
+        // Notifikasi ke client: freelancer sudah kirim hasil
+        $order->client->notify(new FreelancerSubmitNotification($order->load(['service', 'client', 'freelancer'])));
 
         return redirect()->back()
             ->with('success', 'Hasil pekerjaan berhasil dikirim. Menunggu konfirmasi client.');

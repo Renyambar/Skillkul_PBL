@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Payment;
+use App\Notifications\PaymentFailedNotification;
+use App\Notifications\PaymentSuccessNotification;
+use App\Services\EscrowService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +24,7 @@ class MidtransController extends Controller
     /**
      * Inisialisasi konfigurasi Midtrans dari config/midtrans.php.
      */
-    public function __construct()
+    public function __construct(protected EscrowService $escrowService)
     {
         \Midtrans\Config::$serverKey    = config('midtrans.server_key');
         \Midtrans\Config::$clientKey    = config('midtrans.client_key');
@@ -272,7 +275,7 @@ class MidtransController extends Controller
                 ]);
 
                 // Buat atau update record Payment untuk audit trail
-                Payment::updateOrCreate(
+                $payment = Payment::updateOrCreate(
                     ['midtrans_transaction_id' => $transactionId],
                     [
                         'order_id'                 => $lockedOrder->id,
@@ -284,6 +287,23 @@ class MidtransController extends Controller
                         'raw_response'             => $payload,
                     ]
                 );
+
+                // ── BARU: Tahan dana escrow jika pembayaran berhasil ──────
+                if ($newStatus === 'paid') {
+                    $this->escrowService->holdFunds($lockedOrder, $payment);
+
+                    // Notifikasi ke client: pembayaran berhasil
+                    $lockedOrder->client->notify(
+                        new PaymentSuccessNotification($lockedOrder->load(['service', 'client']))
+                    );
+                }
+
+                // ── BARU: Notifikasi jika pembayaran gagal ────────────────
+                if (in_array($transactionStatus, ['expire', 'cancel', 'deny'])) {
+                    $lockedOrder->client->notify(
+                        new PaymentFailedNotification($lockedOrder->load('client'), $transactionStatus)
+                    );
+                }
             });
 
             Log::info('[Midtrans] Status order berhasil diperbarui.', [

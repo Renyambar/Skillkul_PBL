@@ -49,6 +49,11 @@ class Order extends Model
         'total_price',
         'midtrans_snap_token',
         'midtrans_transaction_id',
+        // Lifecycle timestamps (ditambahkan via migration 2026_05_30_000005)
+        'submitted_at',
+        'completed_at',
+        'cancelled_at',
+        'escrow_released_at',
     ];
 
     /**
@@ -59,10 +64,14 @@ class Order extends Model
     protected function casts(): array
     {
         return [
-            'total_price'    => 'decimal:2',
-            'deadline'       => 'datetime',
-            'revision_count' => 'integer',
-            'revision_limit' => 'integer',
+            'total_price'        => 'decimal:2',
+            'deadline'           => 'datetime',
+            'revision_count'     => 'integer',
+            'revision_limit'     => 'integer',
+            'submitted_at'       => 'datetime',
+            'completed_at'       => 'datetime',
+            'cancelled_at'       => 'datetime',
+            'escrow_released_at' => 'datetime',
         ];
     }
 
@@ -131,6 +140,23 @@ class Order extends Model
     public function reports()
     {
         return $this->hasMany(Report::class);
+    }
+
+    /**
+     * Escrow yang menahan dana untuk order ini.
+     * Satu order = satu escrow record (UNIQUE).
+     */
+    public function escrow()
+    {
+        return $this->hasOne(Escrow::class, 'order_id');
+    }
+
+    /**
+     * Semua entri ledger wallet yang terkait dengan order ini.
+     */
+    public function walletTransactions()
+    {
+        return $this->hasMany(WalletTransaction::class, 'order_id');
     }
 
     // ─── Accessors ───────────────────────────────────────────

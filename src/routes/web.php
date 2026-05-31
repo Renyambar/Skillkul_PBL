@@ -78,6 +78,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Midtrans: Generate Snap Token (dipanggil via AJAX dari halaman checkout)
     Route::post('/midtrans/snap-token/{order_id}', [MidtransController::class, 'getSnapToken'])->name('midtrans.snapToken');
+
+    // ── Wallet Client ──────────────────────────────────────────────────
+    Route::get('/dompet', [WalletController::class, 'clientWallet'])->name('client.dompet');
+
+    // ── Withdrawal (Client & Freelancer — shared routes) ───────────────
+    Route::get('/withdrawal', [\App\Http\Controllers\WithdrawalController::class, 'create'])->name('withdrawal.create');
+    Route::post('/withdrawal', [\App\Http\Controllers\WithdrawalController::class, 'store'])->name('withdrawal.store');
+    Route::get('/withdrawal/history', [\App\Http\Controllers\WithdrawalController::class, 'history'])->name('withdrawal.history');
+
+    // ── Notifikasi In-App ──────────────────────────────────────────────
+    Route::get('/notifikasi', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifikasi.index');
+    Route::post('/notifikasi/{id}/baca', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifikasi.read');
+    Route::post('/notifikasi/baca-semua', [\App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifikasi.readAll');
 });
 
 // ============================================================
@@ -133,6 +146,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/services', [AdminServiceController::class, 'index'])->name('services.index');
     Route::get('/services/{service}', [AdminServiceController::class, 'show'])->name('services.show');
     Route::post('/services/{service}/toggle', [AdminServiceController::class, 'toggle'])->name('services.toggle');
+
+    // ── Payment System: Withdrawal Management ──────────────────────────
+    Route::get('/withdrawal', [\App\Http\Controllers\Admin\WithdrawalController::class, 'index'])->name('withdrawal.index');
+    Route::post('/withdrawal/{id}/approve', [\App\Http\Controllers\Admin\WithdrawalController::class, 'approve'])->name('withdrawal.approve');
+    Route::post('/withdrawal/{id}/reject', [\App\Http\Controllers\Admin\WithdrawalController::class, 'reject'])->name('withdrawal.reject');
+    Route::post('/withdrawal/{id}/complete', [\App\Http\Controllers\Admin\WithdrawalController::class, 'complete'])->name('withdrawal.complete');
+
+    // ── Payment System: Escrow Dashboard ──────────────────────────────
+    Route::get('/escrow', [\App\Http\Controllers\Admin\WithdrawalController::class, 'escrowDashboard'])->name('escrow.index');
+
+    // ── Payment System: Ledger Transaksi ──────────────────────────────
+    Route::get('/transaksi', [\App\Http\Controllers\Admin\WithdrawalController::class, 'transactions'])->name('transactions.index');
 });
 
 require __DIR__ . '/auth.php';

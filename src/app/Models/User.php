@@ -157,6 +157,31 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Report::class, 'reported_id');
     }
 
+    /**
+     * Semua entri ledger wallet milik user ini.
+     * Digunakan untuk menampilkan histori transaksi.
+     */
+    public function walletTransactions()
+    {
+        return $this->hasMany(WalletTransaction::class);
+    }
+
+    /**
+     * Request withdrawal yang diajukan user ini.
+     */
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class);
+    }
+
+    /**
+     * Escrow di mana user ini adalah penerima dana (release atau refund).
+     */
+    public function escrowsReceived()
+    {
+        return $this->hasMany(Escrow::class, 'released_to_user_id');
+    }
+
     // ─── Accessors ───────────────────────────────────────────
 
     /**

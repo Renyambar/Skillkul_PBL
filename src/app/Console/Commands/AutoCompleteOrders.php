@@ -3,17 +3,25 @@
 namespace App\Console\Commands;
 
 use App\Models\Order;
+use App\Services\EscrowService;
+use App\Notifications\AutoCompleteNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
 
 /**
  * AutoCompleteOrders Command
  *
  * Menjalankan logika auto-complete: jika freelancer sudah mengirim hasil
- * ('delivered') dan client tidak memberikan respon dalam 48 jam,
- * sistem otomatis mengubah status ke 'completed' dan melepas dana ke freelancer.
+ * ('delivered') dan client tidak memberikan respon sesuai AUTO_COMPLETE_HOURS,
+ * sistem otomatis mengubah status ke 'completed' dan melepas dana ke freelancer
+ * melalui EscrowService (dengan ledger).
+ *
+ * Perubahan dari versi sebelumnya:
+ * - Menggunakan EscrowService::autoRelease() (bukan direct wallet increment)
+ * - Menggunakan submitted_at sebagai acuan waktu (bukan updated_at yang tidak reliable)
+ * - Guard: escrow_released_at IS NULL mencegah double-release
+ * - Mengirim AutoCompleteNotification ke client dan freelancer
  *
  * Jadwal: setiap jam (lihat routes/console.php)
  *
@@ -22,16 +30,25 @@ use Illuminate\Support\Facades\Notification;
 class AutoCompleteOrders extends Command
 {
     protected $signature   = 'orders:auto-complete';
-    protected $description = 'Auto-complete pesanan yang sudah dikirim freelancer lebih dari 48 jam tanpa konfirmasi client.';
+    protected $description = 'Auto-complete pesanan yang sudah dikirim freelancer lebih dari batas waktu tanpa konfirmasi client.';
+
+    public function __construct(protected EscrowService $escrowService)
+    {
+        parent::__construct();
+    }
 
     public function handle(): int
     {
-        // Ambil semua order dengan status 'delivered' yang sudah lebih dari 48 jam
-        $cutoff = now()->subHours(48);
+        $autoCompleteHours = (int) config('skillkul.auto_complete_hours', 48);
+        $cutoff = now()->subHours($autoCompleteHours);
 
-        $orders = Order::with('freelancer')
+        // Gunakan submitted_at sebagai acuan (lebih reliable dari updated_at)
+        // Guard: escrow_released_at IS NULL mencegah double-release
+        $orders = Order::with(['client', 'freelancer', 'service', 'escrow'])
             ->where('status', 'delivered')
-            ->where('updated_at', '<=', $cutoff)
+            ->whereNotNull('submitted_at')
+            ->where('submitted_at', '<=', $cutoff)
+            ->whereNull('escrow_released_at')  // guard
             ->get();
 
         if ($orders->isEmpty()) {
@@ -44,19 +61,33 @@ class AutoCompleteOrders extends Command
         foreach ($orders as $order) {
             try {
                 DB::transaction(function () use ($order) {
-                    // Update status ke completed
-                    $order->update(['status' => 'completed']);
+                    // 1. Update status ke completed
+                    $order->update([
+                        'status'             => 'completed',
+                        'completed_at'       => now(),
+                        'escrow_released_at' => now(), // guard
+                    ]);
 
-                    // Lepas 95% dana ke wallet freelancer (5% fee platform)
-                    $freelancerEarning = $order->total_price * 0.95;
-                    $order->freelancer->increment('wallet_balance', $freelancerEarning);
+                    // 2. Lepas dana escrow ke wallet freelancer (via EscrowService + ledger)
+                    $this->escrowService->autoRelease($order);
+
+                    // 3. Notifikasi ke freelancer
+                    $order->freelancer->notify(
+                        new AutoCompleteNotification($order, 'freelancer')
+                    );
+
+                    // 4. Notifikasi ke client
+                    $order->client->notify(
+                        new AutoCompleteNotification($order, 'client')
+                    );
                 });
 
                 Log::info('[AutoComplete] Order berhasil di-auto-complete.', [
-                    'order_id'           => $order->id,
-                    'freelancer_id'      => $order->freelancer_id,
-                    'amount_released'    => $order->total_price * 0.95,
-                    'delivered_at'       => $order->updated_at,
+                    'order_id'        => $order->id,
+                    'freelancer_id'   => $order->freelancer_id,
+                    'client_id'       => $order->client_id,
+                    'submitted_at'    => $order->submitted_at?->toDateTimeString(),
+                    'cutoff_hours'    => $autoCompleteHours,
                 ]);
 
                 $completed++;
@@ -65,6 +96,7 @@ class AutoCompleteOrders extends Command
                 Log::error('[AutoComplete] Gagal auto-complete order.', [
                     'order_id' => $order->id,
                     'error'    => $e->getMessage(),
+                    'trace'    => $e->getTraceAsString(),
                 ]);
             }
         }
