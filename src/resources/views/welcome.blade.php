@@ -204,7 +204,7 @@
                     INOVATIF</span>
                 <h3 class="text-2xl md:text-3xl font-bold mb-4 tracking-tight">Auto-Portfolio Generator</h3>
                 <p class="text-indigo-200 text-sm max-w-sm leading-relaxed mb-16 relative z-10">
-                    Teknologi AI yang otomatis merangkum proyek kuliah, kompetisi, dan sertifikasi menjadi
+                    Sistem otomatis yang merangkum proyek menjadi
                     portofolio profesional siap kerja.
                 </p>
                 <div

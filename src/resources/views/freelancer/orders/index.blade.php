@@ -76,15 +76,15 @@
                         </div>
                         
                         <div class="w-full">
-                            @if($order->status === 'in_progress')
+                            @if(in_array($order->status, ['in_progress', 'paid', 'revision']))
                                 <div x-data="{ open: false }" class="w-full">
-                                    <button @click="open = !open" class="w-full inline-flex justify-center items-center px-5 py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl hover:bg-indigo-700 transition-colors focus:ring-4 focus:ring-indigo-100">
+                                    <button @click="open = !open" class="w-full inline-flex justify-center items-center px-5 py-2.5 {{ $order->status === 'revision' ? 'bg-orange-600 hover:bg-orange-700' : 'bg-indigo-600 hover:bg-indigo-700' }} text-white text-sm font-bold rounded-xl transition-colors focus:ring-4 focus:ring-indigo-100">
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                                        Kirim Tugas
+                                        {{ $order->status === 'revision' ? 'Kirim Revisi' : 'Kirim Hasil' }}
                                     </button>
                                     
                                     <div x-show="open" x-transition class="mt-3 bg-indigo-50 rounded-xl p-4 border border-indigo-100 text-left w-full">
-                                        <form action="{{ route('freelancer.pesanan.submit', $order->id) }}" method="POST">
+                                        <form action="{{ route('freelancer.pesanan.submitResult', $order->id) }}" method="POST">
                                             @csrf
                                             <label class="block text-[10px] font-extrabold text-indigo-800 uppercase tracking-widest mb-2">Link Hasil Kerja (Google Drive)</label>
                                             <input type="url" name="freelancer_result_link" placeholder="Link Google Drive hasil kerja" required class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 mb-3">
@@ -92,6 +92,7 @@
                                         </form>
                                     </div>
                                 </div>
+
                             @elseif($order->status === 'delivered')
                                 <div class="w-full bg-purple-50 border border-purple-100 rounded-xl px-4 py-3 text-center">
                                     <span class="text-purple-700 text-xs font-bold flex items-center justify-center gap-2">

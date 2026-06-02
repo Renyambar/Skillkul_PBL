@@ -162,13 +162,13 @@
                     <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
                     <span
                         class="inline-block bg-white/10 px-3 py-1 rounded-full text-[9px] font-extrabold tracking-widest uppercase mb-4 border border-white/10">Fitur
-                        AI</span>
-                    <h3 class="text-xl font-bold mb-3">Auto-Portfolio Optimizer</h3>
-                    <p class="text-indigo-200 text-[11px] leading-relaxed mb-8">AI kami akan membantu memoles deskripsi jasa
+                        Asisten</span>
+                    <h3 class="text-xl font-bold mb-3">Auto-Portfolio Helper</h3>
+                    <p class="text-indigo-200 text-[11px] leading-relaxed mb-8">Sistem kami akan membantu memoles deskripsi jasa
                         Anda agar terlihat lebih profesional di mata klien korporat.</p>
                     <button
                         class="w-full bg-white text-[#2a0e88] font-bold py-3 rounded-xl text-xs flex justify-center items-center gap-2 hover:bg-indigo-50 transition-colors shadow-lg">⚡
-                        Gunakan Optimasi AI</button>
+                        Optimalkan Deskripsi Jasa</button>
                 </div>
 
                 <div class="bg-white rounded-2xl p-6 border border-gray-100">

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Review;
 use App\Notifications\FreelancerSubmitNotification;
 use App\Notifications\OrderCompletedNotification;
+use App\Notifications\RefundGeneratedNotification;
 use App\Services\EscrowService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -16,20 +17,31 @@ use Illuminate\View\View;
 class OrderController extends Controller
 {
     public function __construct(protected EscrowService $escrowService) {}
+
     // ─── Portal Klien ────────────────────────────────────────
 
     /**
      * Daftar pesanan milik client yang sedang login.
-     * Eager load service & freelancer agar tidak N+1 query.
+     *
+     * Tampilkan dua grup:
+     * - $pendingOrders: status pending/waiting_payment (tampil terpisah dengan tombol bayar)
+     * - $activeOrders: pesanan aktif yang sudah dibayar/selesai
      */
     public function clientOrders(): View
     {
-        $orders = Order::with(['service', 'freelancer'])
+        $activeOrders = Order::with(['service', 'freelancer'])
             ->where('client_id', auth()->id())
+            ->whereNotIn('status', ['pending', 'waiting_payment'])
             ->latest()
-            ->paginate(10);
+            ->paginate(10, ['*'], 'active');
 
-        return view('orders.index', compact('orders'));
+        $pendingOrders = Order::with(['service', 'freelancer'])
+            ->where('client_id', auth()->id())
+            ->whereIn('status', ['pending', 'waiting_payment'])
+            ->latest()
+            ->get();
+
+        return view('orders.index', compact('activeOrders', 'pendingOrders'));
     }
 
     /**
@@ -38,75 +50,108 @@ class OrderController extends Controller
      */
     public function show(string $id): View
     {
-        $order = Order::with(['service', 'freelancer', 'client', 'review', 'payments'])
+        $order = Order::with(['service', 'freelancer', 'client', 'review', 'payments', 'escrow'])
             ->findOrFail($id);
 
-        // Otorisasi: hanya client atau freelancer terkait yang boleh akses
         abort_unless(
             auth()->id() === $order->client_id || auth()->id() === $order->freelancer_id,
             403,
             'Anda tidak memiliki akses ke pesanan ini.'
         );
 
-        return view('orders.show', compact('order'));
+        // Hitung sisa waktu batalkan (12 jam sejak bayar)
+        $paidPayment    = $order->payments->where('payment_status', 'settlement')->first()
+                       ?? $order->payments->where('payment_status', 'capture')->first();
+        $paidAt         = $paidPayment?->paid_at ?? null;
+        $cancelDeadline = $paidAt?->addHours(12);
+        $canCancel      = in_array($order->status, ['paid', 'in_progress'])
+                       && $cancelDeadline
+                       && now()->lessThan($cancelDeadline);
+        $cancelHoursLeft = $cancelDeadline ? max(0, now()->diffInMinutes($cancelDeadline, false)) : 0;
+
+        return view('orders.show', compact('order', 'canCancel', 'cancelDeadline', 'cancelHoursLeft'));
+    }
+
+    /**
+     * Client membatalkan pesanan (maksimal 12 jam setelah bayar).
+     *
+     * Alur:
+     * 1. Validasi: pemilik order, status paid/in_progress, dalam 12 jam
+     * 2. DB::transaction: update status canceled, refundToClient()
+     * 3. Notifikasi refund ke client
+     */
+    public function cancelOrder(string $id): RedirectResponse
+    {
+        $order = Order::with(['client', 'freelancer', 'payments', 'escrow'])->findOrFail($id);
+
+        abort_unless(auth()->id() === $order->client_id, 403, 'Akses ditolak.');
+
+        if (! in_array($order->status, ['paid', 'in_progress'])) {
+            return redirect()->back()
+                ->with('error', 'Pesanan tidak dapat dibatalkan karena statusnya sudah berubah.');
+        }
+
+        $paidPayment    = $order->payments->where('payment_status', 'settlement')->first()
+                       ?? $order->payments->where('payment_status', 'capture')->first();
+        $paidAt         = $paidPayment?->paid_at ?? null;
+        $cancelDeadline = $paidAt?->addHours(12);
+
+        if (! $cancelDeadline || now()->greaterThanOrEqualTo($cancelDeadline)) {
+            return redirect()->back()
+                ->with('error', 'Batas waktu pembatalan (12 jam setelah pembayaran) sudah lewat.');
+        }
+
+        DB::transaction(function () use ($order) {
+            $order->update([
+                'status'       => 'canceled',
+                'cancelled_at' => now(),
+            ]);
+
+            $this->escrowService->refundToClient($order, 'refund_cancel');
+            $order->client->notify(new RefundGeneratedNotification($order->load(['service', 'client'])));
+        });
+
+        return redirect()->route('pesanan.klien')
+            ->with('success', 'Pesanan berhasil dibatalkan. Dana Rp ' . number_format($order->total_price, 0, ',', '.') . ' telah dikembalikan ke Wallet SkillKul Anda.');
     }
 
     /**
      * Client meminta revisi atas hasil pekerjaan freelancer.
-     *
-     * Syarat:
-     * - Hanya client pemilik order yang boleh meminta revisi
-     * - Status order harus 'delivered' (sudah dikirim freelancer)
-     * - revision_count harus < revision_limit
-     *
-     * Setelah revisi: status kembali ke 'revision', counter bertambah.
-     * Jika sudah mencapai limit, tombol revisi dinonaktifkan di view.
      */
     public function requestRevision(string $id): RedirectResponse
     {
         $order = Order::findOrFail($id);
 
-        // Otorisasi: hanya client pemilik order
         abort_unless(auth()->id() === $order->client_id, 403, 'Akses ditolak.');
 
-        // Pastikan order berstatus delivered
         if ($order->status !== 'delivered') {
             return redirect()->back()
                 ->with('error', 'Revisi hanya bisa diminta saat hasil pekerjaan sudah terkirim.');
         }
 
-        // Cek batas revisi
         if ($order->revision_count >= $order->revision_limit) {
             return redirect()->back()
-                ->with('error', "Batas revisi ({$order->revision_limit}x) sudah tercapai. Silakan terima atau hubungi freelancer.");
+                ->with('error', "Batas revisi ({$order->revision_limit}x) sudah tercapai.");
         }
 
-        // Increment counter dan ubah status ke 'revision'
         $order->update([
             'status'         => 'revision',
             'revision_count' => $order->revision_count + 1,
         ]);
 
         return redirect()->back()
-            ->with('success', "Permintaan revisi ke-{$order->revision_count} berhasil dikirim ke freelancer.");
+            ->with('success', "Permintaan revisi ke-{$order->revision_count} berhasil dikirim.");
     }
 
     /**
      * Client menerima hasil pekerjaan dan memberikan review + rating.
-     *
-     * Alur dalam satu transaksi DB:
-     * 1. Update status order → completed
-     * 2. Buat review (rating + komentar opsional)
-     * 3. Tambahkan 95% dari total_price ke wallet freelancer (5% fee platform)
      */
     public function acceptOrder(AcceptOrderRequest $request, string $id): RedirectResponse
     {
         $order = Order::with('freelancer')->findOrFail($id);
 
-        // Otorisasi: hanya client pemilik order yang boleh terima
         abort_unless(auth()->id() === $order->client_id, 403);
 
-        // Pastikan order berstatus delivered (sudah dikirim oleh freelancer)
         if (! in_array($order->status, ['delivered', 'revision'])) {
             return redirect()->back()
                 ->with('error', 'Pesanan ini belum dikirim oleh freelancer.');
@@ -115,14 +160,12 @@ class OrderController extends Controller
         $validated = $request->validated();
 
         DB::transaction(function () use ($order, $validated) {
-            // 1. Update status order menjadi completed
             $order->update([
-                'status'       => 'completed',
-                'completed_at' => now(),
-                'escrow_released_at' => now(), // guard: sudah dilepas
+                'status'             => 'completed',
+                'completed_at'       => now(),
+                'escrow_released_at' => now(),
             ]);
 
-            // 2. Simpan review dari client (hanya jika belum ada review)
             if (! $order->review) {
                 Review::create([
                     'order_id'  => $order->id,
@@ -132,28 +175,25 @@ class OrderController extends Controller
                 ]);
             }
 
-            // 3. Lepas dana escrow ke wallet freelancer via EscrowService
-            //    (potong 8% fee platform, catat ledger, idempotent)
             $this->escrowService->releaseToFreelancer($order, 'manual_accept');
-
-            // 4. Notifikasi ke freelancer: order selesai + dana masuk
             $order->freelancer->notify(new OrderCompletedNotification($order));
         });
 
         return redirect()->route('pesanan.detail', ['id' => $order->id])
-            ->with('success', 'Pesanan diterima! Terima kasih atas penilaian Anda. Dana telah diteruskan ke freelancer.');
+            ->with('success', 'Pesanan diterima! Dana telah diteruskan ke freelancer.');
     }
 
     // ─── Portal Freelancer ───────────────────────────────────
 
     /**
      * Daftar pesanan yang dikerjakan oleh freelancer yang sedang login.
-     * Eager load service & client agar tidak N+1 query.
+     * Hanya tampilkan pesanan yang sudah dibayar (bukan pending).
      */
     public function freelancerOrders(): View
     {
         $orders = Order::with(['service', 'client'])
             ->where('freelancer_id', auth()->id())
+            ->whereNotIn('status', ['pending', 'waiting_payment'])
             ->latest()
             ->paginate(10);
 
@@ -162,21 +202,13 @@ class OrderController extends Controller
 
     /**
      * Freelancer mengirim link hasil pekerjaan.
-     *
-     * Syarat:
-     * - freelancer_id harus = user yang login
-     * - Status order harus 'in_progress' atau 'revision' (re-submit setelah revisi)
-     *
-     * Setelah submit: status berubah menjadi 'delivered'.
      */
     public function submitResult(SubmitResultRequest $request, string $id): RedirectResponse
     {
         $order = Order::findOrFail($id);
 
-        // Otorisasi: hanya freelancer yang mengerjakan order ini
         abort_unless(auth()->id() === $order->freelancer_id, 403);
 
-        // Pastikan order sedang dalam proses pengerjaan atau revisi
         if (! in_array($order->status, ['in_progress', 'revision', 'paid'])) {
             return redirect()->back()
                 ->with('error', 'Pesanan ini tidak dalam status pengerjaan atau revisi.');
@@ -184,14 +216,12 @@ class OrderController extends Controller
 
         $validated = $request->validated();
 
-        // Update link hasil, ubah status ke delivered, catat submitted_at
         $order->update([
             'freelancer_result_link' => $validated['freelancer_result_link'],
             'status'                 => 'delivered',
-            'submitted_at'           => now(), // acuan waktu 48-jam auto-complete
+            'submitted_at'           => now(),
         ]);
 
-        // Notifikasi ke client: freelancer sudah kirim hasil
         $order->client->notify(new FreelancerSubmitNotification($order->load(['service', 'client', 'freelancer'])));
 
         return redirect()->back()

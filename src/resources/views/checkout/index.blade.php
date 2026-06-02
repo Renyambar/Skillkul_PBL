@@ -193,29 +193,81 @@
      data-client-key wajib diisi agar popup Snap bisa terbuka.
 ============================================================ --}}
 @push('scripts')
-{{-- 1. Load Snap.js dari Midtrans (Sandbox / Production tergantung config) --}}
-<script
-    src="{{ config('midtrans.snap_url') }}"
-    data-client-key="{{ config('midtrans.client_key') }}"
-></script>
+
+{{-- Debug info: pastikan client key sudah terisi --}}
+{{-- Hapus baris ini di production --}}
+<meta name="midtrans-client-key" content="{{ config('midtrans.client_key') }}">
 
 <script>
+    /**
+     * Muat Snap.js secara dinamis, lalu aktifkan tombol Bayar.
+     * Ini lebih reliable daripada <script src="..."> biasa karena kita
+     * bisa tahu persis kapan library sudah siap digunakan.
+     */
+    (function loadSnapJs() {
+        const clientKey = '{{ config('midtrans.client_key') }}';
+        const snapUrl   = '{{ config('midtrans.snap_url') }}';
+
+        // Debug info di console
+        console.log('[SkillKul] Midtrans config:', {
+            clientKey: clientKey,
+            snapUrl: snapUrl,
+            isProduction: false,
+        });
+
+        if (!clientKey) {
+            console.error('[SkillKul] MIDTRANS_CLIENT_KEY tidak ditemukan di .env!');
+            showBanner('error', '⚠️ Konfigurasi pembayaran tidak lengkap. Hubungi admin.');
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = snapUrl;
+        script.setAttribute('data-client-key', clientKey);
+
+        script.onload = function () {
+            console.log('[SkillKul] Snap.js berhasil dimuat. window.snap:', typeof window.snap);
+            // Aktifkan tombol bayar setelah Snap.js siap
+            const btn = document.getElementById('btn-pay');
+            if (btn) {
+                btn.removeAttribute('disabled');
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        };
+
+        script.onerror = function () {
+            console.error('[SkillKul] Gagal memuat Snap.js dari:', snapUrl);
+            showBanner('error', '⚠️ Gagal memuat sistem pembayaran. Periksa koneksi internet Anda.');
+        };
+
+        document.head.appendChild(script);
+    })();
+
     /**
      * initiateMidtransPayment
      *
      * Fungsi utama yang dipanggil saat tombol "Bayar Sekarang" diklik.
      * Alur:
-     *  1. Set tombol ke state loading
-     *  2. Fetch Snap Token dari backend via POST AJAX
-     *  3. Buka popup Midtrans Snap dengan token yang didapat
-     *  4. Handle callback: onSuccess, onPending, onError, onClose
+     *  1. Pastikan window.snap tersedia (Snap.js sudah dimuat)
+     *  2. Set tombol ke state loading
+     *  3. Fetch Snap Token dari backend via POST AJAX
+     *  4. Buka popup Midtrans Snap dengan token yang didapat
+     *  5. Handle callback: onSuccess, onPending, onError, onClose
      *
      * @param {HTMLButtonElement} btn - Elemen tombol yang diklik
      */
     async function initiateMidtransPayment(btn) {
-        // Ambil data dari atribut data- pada tombol
+        // Pastikan Snap.js sudah dimuat
+        if (typeof window.snap === 'undefined') {
+            console.error('[SkillKul] window.snap tidak tersedia!');
+            showBanner('error', '⚠️ Sistem pembayaran belum siap. Tunggu beberapa detik lalu coba lagi.');
+            return;
+        }
+
         const snapUrl     = btn.dataset.snapUrl;
         const redirectUrl = btn.dataset.redirectUrl;
+
+        console.log('[SkillKul] Memulai pembayaran:', { snapUrl, redirectUrl });
 
         // Ubah tampilan tombol ke state loading
         setButtonLoading(true);
@@ -233,7 +285,9 @@
                 },
             });
 
+            console.log('[SkillKul] Response status:', response.status);
             const data = await response.json();
+            console.log('[SkillKul] Response data:', data);
 
             // Jika backend mengembalikan error
             if (! data.success) {
@@ -243,31 +297,27 @@
             }
 
             const snapToken = data.snap_token;
+            console.log('[SkillKul] Snap Token diterima. Membuka popup...');
 
             // ── Langkah 2: Buka popup Midtrans Snap ─────────────────────
             window.snap.pay(snapToken, {
 
                 /**
                  * onSuccess — Pembayaran berhasil & sudah dikonfirmasi Midtrans.
-                 * Redirect ke halaman detail pesanan.
-                 *
-                 * @param {object} result - Hasil transaksi dari Midtrans
                  */
                 onSuccess: function (result) {
+                    console.log('[SkillKul] Pembayaran sukses:', result);
                     showBanner('success', '✓ Pembayaran berhasil! Mengalihkan ke halaman pesanan...');
-                    // Delay singkat agar user bisa melihat pesan sukses
                     setTimeout(() => {
                         window.location.href = redirectUrl;
                     }, 1500);
                 },
 
                 /**
-                 * onPending — Pembayaran sedang menunggu konfirmasi
-                 * (misal: transfer bank belum dibayar, QRIS belum di-scan).
-                 *
-                 * @param {object} result - Hasil transaksi dari Midtrans
+                 * onPending — Pembayaran sedang menunggu konfirmasi.
                  */
                 onPending: function (result) {
+                    console.log('[SkillKul] Pembayaran pending:', result);
                     showBanner(
                         'pending',
                         '🕐 Menunggu pembayaran. Selesaikan pembayaran sesuai instruksi yang dikirimkan.'
@@ -277,8 +327,6 @@
 
                 /**
                  * onError — Terjadi error saat proses pembayaran.
-                 *
-                 * @param {object} result - Detail error dari Midtrans
                  */
                 onError: function (result) {
                     console.error('[SkillKul] Midtrans payment error:', result);
@@ -291,10 +339,9 @@
 
                 /**
                  * onClose — User menutup popup Snap tanpa menyelesaikan pembayaran.
-                 * Tidak lakukan apa-apa; biarkan tombol aktif kembali agar bisa coba lagi.
                  */
                 onClose: function () {
-                    // Kembalikan tombol ke state normal agar user bisa mencoba lagi
+                    console.log('[SkillKul] Popup Snap ditutup.');
                     setButtonLoading(false);
                 },
             });
@@ -315,7 +362,7 @@
      * @param {boolean} isLoading
      */
     function setButtonLoading(isLoading) {
-        const btn     = document.getElementById('btn-pay');
+        const btn        = document.getElementById('btn-pay');
         const txtNormal  = document.getElementById('btn-pay-text');
         const txtLoading = document.getElementById('btn-pay-loading');
 
@@ -371,3 +418,5 @@
     }
 </script>
 @endpush
+
+

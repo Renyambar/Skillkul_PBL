@@ -108,9 +108,9 @@
                     class="bg-gradient-to-br from-[#2a0e88] to-[#160655] rounded-2xl p-7 text-white shadow-xl relative overflow-hidden h-full flex flex-col justify-between">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
                     <div>
-                        <span
+                        <!-- <span
                             class="inline-block bg-white/10 px-3 py-1 rounded-full text-[9px] font-extrabold tracking-widest uppercase mb-4 border border-white/10">Fitur
-                            Premium</span>
+                            Utama</span> -->
                         <h3 class="text-xl font-extrabold mb-3">Sistem Auto-Portfolio</h3>
                         <p class="text-indigo-200 text-xs leading-relaxed mb-6">Buat PDF portofolio profesional secara
                             instan. Kami hanya mengurasi proyek dengan ulasan bintang 4 ke atas untuk memastikan karya

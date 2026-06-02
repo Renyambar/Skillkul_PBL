@@ -71,6 +71,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pesanan/{id}', [OrderController::class, 'show'])->name('pesanan.detail');
     Route::post('/pesanan/{id}/terima', [OrderController::class, 'acceptOrder'])->name('orders.accept');
     Route::post('/pesanan/{id}/minta-revisi', [OrderController::class, 'requestRevision'])->name('orders.requestRevision');
+    Route::post('/pesanan/{id}/batalkan', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
+
 
     // Laporan Klien
     Route::get('/laporan/buat', [\App\Http\Controllers\ReportController::class, 'create'])->name('laporan.buat');

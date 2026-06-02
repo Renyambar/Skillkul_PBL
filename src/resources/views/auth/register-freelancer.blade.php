@@ -59,7 +59,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="font-bold text-sm">Auto-Portfolio AI</h3>
+                            <h3 class="font-bold text-sm">Portofolio Otomatis</h3>
                             <p class="text-xs text-indigo-200 mt-0.5">Ubah proyek menjadi aset profesional</p>
                         </div>
                     </div>
