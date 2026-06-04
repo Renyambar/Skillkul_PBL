@@ -11,6 +11,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\PortfolioController;
 use Illuminate\Support\Facades\Route;
@@ -148,6 +149,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/services', [AdminServiceController::class, 'index'])->name('services.index');
     Route::get('/services/{service}', [AdminServiceController::class, 'show'])->name('services.show');
     Route::post('/services/{service}/toggle', [AdminServiceController::class, 'toggle'])->name('services.toggle');
+
+    // ── Manajemen Kategori ──────────────────────────────────────────────────
+    Route::resource('categories', AdminCategoryController::class)->names([
+        'index'   => 'categories.index',
+        'create'  => 'categories.create',
+        'store'   => 'categories.store',
+        'edit'    => 'categories.edit',
+        'update'  => 'categories.update',
+        'destroy' => 'categories.destroy',
+    ]);
 
     // ── Payment System: Withdrawal Management ──────────────────────────
     Route::get('/withdrawal', [\App\Http\Controllers\Admin\WithdrawalController::class, 'index'])->name('withdrawal.index');

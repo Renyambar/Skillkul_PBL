@@ -23,14 +23,14 @@ test('client can request a revision if limit allows', function () {
     $response->assertSessionHas('success');
 
     $order->refresh();
-    
+
     expect($order->status)->toBe('revision')
         ->and($order->revision_count)->toBe(1);
 });
 
 test('client cannot request revision if limit exhausted', function () {
     $client = User::factory()->client()->create();
-    
+
     $order = Order::factory()->create([
         'client_id' => $client->id,
         'status' => 'delivered',
@@ -46,7 +46,7 @@ test('client cannot request revision if limit exhausted', function () {
     $response->assertSessionHas('error');
 
     $order->refresh();
-    
+
     expect($order->status)->toBe('delivered')
         ->and($order->revision_count)->toBe(2);
 });
@@ -70,16 +70,16 @@ test('client can accept order and escrow is released to freelancer', function ()
         ]);
 
     $response->assertRedirect(route('pesanan.detail', $order->id));
-    
+
     $order->refresh();
     $freelancer->refresh();
 
     // Order status should be completed
     expect($order->status)->toBe('completed');
-    
+
     // Escrow released (95% to freelancer)
-    expect((float)$freelancer->wallet_balance)->toBe(95000.0);
-    
+    expect((float) $freelancer->wallet_balance)->toBe(95000.0);
+
     // Review should be created
     $this->assertDatabaseHas('reviews', [
         'order_id' => $order->id,

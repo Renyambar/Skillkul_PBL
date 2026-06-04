@@ -20,14 +20,16 @@ class Service extends Model
         'type',
         'is_active',
         'image',
+        'estimated_days',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_active' => 'boolean',
-            'price'     => 'decimal:2',
-            'price_max' => 'decimal:2',
+            'is_active'       => 'boolean',
+            'price'           => 'decimal:2',
+            'price_max'       => 'decimal:2',
+            'estimated_days'  => 'integer',
         ];
     }
 
@@ -112,5 +114,17 @@ class Service extends Model
         return $this->orders()
             ->whereIn('status', ['in_progress', 'delivered', 'revision'])
             ->exists();
+    }
+
+    /**
+     * Label estimasi pengerjaan dalam format human-readable.
+     * Contoh: 1 Hari, 3 Hari, Sesuai Kesepakatan
+     */
+    public function getEstimatedLabelAttribute(): string
+    {
+        if (! $this->estimated_days) {
+            return 'Sesuai Kesepakatan';
+        }
+        return $this->estimated_days . ' Hari';
     }
 }

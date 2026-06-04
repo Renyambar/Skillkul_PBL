@@ -193,12 +193,12 @@
                 {{-- Info Pengiriman --}}
                 <div class="flex gap-4">
                     <div class="flex-1 bg-white rounded-xl p-4 border border-gray-100 text-center shadow-sm">
-                        <p class="text-xs text-gray-500 mb-1">⏱ Waktu Pengerjaan</p>
-                        <p class="font-bold text-brand-dark text-sm">1 Hari</p>
+                        <p class="text-xs text-gray-500 mb-1">⏱ Estimasi Pengerjaan</p>
+                        <p class="font-bold text-brand-dark text-sm">{{ $service->estimated_label }}</p>
                     </div>
                     <div class="flex-1 bg-white rounded-xl p-4 border border-gray-100 text-center shadow-sm">
                         <p class="text-xs text-gray-500 mb-1">🔄 Revisi</p>
-                        <p class="font-bold text-brand-dark text-sm">Tanpa Batas</p>
+                        <p class="font-bold text-brand-dark text-sm">Sesuai Kesepakatan</p>
                     </div>
                 </div>
             </div>

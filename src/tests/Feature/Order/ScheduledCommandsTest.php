@@ -25,10 +25,10 @@ test('orders:auto-complete completes orders delivered over 48 hours ago', functi
 
     // Assert status is completed
     expect($order->status)->toBe('completed');
-    
+
     // Assert wallet balance increased by 95% of total price
     // 1000 + (100000 * 0.95) = 1000 + 95000 = 96000
-    expect((float)$freelancer->wallet_balance)->toBe(96000.0);
+    expect((float) $freelancer->wallet_balance)->toBe(96000.0);
 });
 
 test('orders:auto-complete ignores orders delivered less than 48 hours ago', function () {
@@ -49,16 +49,16 @@ test('orders:auto-complete ignores orders delivered less than 48 hours ago', fun
     // Order should remain delivered
     expect($order->status)->toBe('delivered');
     // Wallet should remain 0
-    expect((float)$freelancer->wallet_balance)->toBe(0.0);
+    expect((float) $freelancer->wallet_balance)->toBe(0.0);
 });
 
 test('orders:deadline-reminders logs reminders for deadlines within 24 hours', function () {
     Log::shouldReceive('info')
         ->once()
         ->withArgs(function ($message, $context) {
-            return str_contains($message, '[DeadlineReminder]') && 
-                   isset($context['order_id']) && 
-                   isset($context['hours_left']);
+            return str_contains($message, '[DeadlineReminder]') &&
+                isset($context['order_id']) &&
+                isset($context['hours_left']);
         });
 
     $order = Order::factory()->create([

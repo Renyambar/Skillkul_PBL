@@ -21,6 +21,7 @@ class Report extends Model
         'order_id',
         'category',
         'description',
+        'attachment_path',
         'status',
         'admin_notes',
     ];

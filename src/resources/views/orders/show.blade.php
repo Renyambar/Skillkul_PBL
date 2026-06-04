@@ -227,6 +227,34 @@
             </div>
             @endif
 
+            {{-- Riwayat Revisi --}}
+            @if($order->revisions->count() > 0)
+            <div class="bg-white rounded-2xl border border-orange-100 shadow-sm p-6">
+                <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    Riwayat Revisi
+                </h3>
+                <div class="space-y-4">
+                    @foreach($order->revisions as $revision)
+                    <div class="bg-orange-50 border border-orange-100 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-extrabold text-orange-700 uppercase tracking-wider">Revisi ke-{{ $revision->revision_number }}</span>
+                            <span class="text-xs text-gray-400">{{ $revision->created_at->locale('id')->isoFormat('D MMM YYYY, HH:mm') }}</span>
+                        </div>
+                        <p class="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">{{ $revision->notes }}</p>
+                        @if($revision->drive_link)
+                        <a href="{{ $revision->drive_link }}" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-800 mt-2 transition-colors">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.1-1.1m-.758-4.9a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                            Lihat Referensi Drive
+                        </a>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
         </div>
 
         {{-- RIGHT: Ringkasan & Aksi --}}
@@ -286,15 +314,51 @@
 
                     {{-- Tombol Revisi --}}
                     @if($order->revision_count < $order->revision_limit)
-                    <form action="{{ route('orders.requestRevision', $order->id) }}" method="POST">
-                        @csrf
-                        <button type="submit"
-                                onclick="return confirm('Kirim permintaan revisi ke freelancer?')"
+                    <div x-data="{ showRevisi: false }">
+                        <button @click="showRevisi = true"
                                 class="w-full bg-orange-50 border border-orange-200 text-orange-700 hover:bg-orange-100 font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-all">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                             Minta Revisi ({{ $order->revision_limit - $order->revision_count }} sisa)
                         </button>
-                    </form>
+
+                        {{-- Modal Form Revisi --}}
+                        <div x-show="showRevisi" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display:none">
+                            <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="showRevisi = false"></div>
+                            <div x-transition class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 z-10">
+                                <h3 class="text-lg font-bold text-gray-900 mb-1">Permintaan Revisi</h3>
+                                <p class="text-sm text-gray-500 mb-5">Jelaskan secara detail apa yang perlu direvisi oleh freelancer.</p>
+                                <form action="{{ route('orders.requestRevision', $order->id) }}" method="POST" class="space-y-4">
+                                    @csrf
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1.5">Catatan Revisi <span class="text-red-500">*</span></label>
+                                        <textarea name="notes" rows="4" required minlength="10"
+                                                  placeholder="Contoh: Tolong ubah warna grafik menjadi biru, dan tambahkan label pada sumbu Y..."
+                                                  class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 resize-none">{{ old('notes') }}</textarea>
+                                        @error('notes')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1.5">Link Google Drive Referensi (Opsional)</label>
+                                        <input type="url" name="drive_link"
+                                               placeholder="https://drive.google.com/..."
+                                               class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
+                                        @error('drive_link')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="flex gap-3 pt-1">
+                                        <button type="submit" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl transition-all">
+                                            Kirim Revisi
+                                        </button>
+                                        <button type="button" @click="showRevisi = false" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-xl transition-all">
+                                            Batal
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     @else
                     <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-center">
                         <p class="text-xs text-gray-500">Batas revisi ({{ $order->revision_limit }}x) sudah habis.</p>
@@ -401,6 +465,17 @@
                 @endif
 
             @endif {{-- end isClient --}}
+
+            {{-- ── Tombol Laporkan Freelancer (Client Only) ──── --}}
+            @if($isClient && in_array($order->status, ['in_progress', 'delivered', 'completed', 'canceled', 'revision']))
+            <div class="border-t border-gray-100 pt-4">
+                <a href="{{ route('laporan.buat', ['order_id' => $order->id]) }}"
+                   class="w-full flex items-center justify-center gap-2 text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 py-2.5 rounded-xl border border-red-100 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
+                    Laporkan Freelancer
+                </a>
+            </div>
+            @endif
 
             {{-- ── Tombol Aksi (Freelancer Only) ────────────── --}}
             @if($isFreelancer)

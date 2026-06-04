@@ -159,6 +159,16 @@ class Order extends Model
         return $this->hasMany(WalletTransaction::class, 'order_id');
     }
 
+    /**
+     * Riwayat permintaan revisi dari client untuk order ini.
+     * Diurutkan dari yang paling awal (revision_number ASC).
+     */
+    public function revisions()
+    {
+        return $this->hasMany(OrderRevision::class, 'order_id')
+                    ->orderBy('revision_number', 'asc');
+    }
+
     // ─── Accessors ───────────────────────────────────────────
 
     /**

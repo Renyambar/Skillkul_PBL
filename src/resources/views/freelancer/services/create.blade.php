@@ -145,6 +145,27 @@
                         <p class="text-[10px] text-gray-400 mt-2">Format: JPG, JPEG, PNG, WEBP. Maks 2MB.</p>
                     </div>
 
+                    {{-- Estimasi Pengerjaan --}}
+                    <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <label class="text-sm font-bold text-gray-900">Estimasi Waktu Pengerjaan</label>
+                        </div>
+                        <div class="relative">
+                            <select name="estimated_days"
+                                    class="w-full bg-white border border-blue-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 outline-none appearance-none cursor-pointer">
+                                <option value="">Sesuai Kesepakatan</option>
+                                @foreach([1 => '1 Hari', 2 => '2 Hari', 3 => '3 Hari', 5 => '5 Hari', 7 => '7 Hari (1 Minggu)', 14 => '14 Hari (2 Minggu)', 30 => '30 Hari (1 Bulan)'] as $val => $label)
+                                    <option value="{{ $val }}" {{ old('estimated_days') == $val ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            <svg class="w-4 h-4 text-blue-500 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                        <p class="text-[10px] font-semibold text-blue-600 mt-2 leading-relaxed">
+                            ⏱ Deadline order akan otomatis dihitung dari tanggal pembayaran + estimasi ini. Jika kosong, deadline tidak di-set otomatis.
+                        </p>
+                    </div>
+
                     <div class="flex justify-end items-center gap-4 pt-4">
                         <a href="{{ route('freelancer.jasa.index') }}"
                             class="text-sm font-bold text-gray-600 hover:text-gray-900 px-4 py-2 transition-colors">Batal</a>

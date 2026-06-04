@@ -41,6 +41,10 @@ class CheckoutController extends Controller
         }
 
         // Buat order baru — UUID di-generate otomatis oleh Model boot()
+        $deadline = $service->estimated_days
+            ? now()->addDays($service->estimated_days)
+            : null;
+
         $order = Order::create([
             'client_id'     => auth()->id(),
             'freelancer_id' => $service->freelancer_id,
@@ -48,6 +52,7 @@ class CheckoutController extends Controller
             'type'          => 'direct_checkout',
             'status'        => 'pending',
             'total_price'   => $service->price,
+            'deadline'      => $deadline,
         ]);
 
         return redirect()->route('checkout', ['order_id' => $order->id])

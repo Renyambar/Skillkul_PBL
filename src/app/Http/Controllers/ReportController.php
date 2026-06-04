@@ -54,9 +54,12 @@ class ReportController extends Controller
             'order_id'    => ['nullable', 'exists:orders,id'],
             'category'    => ['required', 'in:penipuan,tidak_selesai,kualitas_buruk,perilaku_tidak_pantas,lainnya'],
             'description' => ['required', 'string', 'min:30', 'max:2000'],
+            'attachment'  => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
         ], [
             'reported_id.different' => 'Anda tidak dapat melaporkan diri sendiri.',
             'description.min'       => 'Deskripsi laporan minimal 30 karakter. Jelaskan kejadian secara detail.',
+            'attachment.mimes'      => 'File bukti harus berformat JPG, PNG, atau PDF.',
+            'attachment.max'        => 'File bukti maksimal 5MB.',
         ]);
 
         // Pastikan order (jika ada) memang milik client yang login
@@ -84,13 +87,20 @@ class ReportController extends Controller
                 ->withInput();
         }
 
+        // Simpan file attachment jika ada
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $attachmentPath = $request->file('attachment')->store('reports/attachments', 'public');
+        }
+
         Report::create([
-            'reporter_id' => auth()->id(),
-            'reported_id' => $validated['reported_id'],
-            'order_id'    => $validated['order_id'] ?? null,
-            'category'    => $validated['category'],
-            'description' => $validated['description'],
-            'status'      => 'pending',
+            'reporter_id'     => auth()->id(),
+            'reported_id'     => $validated['reported_id'],
+            'order_id'        => $validated['order_id'] ?? null,
+            'category'        => $validated['category'],
+            'description'     => $validated['description'],
+            'attachment_path' => $attachmentPath,
+            'status'          => 'pending',
         ]);
 
         return redirect()->route('pesanan.klien')

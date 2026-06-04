@@ -121,13 +121,14 @@ class ServiceController extends Controller
         }
 
         $validated = $request->validate([
-            'title'       => 'required|string|max:150',
-            'category_id' => 'required|exists:categories,id',
-            'type'        => 'required|in:non_project,project',
-            'price'       => 'required|numeric|min:0',
-            'price_max'   => 'nullable|numeric|min:0|gt:price',
-            'description' => 'required|string',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'title'          => 'required|string|max:150',
+            'category_id'    => 'required|exists:categories,id',
+            'type'           => 'required|in:non_project,project',
+            'price'          => 'required|numeric|min:0',
+            'price_max'      => 'nullable|numeric|min:0|gt:price',
+            'description'    => 'required|string',
+            'image'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'estimated_days' => 'nullable|integer|min:1|max:365',
         ]);
 
         if ($request->hasFile('image')) {
@@ -164,13 +165,14 @@ class ServiceController extends Controller
         }
 
         $validated = $request->validate([
-            'title'       => 'required|string|max:150',
-            'category_id' => 'required|exists:categories,id',
-            'type'        => 'required|in:non_project,project',
-            'price'       => 'required|numeric|min:0',
-            'price_max'   => 'nullable|numeric|min:0|gt:price',
-            'description' => 'required|string',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'title'          => 'required|string|max:150',
+            'category_id'    => 'required|exists:categories,id',
+            'type'           => 'required|in:non_project,project',
+            'price'          => 'required|numeric|min:0',
+            'price_max'      => 'nullable|numeric|min:0|gt:price',
+            'description'    => 'required|string',
+            'image'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'estimated_days' => 'nullable|integer|min:1|max:365',
         ]);
 
         if ($request->hasFile('image')) {

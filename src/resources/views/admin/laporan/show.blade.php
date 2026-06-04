@@ -78,6 +78,24 @@
                 </div>
                 @endif
 
+                {{-- File Lampiran --}}
+                @if($report->attachment_path)
+                <div class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                    <p class="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">📎 Bukti Lampiran</p>
+                    @php $ext = pathinfo($report->attachment_path, PATHINFO_EXTENSION); @endphp
+                    @if(in_array(strtolower($ext), ['jpg', 'jpeg', 'png']))
+                        <img src="{{ Storage::url($report->attachment_path) }}"
+                             alt="Bukti laporan"
+                             class="w-full max-h-64 object-contain rounded-lg border border-gray-100">
+                    @endif
+                    <a href="{{ Storage::url($report->attachment_path) }}" target="_blank" rel="noopener"
+                       class="inline-flex items-center gap-2 mt-3 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        Unduh / Buka Bukti
+                    </a>
+                </div>
+                @endif
+
                 <p class="text-xs text-gray-400 mt-4">Dilaporkan pada: {{ $report->created_at->locale('id')->isoFormat('D MMMM YYYY, HH.mm') }}</p>
             </div>
 

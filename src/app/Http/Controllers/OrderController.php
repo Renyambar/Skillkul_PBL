@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AcceptOrderRequest;
 use App\Http\Requests\SubmitResultRequest;
 use App\Models\Order;
+use App\Models\OrderRevision;
 use App\Models\Review;
 use App\Notifications\FreelancerSubmitNotification;
 use App\Notifications\OrderCompletedNotification;
 use App\Notifications\RefundGeneratedNotification;
+use App\Notifications\RevisionRequestedNotification;
 use App\Services\EscrowService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -50,7 +53,7 @@ class OrderController extends Controller
      */
     public function show(string $id): View
     {
-        $order = Order::with(['service', 'freelancer', 'client', 'review', 'payments', 'escrow'])
+        $order = Order::with(['service', 'freelancer', 'client', 'review', 'payments', 'escrow', 'revisions.requester'])
             ->findOrFail($id);
 
         abort_unless(
@@ -117,8 +120,9 @@ class OrderController extends Controller
 
     /**
      * Client meminta revisi atas hasil pekerjaan freelancer.
+     * Menyimpan catatan revisi ke tabel order_revisions.
      */
-    public function requestRevision(string $id): RedirectResponse
+    public function requestRevision(Request $request, string $id): RedirectResponse
     {
         $order = Order::findOrFail($id);
 
@@ -134,13 +138,41 @@ class OrderController extends Controller
                 ->with('error', "Batas revisi ({$order->revision_limit}x) sudah tercapai.");
         }
 
-        $order->update([
-            'status'         => 'revision',
-            'revision_count' => $order->revision_count + 1,
+        $validated = $request->validate([
+            'notes'      => ['required', 'string', 'min:10', 'max:2000'],
+            'drive_link' => ['nullable', 'url', 'max:500'],
+        ], [
+            'notes.required' => 'Catatan revisi wajib diisi.',
+            'notes.min'      => 'Catatan revisi minimal 10 karakter.',
+            'drive_link.url' => 'Link Google Drive harus berupa URL yang valid.',
         ]);
 
+        DB::transaction(function () use ($order, $validated) {
+            $newRevisionCount = $order->revision_count + 1;
+
+            // Simpan catatan revisi ke tabel order_revisions
+            OrderRevision::create([
+                'order_id'        => $order->id,
+                'requested_by'    => auth()->id(),
+                'notes'           => $validated['notes'],
+                'drive_link'      => $validated['drive_link'] ?? null,
+                'revision_number' => $newRevisionCount,
+            ]);
+
+            // Update status dan counter di tabel orders
+            $order->update([
+                'status'         => 'revision',
+                'revision_count' => $newRevisionCount,
+            ]);
+        });
+
+        // Notifikasi ke freelancer (jika class ada)
+        if (class_exists('App\Notifications\RevisionRequestedNotification')) {
+            $order->freelancer->notify(new RevisionRequestedNotification($order->load(['service', 'client'])));
+        }
+
         return redirect()->back()
-            ->with('success', "Permintaan revisi ke-{$order->revision_count} berhasil dikirim.");
+            ->with('success', "Permintaan revisi ke-{$order->revision_count} berhasil dikirim ke freelancer.");
     }
 
     /**
