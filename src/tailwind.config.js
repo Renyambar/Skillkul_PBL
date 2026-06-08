@@ -22,6 +22,11 @@ export default {
                     secondary: '#362293', // Lighter purple
                     accent: '#82d385', // Green accent used for tags
                     light: '#f7f8fc', // Very light grayish blue background
+                    
+                    // Dark mode specific colors (Dribbble inspired)
+                    darkbg: '#0B0F19', // Main body bg in dark mode
+                    darksurface: '#151A28', // Cards/Containers in dark mode
+                    darkborder: '#23293B', // Subtle borders
                 }
             }
         },

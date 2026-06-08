@@ -1,15 +1,20 @@
 {{-- Shared Footer Component --}}
-<footer class="bg-white border-t border-gray-100 py-8 px-6 md:px-12 mt-auto">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-        <div class="flex flex-col items-center md:items-start gap-1">
-            <a href="/" class="text-lg font-extrabold text-brand-dark tracking-tight">Skill<span class="text-brand-primary">Kul</span></a>
-            <p class="text-[11px] text-gray-400">&copy; 2026 SkillKul. Rekening Bersama (Escrow) Aman Terjamin.</p>
+<footer class="bg-white dark:bg-brand-darksurface border-t border-gray-100 dark:border-brand-darkborder py-10 px-6 md:px-12 mt-auto transition-colors duration-300">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex flex-col items-center md:items-start gap-2">
+            <a href="/" class="text-xl font-extrabold text-brand-dark dark:text-white tracking-tight flex items-center gap-2">
+                <div class="w-8 h-8 bg-brand-primary text-white rounded-lg flex items-center justify-center shadow-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                Skill<span class="text-brand-primary dark:text-indigo-400">Kul</span>
+            </a>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium">&copy; {{ date('Y') }} SkillKul. Rekening Bersama (Escrow) Aman Terjamin.</p>
         </div>
-        <div class="flex flex-wrap gap-6 text-xs font-semibold text-gray-500">
-            <a href="/ketentuan" class="hover:text-brand-primary transition">Ketentuan Layanan</a>
-            <a href="#" class="hover:text-brand-primary transition">FAQ</a>
-            <a href="/tentang" class="hover:text-brand-primary transition">Tentang Kami</a>
-            <a href="/keamanan" class="hover:text-brand-primary transition">Pusat Keamanan</a>
+        <div class="flex flex-wrap gap-6 text-xs font-bold text-gray-500 dark:text-gray-400">
+            <a href="#" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Ketentuan Layanan</a>
+            <a href="#" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">FAQ</a>
+            <a href="/tentang" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Tentang Kami</a>
+            <a href="/keamanan" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Pusat Keamanan</a>
         </div>
     </div>
 </footer>

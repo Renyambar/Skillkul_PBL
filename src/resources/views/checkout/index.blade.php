@@ -2,17 +2,17 @@
 @section('title', 'Checkout & Pembayaran - SkillKul')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-6 lg:px-12 py-10">
-    <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-primary tracking-widest uppercase mb-4">
+<div class="max-w-6xl mx-auto px-6 lg:px-12 py-10 transition-colors duration-300">
+    <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-primary dark:text-indigo-400 tracking-widest uppercase mb-4">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
         CHECKOUT AMAN
     </span>
-    <h1 class="text-2xl md:text-3xl font-extrabold text-brand-dark tracking-tight mb-8">
+    <h1 class="text-2xl md:text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight mb-8">
         {{ $order->service->title ?? 'Detail Pesanan' }}
     </h1>
 
     {{-- ── Pesan Status Pembayaran (ditampilkan via JS) ── --}}
-    <div id="payment-status-banner" class="hidden mb-6 rounded-xl px-5 py-4 flex items-start gap-3 text-sm font-semibold border"></div>
+    <div id="payment-status-banner" class="hidden mb-6 rounded-xl px-5 py-4 items-start gap-3 text-sm font-semibold border transition-colors"></div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {{-- ──────────────────────────────────────────────────────────────
@@ -21,9 +21,9 @@
         <div class="lg:col-span-7 space-y-6">
 
             {{-- Deliverables Card --}}
-            <div class="bg-[#080c35] rounded-2xl p-8 text-white">
+            <div class="bg-brand-dark rounded-2xl p-8 text-white shadow-lg border border-brand-darkborder transition-colors">
                 <div class="space-y-4 mb-6">
-                    <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10">
+                    <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
                         <div class="w-5 h-5 rounded bg-brand-primary flex items-center justify-center shrink-0">
                             <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                         </div>
@@ -32,7 +32,7 @@
                             <p class="text-[10px] text-indigo-300">{{ $order->service->title ?? '-' }}</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10">
+                    <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
                         <div class="w-5 h-5 rounded bg-white/10 flex items-center justify-center shrink-0">
                             <svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         </div>
@@ -41,7 +41,7 @@
                             <p class="text-[10px] text-indigo-300">{{ $order->freelancer->name ?? '-' }}</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10">
+                    <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm">
                         <div class="w-5 h-5 rounded bg-white/10 flex items-center justify-center shrink-0">
                             <svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                         </div>
@@ -51,91 +51,63 @@
                         </div>
                     </div>
                 </div>
-                <div class="h-1 bg-brand-primary rounded-full w-3/4 mb-2"></div>
+                <div class="h-1 bg-brand-primary/50 rounded-full w-3/4 mb-2 overflow-hidden">
+                    <div class="h-full bg-brand-primary w-1/2"></div>
+                </div>
             </div>
 
             {{-- Proyek Info --}}
-            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+            <div class="bg-white dark:bg-brand-darksurface rounded-2xl p-6 border border-gray-100 dark:border-brand-darkborder shadow-sm transition-colors">
                 <div class="flex items-center gap-3 mb-1">
-                    <div class="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-white">
+                    <div class="w-8 h-8 bg-brand-primary dark:bg-indigo-600 rounded-lg flex items-center justify-center text-white">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
                     </div>
                     <div>
-                        <h4 class="font-bold text-sm text-gray-900">{{ $order->service->title ?? 'Detail Jasa' }}</h4>
-                        <span class="text-[10px] font-extrabold text-brand-primary tracking-wider uppercase">
+                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">{{ $order->service->title ?? 'Detail Jasa' }}</h4>
+                        <span class="text-[10px] font-extrabold text-brand-primary dark:text-indigo-400 tracking-wider uppercase">
                             {{ $order->type === 'direct_checkout' ? 'HARGA TETAP' : 'BERBASIS PROYEK' }}
                         </span>
                     </div>
                 </div>
-                <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 leading-relaxed">
                     {{ $order->service->description ?? 'Tidak ada deskripsi.' }}
                 </p>
             </div>
 
-            {{-- Metode Pembayaran --}}
-            <div>
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-bold text-gray-900">Metode Pembayaran</h3>
-                    <span class="text-[10px] text-gray-400 font-semibold flex items-center gap-1">
-                        DIDUKUNG OLEH
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Midtrans_Logo.svg/320px-Midtrans_Logo.svg.png" class="h-3 opacity-60" alt="Midtrans">
-                    </span>
-                </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <button class="bg-white rounded-xl p-4 border-2 border-brand-primary text-center shadow-sm">
-                        <div class="w-10 h-10 mx-auto mb-2 bg-indigo-50 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
-                        </div>
-                        <span class="text-xs font-bold text-brand-primary">QRIS</span>
-                    </button>
-                    <button class="bg-white rounded-xl p-4 border border-gray-100 text-center hover:border-gray-300 transition-colors">
-                        <div class="w-10 h-10 mx-auto mb-2 bg-gray-50 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                        </div>
-                        <span class="text-xs font-semibold text-gray-600">Transfer Bank</span>
-                    </button>
-                    <button class="bg-white rounded-xl p-4 border border-gray-100 text-center hover:border-gray-300 transition-colors">
-                        <div class="w-10 h-10 mx-auto mb-2 bg-gray-50 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                        </div>
-                        <span class="text-xs font-semibold text-gray-600">E-Wallet</span>
-                    </button>
-                </div>
-                <p class="text-[10px] text-gray-400 mt-3">* Pilihan metode ditentukan di popup Midtrans Snap.</p>
-            </div>
+
         </div>
 
         {{-- ──────────────────────────────────────────────────────────────
              RIGHT: Ringkasan & Tombol Bayar
         ────────────────────────────────────────────────────────────── --}}
         <div class="lg:col-span-5">
-            <div class="sticky top-24 bg-white rounded-2xl border border-gray-100 p-8 shadow-xl">
-                <h3 class="font-extrabold text-lg text-brand-dark mb-6">Ringkasan Pesanan</h3>
+            <div class="sticky top-24 bg-white dark:bg-brand-darksurface rounded-2xl border border-gray-100 dark:border-brand-darkborder p-8 shadow-xl transition-colors">
+                <h3 class="font-extrabold text-lg text-brand-dark dark:text-white mb-6">Ringkasan Pesanan</h3>
 
                 <div class="space-y-3 mb-6 text-sm">
                     <div class="flex justify-between">
-                        <span class="text-gray-500">Subtotal Jasa</span>
-                        <span class="font-bold">
+                        <span class="text-gray-500 dark:text-gray-400">Subtotal Jasa</span>
+                        <span class="font-bold text-gray-900 dark:text-white">
                             IDR {{ number_format($order->total_price, 0, ',', '.') }}
                         </span>
                     </div>
                     {{-- Catatan: jika ada biaya admin, tambahkan perhitungannya di controller --}}
-                    <div class="border-t border-gray-100 pt-3 flex justify-between">
-                        <span class="font-extrabold text-brand-dark">Total</span>
-                        <span class="font-extrabold text-xl text-brand-primary">
+                    <div class="border-t border-gray-100 dark:border-brand-darkborder pt-3 flex justify-between">
+                        <span class="font-extrabold text-brand-dark dark:text-white">Total</span>
+                        <span class="font-extrabold text-xl text-brand-primary dark:text-indigo-400">
                             IDR {{ number_format($order->total_price, 0, ',', '.') }}
                         </span>
                     </div>
                 </div>
 
                 {{-- Jaminan Escrow --}}
-                <div class="bg-green-50 border border-green-100 rounded-xl p-4 mb-6 flex items-start gap-3">
-                    <div class="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                        <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <div class="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/50 rounded-xl p-4 mb-6 flex items-start gap-3 transition-colors">
+                    <div class="w-5 h-5 bg-green-100 dark:bg-green-800/50 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                        <svg class="w-3 h-3 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                     </div>
                     <div>
-                        <h4 class="text-sm font-bold text-green-800">Jaminan Escrow</h4>
-                        <p class="text-[10px] text-green-700 leading-relaxed">
+                        <h4 class="text-sm font-bold text-green-800 dark:text-green-400">Jaminan Escrow</h4>
+                        <p class="text-[10px] text-green-700 dark:text-green-300/80 leading-relaxed">
                             Seluruh biaya ditahan Escrow SkillKul. Pekerja Lepas baru menerima pembayaran setelah Anda menyetujui hasil kerja.
                         </p>
                     </div>
@@ -149,7 +121,7 @@
                     data-snap-url="{{ route('midtrans.snapToken', $order->id) }}"
                     data-redirect-url="{{ route('pesanan.detail', ['id' => $order->id]) }}"
                     onclick="initiateMidtransPayment(this)"
-                    class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                    class="w-full bg-brand-primary dark:bg-indigo-600 hover:bg-brand-dark dark:hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex justify-center items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     @if($order->status !== 'pending' && $order->status !== 'waiting_payment') disabled @endif
                 >
                     {{-- State: Default --}}
@@ -168,16 +140,16 @@
                 </button>
 
                 @if($order->status === 'paid')
-                    <p class="text-center text-xs text-green-600 font-bold mt-3">✓ Pesanan ini sudah dibayar.</p>
+                    <p class="text-center text-xs text-green-600 dark:text-green-400 font-bold mt-3">✓ Pesanan ini sudah dibayar.</p>
                 @elseif($order->status === 'cancelled')
-                    <p class="text-center text-xs text-red-500 font-bold mt-3">✗ Pesanan ini telah dibatalkan.</p>
+                    <p class="text-center text-xs text-red-500 dark:text-red-400 font-bold mt-3">✗ Pesanan ini telah dibatalkan.</p>
                 @endif
 
-                <p class="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-wider font-semibold">
+                <p class="text-center text-[10px] text-gray-400 dark:text-gray-500 mt-4 uppercase tracking-wider font-semibold">
                     Pembayaran aman via Midtrans &bull; Order #{{ substr($order->id, 0, 8) }}
                 </p>
 
-                <div class="mt-6 pt-4 border-t border-gray-100 flex items-center gap-2 text-gray-400 text-xs">
+                <div class="mt-6 pt-4 border-t border-gray-100 dark:border-brand-darkborder flex items-center gap-2 text-gray-400 dark:text-gray-500 text-xs transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     <span>Pekerja Lepas Akademik Terverifikasi</span>
                 </div>

@@ -6,17 +6,24 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'SkillKul') }} — Daftar sebagai Klien</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
-<body class="font-sans antialiased bg-brand-light flex flex-col min-h-screen">
+<body class="font-sans antialiased bg-brand-light dark:bg-brand-darkbg flex flex-col min-h-screen transition-colors duration-300">
 
     <div class="flex-grow flex items-center justify-center p-6">
-        <div class="bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row w-full max-w-5xl min-h-[600px] border border-gray-100">
+        <div class="bg-white dark:bg-brand-darksurface rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row w-full max-w-5xl min-h-[600px] border border-gray-100 dark:border-brand-darkborder transition-colors duration-300">
 
             {{-- Panel Kiri: Ilustrasi --}}
-            <div class="hidden md:flex flex-col justify-center w-5/12 p-12 bg-brand-primary text-white relative overflow-hidden">
+            <div class="hidden md:flex flex-col justify-center w-5/12 p-12 bg-brand-primary dark:bg-indigo-900 text-white relative overflow-hidden transition-colors duration-300">
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10"></div>
-                <a href="{{ route('register') }}" class="relative z-10 inline-flex items-center gap-2 text-indigo-200 hover:text-white text-sm font-medium mb-10 transition-colors">
+                <a href="{{ route('register') }}" class="relative z-10 inline-flex items-center gap-2 text-indigo-200 dark:text-indigo-300 hover:text-white text-sm font-medium mb-10 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
@@ -26,7 +33,7 @@
                 <h2 class="text-4xl font-extrabold mb-6 leading-tight tracking-tight relative z-10">
                     Temukan Talenta<br>Terbaik Kampus
                 </h2>
-                <p class="text-indigo-200 mb-10 text-sm leading-relaxed relative z-10">
+                <p class="text-indigo-200 dark:text-indigo-300 mb-10 text-sm leading-relaxed relative z-10">
                     Akses ratusan mahasiswa berbakat untuk kebutuhan desain, coding, penulisan, dan banyak lagi.
                 </p>
 
@@ -39,7 +46,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-sm">Email Bebas</h3>
-                            <p class="text-xs text-indigo-200 mt-0.5">Gmail, Yahoo, Outlook — semua diterima</p>
+                            <p class="text-xs text-indigo-200 dark:text-indigo-300 mt-0.5">Gmail, Yahoo, Outlook — semua diterima</p>
                         </div>
                     </div>
                     <div class="bg-white/10 rounded-2xl p-4 flex gap-3 items-center border border-white/10 backdrop-blur-sm">
@@ -50,16 +57,16 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-sm">Transaksi Aman</h3>
-                            <p class="text-xs text-indigo-200 mt-0.5">Dana dijamin hingga pekerjaan selesai</p>
+                            <p class="text-xs text-indigo-200 dark:text-indigo-300 mt-0.5">Dana dijamin hingga pekerjaan selesai</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             {{-- Panel Kanan: Form --}}
-            <div class="w-full md:w-7/12 p-8 md:p-14 flex flex-col justify-center bg-white overflow-y-auto">
+            <div class="w-full md:w-7/12 p-8 md:p-14 flex flex-col justify-center bg-white dark:bg-brand-darksurface overflow-y-auto transition-colors duration-300">
                 {{-- Back link (mobile only) --}}
-                <a href="{{ route('register') }}" class="md:hidden inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-700 mb-6 transition-colors">
+                <a href="{{ route('register') }}" class="md:hidden inline-flex items-center gap-1 text-sm text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 mb-6 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
@@ -67,59 +74,59 @@
                 </a>
 
                 {{-- Badge role --}}
-                <div class="inline-flex items-center gap-1.5 bg-indigo-50 text-brand-primary text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4 self-start">
+                <div class="inline-flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-brand-primary dark:text-indigo-400 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4 self-start transition-colors">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                     </svg>
                     Klien
                 </div>
 
-                <h2 class="text-3xl font-bold text-gray-900 mb-1 tracking-tight">Buat Akun Klien</h2>
-                <p class="text-gray-500 text-sm mb-8">Gunakan email apa saja untuk mendaftar.</p>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">Buat Akun Klien</h2>
+                <p class="text-gray-500 dark:text-gray-400 text-sm mb-8">Gunakan email apa saja untuk mendaftar.</p>
 
                 <form method="POST" action="{{ route('register.client.store') }}" class="space-y-5" id="form-register-client">
                     @csrf
 
                     {{-- Nama --}}
                     <div>
-                        <label for="name" class="block text-[11px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Nama Lengkap</label>
+                        <label for="name" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Nama Lengkap</label>
                         <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus
                             placeholder="Masukkan nama lengkap Anda"
-                            class="block w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400 transition-colors">
+                            class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                         <x-input-error :messages="$errors->get('name')" class="mt-1.5" />
                     </div>
 
                     {{-- Email --}}
                     <div>
-                        <label for="email" class="block text-[11px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Alamat Email</label>
+                        <label for="email" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Alamat Email</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required
                             placeholder="contoh@gmail.com"
-                            class="block w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400 transition-colors">
-                        <p class="mt-1 text-[10px] text-gray-400">Gmail, Yahoo, Outlook, atau domain apapun diterima.</p>
+                            class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
+                        <p class="mt-1 text-[10px] text-gray-400 dark:text-gray-500">Gmail, Yahoo, Outlook, atau domain apapun diterima.</p>
                         <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
                     </div>
 
                     {{-- Password --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label for="password" class="block text-[11px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Kata Sandi</label>
+                            <label for="password" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Kata Sandi</label>
                             <input id="password" type="password" name="password" required autocomplete="new-password"
                                 placeholder="Min. 8 karakter"
-                                class="block w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400 transition-colors">
+                                class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                             <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
                         </div>
                         <div>
-                            <label for="password_confirmation" class="block text-[11px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Konfirmasi Sandi</label>
+                            <label for="password_confirmation" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Konfirmasi Sandi</label>
                             <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password"
                                 placeholder="Ulangi kata sandi"
-                                class="block w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium placeholder-gray-400 transition-colors">
+                                class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                         </div>
                     </div>
 
                     {{-- Submit --}}
                     <div class="pt-2">
                         <button type="submit" id="btn-submit-client"
-                            class="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-2xl shadow-lg shadow-indigo-900/20 text-sm font-bold text-white bg-brand-primary hover:bg-brand-dark hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary">
+                            class="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-2xl shadow-lg shadow-indigo-900/20 text-sm font-bold text-white bg-brand-primary dark:bg-indigo-600 hover:bg-brand-dark dark:hover:bg-indigo-700 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary dark:focus:ring-offset-gray-900">
                             Buat Akun & Verifikasi Email
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -127,15 +134,14 @@
                         </button>
                     </div>
 
-                    <p class="text-center text-sm font-medium text-gray-500">
+                    <p class="text-center text-sm font-medium text-gray-500 dark:text-gray-400">
                         Sudah punya akun?
-                        <a href="{{ route('login') }}" class="font-bold text-brand-primary hover:text-brand-dark transition-colors">Masuk di sini</a>
+                        <a href="{{ route('login') }}" class="font-bold text-brand-primary dark:text-indigo-400 hover:text-brand-dark dark:hover:text-indigo-300 transition-colors">Masuk di sini</a>
                     </p>
                 </form>
             </div>
         </div>
     </div>
 
-    @include('layouts.footer')
 </body>
 </html>
