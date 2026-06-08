@@ -29,7 +29,7 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                 <div class="absolute bottom-6 left-6">
                     @if($service->type === 'project')
-                        <span class="bg-orange-500 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg">Harga Nego (Project)</span>
+                        <span class="bg-orange-500 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg">Harga Nego (Proyek)</span>
                     @else
                         <span class="bg-green-500 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg">Harga Pas — Langsung Bayar</span>
                     @endif
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            {{-- Freelancer Info --}}
+            {{-- Pekerja Lepas Info --}}
             <div class="flex items-center justify-between bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex items-center gap-4">
                     @if($service->freelancer?->profile_photo_path)
@@ -49,7 +49,7 @@
                         </div>
                     @endif
                     <div>
-                        <h4 class="font-bold text-gray-900">{{ $service->freelancer?->name ?? 'Freelancer' }}</h4>
+                        <h4 class="font-bold text-gray-900">{{ $service->freelancer?->name ?? 'Pekerja Lepas' }}</h4>
                         <div class="flex items-center gap-2 text-xs text-gray-500">
                             <span class="flex items-center gap-1 text-yellow-500">★ <span class="text-gray-700 font-semibold">4.9</span></span>
                             <span class="text-gray-400">Anggota SkillKul</span>
@@ -106,9 +106,9 @@
 
                     @if($isBusy)
                         <button disabled class="block w-full bg-gray-400 text-white font-bold py-3.5 rounded-xl text-center text-sm cursor-not-allowed opacity-70 mb-3">
-                            🔒 Freelancer Sedang Sibuk
+                            🔒 Pekerja Lepas Sedang Sibuk
                         </button>
-                        <p class="text-[10px] text-indigo-200 text-center">Freelancer sedang dalam Mode Ujian atau menyelesaikan pesanan lain.</p>
+                        <p class="text-[10px] text-indigo-200 text-center">Pekerja Lepas sedang dalam Mode Ujian atau menyelesaikan pesanan lain.</p>
                     @else
                         <form action="{{ route('order.create', $service->id) }}" method="POST">
                             @csrf
@@ -155,7 +155,7 @@
                         </div>
                         <div class="flex items-start gap-2 text-xs text-white">
                             <span class="bg-white/20 rounded-full w-5 h-5 flex items-center justify-center shrink-0 font-bold text-[10px]">2</span>
-                            <span>Freelancer akan mengirimkan tagihan (invoice) custom</span>
+                            <span>Pekerja Lepas akan mengirimkan tagihan (invoice) custom</span>
                         </div>
                         <div class="flex items-start gap-2 text-xs text-white">
                             <span class="bg-white/20 rounded-full w-5 h-5 flex items-center justify-center shrink-0 font-bold text-[10px]">3</span>
@@ -165,12 +165,12 @@
 
                     @if($isBusy)
                         <button disabled class="block w-full bg-gray-400 text-white font-bold py-3.5 rounded-xl text-center text-sm cursor-not-allowed opacity-70 mb-3">
-                            🔒 Freelancer Sedang Sibuk
+                            🔒 Pekerja Lepas Sedang Sibuk
                         </button>
-                        <p class="text-[10px] text-indigo-200 text-center">Freelancer sedang dalam Mode Ujian atau menyelesaikan pesanan lain.</p>
+                        <p class="text-[10px] text-indigo-200 text-center">Pekerja Lepas sedang dalam Mode Ujian atau menyelesaikan pesanan lain.</p>
                     @else
                         @php
-                            $waName  = $service->freelancer?->name ?? 'Freelancer';
+                            $waName  = $service->freelancer?->name ?? 'Pekerja Lepas';
                             $waPhone = preg_replace('/[^0-9]/', '', $service->freelancer?->phone_number ?? '62');
                             $waText  = 'Halo ' . $waName . ', saya tertarik dengan jasa "' . $service->title . '" di SkillKul. Bisakah kita diskusikan detail proyeknya?';
                         @endphp

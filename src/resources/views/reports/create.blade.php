@@ -1,5 +1,5 @@
 @extends('layouts.client')
-@section('title', 'Laporkan Freelancer - SkillKul')
+@section('title', 'Laporkan Pekerja Lepas - SkillKul')
 
 @section('content')
 <div class="max-w-2xl mx-auto px-4 sm:px-6 py-10">
@@ -11,7 +11,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             Kembali
         </a>
-        <h1 class="text-2xl font-extrabold text-gray-900">Laporkan Freelancer</h1>
+        <h1 class="text-2xl font-extrabold text-gray-900">Laporkan Pekerja Lepas</h1>
         <p class="text-gray-500 text-sm mt-1">Laporan Anda akan ditinjau oleh admin SkillKul dalam 1x24 jam.</p>
     </div>
 
@@ -51,7 +51,7 @@
             @else
                 <div>
                     <label for="reported_id" class="block text-sm font-bold text-gray-700 mb-2">
-                        ID Freelancer yang Dilaporkan <span class="text-red-500">*</span>
+                        ID Pekerja Lepas yang Dilaporkan <span class="text-red-500">*</span>
                     </label>
                     <input type="number" id="reported_id" name="reported_id" value="{{ old('reported_id') }}"
                            placeholder="Masukkan ID user freelancer"

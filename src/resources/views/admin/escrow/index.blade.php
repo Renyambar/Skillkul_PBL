@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Escrow Dashboard - Admin SkillKul')
+@section('title', 'Escrow Dasbor - Admin SkillKul')
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-8">
-        <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Escrow Dashboard</h1>
+        <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Escrow Dasbor</h1>
         <p class="text-sm text-gray-500 mt-1">Pantau dana yang sedang ditahan dan telah diproses platform.</p>
     </div>
 
@@ -32,7 +32,7 @@
         {{-- Released --}}
         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
             <div class="flex items-center justify-between mb-3">
-                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">Dilepas ke Freelancer</p>
+                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">Dilepas ke Pekerja Lepas</p>
                 <span class="bg-green-50 text-green-700 text-xs font-bold px-2 py-1 rounded-lg">{{ $summary['released']['count'] }}</span>
             </div>
             <p class="text-2xl font-extrabold text-gray-900">Rp {{ number_format($summary['released']['total'], 0, ',', '.') }}</p>
@@ -42,7 +42,7 @@
         {{-- Refunded --}}
         <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
             <div class="flex items-center justify-between mb-3">
-                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">Direfund ke Client</p>
+                <p class="text-xs font-bold uppercase tracking-wider text-gray-400">Direfund ke Klien</p>
                 <span class="bg-red-50 text-red-700 text-xs font-bold px-2 py-1 rounded-lg">{{ $summary['refunded']['count'] }}</span>
             </div>
             <p class="text-2xl font-extrabold text-gray-900">Rp {{ number_format($summary['refunded']['total'], 0, ',', '.') }}</p>
@@ -70,10 +70,10 @@
                     <thead>
                         <tr class="text-[10px] font-extrabold text-gray-500 uppercase tracking-widest border-b border-gray-100 bg-gray-50">
                             <th class="px-5 py-4">Order</th>
-                            <th class="px-5 py-4">Client → Freelancer</th>
+                            <th class="px-5 py-4">Klien → Pekerja Lepas</th>
                             <th class="px-5 py-4 text-right">Gross</th>
                             <th class="px-5 py-4 text-right">Platform Fee (8%)</th>
-                            <th class="px-5 py-4 text-right">Freelancer (92%)</th>
+                            <th class="px-5 py-4 text-right">Pekerja Lepas (92%)</th>
                             <th class="px-5 py-4 text-center">Status</th>
                             <th class="px-5 py-4">Tipe Release</th>
                             <th class="px-5 py-4">Waktu</th>

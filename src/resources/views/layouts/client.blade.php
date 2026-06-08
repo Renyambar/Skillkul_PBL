@@ -29,6 +29,10 @@
                             class="text-brand-primary">Kul</span></a>
                 </div>
                 <div class="hidden md:flex items-center gap-1 mx-auto">
+                    <a href="{{ route('dashboard') }}"
+                        class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
+                        Beranda
+                    </a>
                     <a href="{{ route('katalog') }}"
                         class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('katalog') || request()->routeIs('jasa.detail') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
                         Layanan
@@ -36,10 +40,6 @@
                     <a href="{{ route('pesanan.klien') }}"
                         class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('pesanan.*') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
                         Pesanan Saya
-                    </a>
-                    <a href="{{ route('dashboard') }}"
-                        class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'text-brand-primary bg-indigo-50' : 'text-gray-600 hover:text-brand-primary hover:bg-gray-50' }}">
-                        Beranda
                     </a>
                 </div>
                 <div class="flex items-center gap-4">

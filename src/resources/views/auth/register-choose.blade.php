@@ -29,7 +29,7 @@
             {{-- Kartu Pilihan Role --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {{-- Kartu: Mencari Jasa (Client) --}}
+                {{-- Kartu: Mencari Jasa (Klien) --}}
                 <a href="{{ route('register.client') }}"
                    class="group relative bg-white rounded-[32px] border-2 border-gray-100 shadow-lg hover:border-brand-primary hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 p-10 flex flex-col items-center text-center cursor-pointer overflow-hidden">
 
@@ -76,7 +76,7 @@
 
                         {{-- CTA Button --}}
                         <div class="w-full flex items-center justify-center gap-2 py-3 px-6 bg-gray-100 group-hover:bg-brand-primary rounded-2xl text-sm font-bold text-gray-700 group-hover:text-white transition-all duration-300">
-                            Daftar sebagai Client
+                            Daftar sebagai Klien
                             <svg class="w-4 h-4 -translate-x-1 group-hover:translate-x-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
@@ -84,7 +84,7 @@
                     </div>
                 </a>
 
-                {{-- Kartu: Menjual Jasa (Freelancer) --}}
+                {{-- Kartu: Menjual Jasa (Pekerja Lepas) --}}
                 <a href="{{ route('register.freelancer') }}"
                    class="group relative bg-white rounded-[32px] border-2 border-gray-100 shadow-lg hover:border-brand-primary hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 p-10 flex flex-col items-center text-center cursor-pointer overflow-hidden">
 
@@ -136,7 +136,7 @@
 
                         {{-- CTA Button --}}
                         <div class="w-full flex items-center justify-center gap-2 py-3 px-6 bg-brand-primary group-hover:bg-brand-dark rounded-2xl text-sm font-bold text-white transition-all duration-300 shadow-lg shadow-indigo-900/20">
-                            Daftar sebagai Freelancer
+                            Daftar sebagai Pekerja Lepas
                             <svg class="w-4 h-4 -translate-x-1 group-hover:translate-x-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>

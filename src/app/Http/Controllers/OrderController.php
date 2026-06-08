@@ -11,6 +11,7 @@ use App\Notifications\FreelancerSubmitNotification;
 use App\Notifications\OrderCompletedNotification;
 use App\Notifications\RefundGeneratedNotification;
 use App\Notifications\RevisionRequestedNotification;
+use App\Services\AchievementService;
 use App\Services\EscrowService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,10 @@ use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-    public function __construct(protected EscrowService $escrowService) {}
+    public function __construct(
+        protected EscrowService     $escrowService,
+        protected AchievementService $achievementService,
+    ) {}
 
     // ─── Portal Klien ────────────────────────────────────────
 
@@ -111,7 +115,7 @@ class OrderController extends Controller
             ]);
 
             $this->escrowService->refundToClient($order, 'refund_cancel');
-            $order->client->notify(new RefundGeneratedNotification($order->load(['service', 'client'])));
+            $order->client->notify(new RefundGeneratedNotification($order->load(['service', 'client']), (float) $order->total_price));
         });
 
         return redirect()->route('pesanan.klien')
@@ -210,6 +214,11 @@ class OrderController extends Controller
             $this->escrowService->releaseToFreelancer($order, 'manual_accept');
             $order->freelancer->notify(new OrderCompletedNotification($order));
         });
+
+        // Hitung ulang achievement freelancer jika order adalah project-based
+        if ($order->service?->type === 'project') {
+            $this->achievementService->recalculate($order->freelancer);
+        }
 
         return redirect()->route('pesanan.detail', ['id' => $order->id])
             ->with('success', 'Pesanan diterima! Dana telah diteruskan ke freelancer.');

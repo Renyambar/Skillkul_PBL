@@ -48,7 +48,7 @@
                             <option value="{{ $service->id }}" data-title="{{ $service->title }}"
                                 {{ old('service_id') == $service->id ? 'selected' : '' }}>
                                 {{ $service->title }}
-                                ({{ $service->type === 'project' ? 'Project' : 'Non-Project' }})
+                                ({{ $service->type === 'project' ? 'Proyek' : 'Non-Proyek' }})
                             </option>
                         @endforeach
                     </select>

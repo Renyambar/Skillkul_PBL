@@ -44,14 +44,14 @@
             <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-1">Total User</p>
             <p class="text-3xl font-extrabold text-brand-dark">{{ $stats['total'] }}</p>
         </div>
-        {{-- Freelancer --}}
+        {{-- Pekerja Lepas --}}
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <p class="text-[10px] font-extrabold text-brand-primary uppercase tracking-widest mb-1">Freelancer</p>
+            <p class="text-[10px] font-extrabold text-brand-primary uppercase tracking-widest mb-1">Pekerja Lepas</p>
             <p class="text-3xl font-extrabold text-brand-primary">{{ $stats['freelancer'] }}</p>
         </div>
-        {{-- Client --}}
+        {{-- Klien --}}
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <p class="text-[10px] font-extrabold text-indigo-400 uppercase tracking-widest mb-1">Client</p>
+            <p class="text-[10px] font-extrabold text-indigo-400 uppercase tracking-widest mb-1">Klien</p>
             <p class="text-3xl font-extrabold text-indigo-600">{{ $stats['client'] }}</p>
         </div>
         {{-- Admin --}}
@@ -71,8 +71,8 @@
             <select name="role"
                     class="border border-gray-200 rounded-xl text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary bg-gray-50">
                 <option value="">Semua Role</option>
-                <option value="client"     {{ request('role') === 'client'     ? 'selected' : '' }}>Client</option>
-                <option value="freelancer" {{ request('role') === 'freelancer' ? 'selected' : '' }}>Freelancer</option>
+                <option value="client"     {{ request('role') === 'client'     ? 'selected' : '' }}>Klien</option>
+                <option value="freelancer" {{ request('role') === 'freelancer' ? 'selected' : '' }}>Pekerja Lepas</option>
                 <option value="admin"      {{ request('role') === 'admin'      ? 'selected' : '' }}>Admin</option>
             </select>
         </div>

@@ -1,129 +1,293 @@
 @extends('layouts.freelancer')
-@section('title', 'Portfolio - SkillKul')
+@section('title', 'Portofolio Saya - SkillKul')
+
 @section('content')
-<div class="p-8 lg:p-10">
-    {{-- Header --}}
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+<div class="p-6 lg:p-10 space-y-8">
+
+    {{-- ══════════════════════════════════════════════════════════════
+         HEADER
+    ══════════════════════════════════════════════════════════════ --}}
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-primary tracking-widest uppercase mb-3">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                AUTO-PORTFOLIO
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-indigo-600 tracking-widest uppercase mb-2">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                Proyek Portofolio System
             </span>
-            <h1 class="text-3xl font-extrabold text-brand-dark tracking-tight mb-2">Portfolio Saya</h1>
-            <p class="text-gray-500 text-sm max-w-xl">Portfolio PDF otomatis dari pesanan selesai dengan rating ≥ 4 bintang.</p>
+            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Portofolio Saya</h1>
+            <p class="text-gray-500 text-sm mt-1">Kelola dan tampilkan karya terbaik Anda kepada dunia.</p>
         </div>
-        <form action="{{ route('freelancer.portfolio.generate') }}" method="POST" class="mt-4 md:mt-0">
-            @csrf
-            <button type="submit" class="bg-[#0b0c54] text-white px-6 py-3 rounded-xl text-sm font-bold shadow-lg hover:bg-brand-dark transition-all flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                Generate Portfolio PDF
-            </button>
-        </form>
-    </div>
-
-    {{-- Notifikasi --}}
-    @if(session('success'))
-        <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-5 py-4 rounded-xl text-sm font-medium flex items-center gap-2">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            {{ session('success') }}
-        </div>
-    @endif
-    @if(session('info'))
-        <div class="mb-6 bg-blue-50 border border-blue-200 text-blue-700 px-5 py-4 rounded-xl text-sm font-medium flex items-center gap-2">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            {{ session('info') }}
-        </div>
-    @endif
-    @if(session('error'))
-        <div class="mb-6 bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-xl text-sm font-medium flex items-center gap-2">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            {{ session('error') }}
-        </div>
-    @endif
-
-    {{-- Info Card --}}
-    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 rounded-2xl p-6 mb-8">
-        <div class="flex items-start gap-4">
-            <div class="w-10 h-10 bg-brand-primary rounded-xl flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-                <h4 class="text-sm font-bold text-brand-dark mb-1">Cara Kerja Auto-Portfolio</h4>
-                <p class="text-xs text-gray-600 leading-relaxed">
-                    Klik tombol <strong>"Generate Portfolio PDF"</strong> untuk membuat CV otomatis dari semua pesanan yang sudah selesai dengan rating ≥ 4 bintang. File PDF akan berisi daftar proyek, deskripsi, dan rating dari klien.
-                </p>
-            </div>
+        <div class="flex items-center gap-3">
+            {{-- Link ke halaman publik --}}
+            <a href="{{ route('portfolio.public', str_replace(' ', '-', strtolower(auth()->user()->name))) }}"
+               target="_blank"
+               class="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-gray-50 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Lihat Publik
+            </a>
+            {{-- Generate PDF --}}
+            <form action="{{ route('freelancer.portfolio.generatePdf') }}" method="POST">
+                @csrf
+                <button type="submit"
+                        class="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Generate PDF
+                </button>
+            </form>
         </div>
     </div>
 
-    {{-- Portfolio List --}}
-    @if($portfolios->isEmpty())
-        <div class="bg-white rounded-2xl border border-gray-100 p-16 text-center shadow-sm">
-            <div class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-2xl flex items-center justify-center">
-                <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </div>
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Belum Ada Portfolio</h3>
-            <p class="text-sm text-gray-500 max-w-md mx-auto mb-6">
-                Selesaikan pesanan dan dapatkan rating ≥ 4 bintang dari klien, lalu klik "Generate Portfolio PDF" untuk membuat CV otomatis.
-            </p>
+    {{-- ══════════════════════════════════════════════════════════════
+         FLASH MESSAGES
+    ══════════════════════════════════════════════════════════════ --}}
+    @foreach(['success' => 'green', 'error' => 'red', 'info' => 'blue', 'warning' => 'yellow'] as $type => $color)
+        @if(session($type))
+        <div class="flex items-start gap-3 bg-{{ $color }}-50 border border-{{ $color }}-200 text-{{ $color }}-800 px-5 py-4 rounded-xl text-sm">
+            <svg class="w-5 h-5 shrink-0 mt-0.5 text-{{ $color }}-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+            <span>{{ session($type) }}</span>
         </div>
-    @else
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <table class="w-full">
-                <thead>
-                    <tr class="bg-gray-50 border-b border-gray-100">
-                        <th class="text-left px-6 py-4 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Judul Proyek</th>
-                        <th class="text-left px-6 py-4 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Rating</th>
-                        <th class="text-left px-6 py-4 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Tanggal Selesai</th>
-                        <th class="text-right px-6 py-4 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-50">
-                    @foreach($portfolios as $portfolio)
-                        <tr class="hover:bg-gray-50/50 transition-colors">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center shrink-0">
-                                        <svg class="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-bold text-gray-900">{{ $portfolio->project_title }}</p>
-                                        <p class="text-[10px] text-gray-400">{{ $portfolio->order?->service?->title ?? '–' }}</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                @if($portfolio->order?->review)
-                                    <div class="flex items-center gap-1">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <svg class="w-3.5 h-3.5 {{ $i <= $portfolio->order->review->rating ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                        @endfor
-                                        <span class="text-xs font-bold text-gray-700 ml-1">{{ $portfolio->order->review->rating }}/5</span>
-                                    </div>
+        @if(session('pdf_path'))
+        <div class="mt-2">
+            <a href="{{ route('freelancer.portfolio.downloadLatest') }}"
+               class="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-green-700 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Unduh PDF Portofolio
+            </a>
+        </div>
+        @endif
+        @endif
+    @endforeach
+
+    {{-- ══════════════════════════════════════════════════════════════
+         STATISTICS BAR
+    ══════════════════════════════════════════════════════════════ --}}
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        @php
+            $statItems = [
+                ['label' => 'Proyek Selesai',    'value' => $stats['total_completed'],  'icon' => '✅', 'color' => 'green'],
+                ['label' => 'Di Portofolio',        'value' => $stats['total_portfolio'],  'icon' => '📁', 'color' => 'indigo'],
+                ['label' => 'Rata-rata Rating',    'value' => number_format($stats['avg_rating'], 1) . '★', 'icon' => '⭐', 'color' => 'yellow'],
+                ['label' => 'Total Klien',        'value' => $stats['total_clients'],    'icon' => '👤', 'color' => 'blue'],
+                ['label' => 'Completion Rate',     'value' => $stats['completion_rate'] . '%', 'icon' => '📈', 'color' => 'purple'],
+            ];
+        @endphp
+        @foreach($statItems as $stat)
+        <div class="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm hover:shadow-md transition-shadow">
+            <div class="text-2xl mb-1">{{ $stat['icon'] }}</div>
+            <div class="text-2xl font-extrabold text-gray-900">{{ $stat['value'] }}</div>
+            <div class="text-xs text-gray-500 mt-1">{{ $stat['label'] }}</div>
+        </div>
+        @endforeach
+    </div>
+
+    {{-- ══════════════════════════════════════════════════════════════
+         ACHIEVEMENT BADGES
+    ══════════════════════════════════════════════════════════════ --}}
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h3 class="text-sm font-extrabold text-gray-900 mb-4 flex items-center gap-2">
+            <span>🏅</span> Pencapaian
+            <span class="text-xs font-normal text-gray-400">(Hanya dari project-based services)</span>
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+            @foreach($allBadges as $key => $badge)
+            @php $unlocked = in_array($key, $unlockedBadgeKeys); @endphp
+            <div class="relative rounded-xl border-2 p-3 text-center transition-all {{ $unlocked ? 'border-indigo-200 bg-indigo-50' : 'border-gray-100 bg-gray-50 opacity-60' }}">
+                @if($unlocked)
+                <div class="absolute -top-2 -right-2 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </div>
+                @endif
+                <div class="text-3xl mb-1">{{ $badge['icon'] }}</div>
+                <div class="text-xs font-bold text-gray-800 leading-tight">{{ $badge['label'] }}</div>
+                <div class="text-[10px] text-gray-500 mt-1 leading-tight">{{ $badge['description'] }}</div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+
+    {{-- ══════════════════════════════════════════════════════════════
+         ELIGIBLE ORDERS (Bisa ditambahkan ke portfolio)
+    ══════════════════════════════════════════════════════════════ --}}
+    @if($eligibleOrders->isNotEmpty())
+    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 rounded-2xl p-6">
+        <h3 class="text-sm font-extrabold text-indigo-900 mb-1 flex items-center gap-2">
+            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            {{ $eligibleOrders->count() }} Proyek Siap Ditambahkan ke Portofolio
+        </h3>
+        <p class="text-xs text-indigo-700 mb-4">Order dari layanan bertipe <strong>Proyek</strong> yang sudah selesai dan belum ada di portfolio Anda.</p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            @foreach($eligibleOrders as $order)
+            <div class="bg-white rounded-xl border border-indigo-100 p-4 flex items-start gap-3">
+                <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center shrink-0 text-lg">📦</div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-gray-900 truncate">{{ $order->service->title ?? 'Proyek' }}</p>
+                    <p class="text-[10px] text-gray-500">{{ $order->service->category?->name ?? '—' }}</p>
+                    @if($order->review)
+                    <div class="flex items-center gap-1 mt-1">
+                        @for($i = 1; $i <= 5; $i++)
+                        <svg class="w-3 h-3 {{ $i <= $order->review->rating ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        @endfor
+                        <span class="text-[10px] text-gray-500">{{ $order->review->rating }}/5</span>
+                    </div>
+                    @endif
+                    <p class="text-[10px] text-gray-400 mt-1">Selesai: {{ $order->completed_at?->format('d M Y') ?? '—' }}</p>
+                </div>
+                <a href="{{ route('freelancer.portfolio.create', $order->id) }}"
+                   class="shrink-0 inline-flex items-center gap-1 bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-indigo-700 transition-colors">
+                    + Tambah
+                </a>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
+    {{-- ══════════════════════════════════════════════════════════════
+         PORTFOLIO GRID
+    ══════════════════════════════════════════════════════════════ --}}
+    <div>
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-extrabold text-gray-900 flex items-center gap-2">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                Portofolio Projects
+            </h3>
+            <span class="text-xs text-gray-400">Total: {{ $portfolios->total() }} project</span>
+        </div>
+
+        @if($portfolios->isEmpty())
+        <div class="bg-white rounded-2xl border border-dashed border-gray-200 p-16 text-center">
+            <div class="text-5xl mb-4">📂</div>
+            <h3 class="text-base font-bold text-gray-700 mb-1">Belum Ada Portofolio</h3>
+            <p class="text-sm text-gray-400 max-w-sm mx-auto">Selesaikan pesanan project dan tambahkan ke portfolio dari daftar di atas.</p>
+        </div>
+        @else
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            @foreach($portfolios as $portfolio)
+            <div class="bg-white rounded-2xl border {{ $portfolio->is_featured ? 'border-yellow-300 shadow-yellow-50' : ($portfolio->is_portfolio ? 'border-gray-100' : 'border-dashed border-gray-200 opacity-70') }} shadow-sm hover:shadow-md transition-all overflow-hidden group">
+                {{-- Featured Badge --}}
+                @if($portfolio->is_featured)
+                <div class="bg-gradient-to-r from-yellow-400 to-orange-400 px-3 py-1.5 flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span class="text-white text-[10px] font-extrabold uppercase tracking-wider">Featured</span>
+                </div>
+                @endif
+
+                <div class="p-5">
+                    {{-- Status indicator --}}
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full {{ $portfolio->is_portfolio ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500' }}">
+                            <span class="w-1.5 h-1.5 rounded-full {{ $portfolio->is_portfolio ? 'bg-green-500' : 'bg-gray-400' }}"></span>
+                            {{ $portfolio->is_portfolio ? 'Publik' : 'Tersembunyi' }}
+                        </span>
+                        @if($portfolio->project_category)
+                        <span class="text-[10px] text-gray-400 font-medium">{{ $portfolio->project_category }}</span>
+                        @endif
+                    </div>
+
+                    {{-- Judul --}}
+                    <h4 class="text-sm font-bold text-gray-900 mb-1 line-clamp-2">{{ $portfolio->project_title }}</h4>
+
+                    @if($portfolio->freelancer_role)
+                    <p class="text-[11px] text-indigo-600 font-semibold mb-2">{{ $portfolio->freelancer_role }}</p>
+                    @endif
+
+                    @if($portfolio->project_description)
+                    <p class="text-xs text-gray-500 line-clamp-2 mb-3">{{ $portfolio->project_description }}</p>
+                    @endif
+
+                    {{-- Meta info --}}
+                    <div class="flex flex-wrap gap-3 text-[10px] text-gray-500 mb-3">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            {{ $portfolio->completed_date?->format('d M Y') ?? '—' }}
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            {{ $portfolio->duration_label }}
+                        </span>
+                    </div>
+
+                    {{-- Rating --}}
+                    @if($portfolio->client_rating)
+                    <div class="flex items-center gap-1 mb-3">
+                        @foreach($portfolio->rating_stars as $filled)
+                        <svg class="w-3.5 h-3.5 {{ $filled ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        @endforeach
+                        <span class="text-[10px] text-gray-500 ml-1">{{ $portfolio->client_rating }}/5</span>
+                    </div>
+                    @endif
+
+                    @if($portfolio->client_testimonial)
+                    <p class="text-[10px] text-gray-500 italic line-clamp-2 mb-3 border-l-2 border-indigo-200 pl-2">"{{ $portfolio->client_testimonial }}"</p>
+                    @endif
+
+                    {{-- Cloud link --}}
+                    @if($portfolio->cloud_link)
+                    <a href="{{ $portfolio->cloud_link }}" target="_blank"
+                       class="inline-flex items-center gap-1 text-[10px] text-indigo-600 font-semibold hover:underline mb-3">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        Lihat Hasil Kerja
+                    </a>
+                    @endif
+
+                    {{-- Action Buttons --}}
+                    <div class="pt-3 border-t border-gray-50 flex items-center gap-2 flex-wrap">
+                        {{-- Toggle Visibility --}}
+                        <form action="{{ route('freelancer.portfolio.toggleVisibility', $portfolio->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" title="{{ $portfolio->is_portfolio ? 'Sembunyikan' : 'Tampilkan' }}"
+                                    class="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg font-semibold transition-colors {{ $portfolio->is_portfolio ? 'bg-green-50 text-green-700 hover:bg-green-100' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                                @if($portfolio->is_portfolio)
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                Publik
                                 @else
-                                    <span class="text-xs text-gray-400">–</span>
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+                                Tersembunyi
                                 @endif
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="text-sm text-gray-600">{{ $portfolio->completed_date?->format('d M Y') ?? '–' }}</span>
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <a href="{{ route('freelancer.portfolio.download', $portfolio->id) }}"
-                                   class="inline-flex items-center gap-1.5 bg-indigo-50 text-brand-primary px-4 py-2 rounded-lg text-xs font-bold hover:bg-indigo-100 transition-colors">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                    Unduh PDF
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                            </button>
+                        </form>
+
+                        {{-- Toggle Featured --}}
+                        @if($portfolio->is_portfolio)
+                        <form action="{{ route('freelancer.portfolio.toggleFeatured', $portfolio->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" title="{{ $portfolio->is_featured ? 'Hapus dari Featured' : 'Jadikan Featured' }}"
+                                    class="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg font-semibold transition-colors {{ $portfolio->is_featured ? 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100' : 'bg-gray-100 text-gray-500 hover:bg-yellow-50 hover:text-yellow-700' }}">
+                                <svg class="w-3.5 h-3.5" fill="{{ $portfolio->is_featured ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                                Featured
+                            </button>
+                        </form>
+                        @endif
+
+                        {{-- Edit --}}
+                        <a href="{{ route('freelancer.portfolio.edit', $portfolio->id) }}"
+                           class="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg font-semibold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            Edit
+                        </a>
+
+                        {{-- Hapus --}}
+                        <form action="{{ route('freelancer.portfolio.destroy', $portfolio->id) }}" method="POST"
+                              onsubmit="return confirm('Hapus project ini dari portfolio?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    class="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg font-semibold bg-red-50 text-red-600 hover:bg-red-100 transition-colors">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                Hapus
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @endforeach
         </div>
 
         {{-- Pagination --}}
-        <div class="mt-6">
-            {{ $portfolios->links() }}
-        </div>
-    @endif
+        @if($portfolios->hasPages())
+        <div class="mt-6">{{ $portfolios->links() }}</div>
+        @endif
+        @endif
+    </div>
+
 </div>
 @endsection

@@ -44,7 +44,7 @@
             <p class="text-3xl font-extrabold text-red-500">{{ $stats['nonaktif'] }}</p>
         </div>
         <div class="bg-white rounded-2xl p-5 border border-purple-100 shadow-sm">
-            <p class="text-[10px] font-extrabold uppercase tracking-widest text-purple-600 mb-1">Project</p>
+            <p class="text-[10px] font-extrabold uppercase tracking-widest text-purple-600 mb-1">Proyek</p>
             <p class="text-3xl font-extrabold text-purple-600">{{ $stats['project'] }}</p>
         </div>
     </div>
@@ -94,8 +94,8 @@
                 <select name="type" id="filter-type"
                         class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-brand-primary transition-colors bg-white">
                     <option value="">Semua Tipe</option>
-                    <option value="non_project" {{ request('type') === 'non_project' ? 'selected' : '' }}>Non-Project</option>
-                    <option value="project"     {{ request('type') === 'project'     ? 'selected' : '' }}>Project</option>
+                    <option value="non_project" {{ request('type') === 'non_project' ? 'selected' : '' }}>Non-Proyek</option>
+                    <option value="project"     {{ request('type') === 'project'     ? 'selected' : '' }}>Proyek</option>
                 </select>
             </div>
             {{-- Buttons --}}
@@ -130,7 +130,7 @@
                     <thead>
                         <tr class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest border-b border-gray-100 bg-gray-50">
                             <th class="px-6 py-4">Jasa</th>
-                            <th class="px-6 py-4">Freelancer</th>
+                            <th class="px-6 py-4">Pekerja Lepas</th>
                             <th class="px-6 py-4">Kategori</th>
                             <th class="px-6 py-4">Tipe</th>
                             <th class="px-6 py-4">Harga</th>
@@ -160,7 +160,7 @@
                                     </div>
                                 </div>
                             </td>
-                            {{-- Freelancer --}}
+                            {{-- Pekerja Lepas --}}
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
                                     @if($service->freelancer?->profile_photo_path)
@@ -183,9 +183,9 @@
                             {{-- Tipe --}}
                             <td class="px-6 py-4">
                                 @if($service->type === 'project')
-                                    <span class="bg-purple-50 text-purple-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Project</span>
+                                    <span class="bg-purple-50 text-purple-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Proyek</span>
                                 @else
-                                    <span class="bg-blue-50 text-blue-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Non-Project</span>
+                                    <span class="bg-blue-50 text-blue-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Non-Proyek</span>
                                 @endif
                             </td>
                             {{-- Harga --}}

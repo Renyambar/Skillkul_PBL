@@ -162,7 +162,7 @@
                 </a>
                 <a href="{{ route('register') }}"
                     class="bg-gray-200 text-gray-800 px-6 py-4 rounded-xl text-sm font-semibold hover:bg-gray-300 transition-all border border-gray-300">
-                    Daftar Jadi Freelancer
+                    Daftar Jadi Pekerja Lepas
                 </a>
             </div>
         </div>
@@ -202,7 +202,7 @@
                 <span
                     class="inline-block bg-white/20 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide mb-6">FITUR
                     INOVATIF</span>
-                <h3 class="text-2xl md:text-3xl font-bold mb-4 tracking-tight">Auto-Portfolio Generator</h3>
+                <h3 class="text-2xl md:text-3xl font-bold mb-4 tracking-tight">Auto-Portofolio Generator</h3>
                 <p class="text-indigo-200 text-sm max-w-sm leading-relaxed mb-16 relative z-10">
                     Sistem otomatis yang merangkum proyek menjadi
                     portofolio profesional siap kerja.
@@ -293,7 +293,7 @@
                                 class="w-5 h-5 rounded-full border border-gray-400 border-dotted flex items-center justify-center">
                                 <span class="text-[8px] text-gray-600">...</span>
                             </div>
-                            <span class="text-sm font-medium text-gray-500">Pelepasan ke Freelancer</span>
+                            <span class="text-sm font-medium text-gray-500">Pelepasan ke Pekerja Lepas</span>
                         </div>
                     </div>
                 </div>
@@ -381,7 +381,7 @@
                                 {{ $svc->title }}
                             </h3>
 
-                            {{-- Freelancer --}}
+                            {{-- Pekerja Lepas --}}
                             <div class="flex items-center gap-2 mb-4">
                                 @if($svc->freelancer?->profile_photo_path)
                                     <img src="{{ Storage::url($svc->freelancer->profile_photo_path) }}"
@@ -393,7 +393,7 @@
                                     </div>
                                 @endif
                                 <span
-                                    class="text-xs text-gray-500 font-medium truncate">{{ $svc->freelancer?->name ?? 'Freelancer' }}</span>
+                                    class="text-xs text-gray-500 font-medium truncate">{{ $svc->freelancer?->name ?? 'Pekerja Lepas' }}</span>
                                 <span class="flex items-center gap-0.5 text-yellow-500 text-xs ml-auto flex-shrink-0">
                                     ★ <span class="text-gray-600 font-bold">4.8</span>
                                 </span>
@@ -459,9 +459,9 @@
                 </div>
             </div>
 
-            <!-- Freelancer Card -->
+            <!-- Pekerja Lepas Card -->
             <div class="bg-gray-100 rounded-3xl p-8 md:p-10 shadow-sm border border-gray-200">
-                <h3 class="text-xl font-bold text-brand-primary mb-8">Untuk Freelancer (Mahasiswa)</h3>
+                <h3 class="text-xl font-bold text-brand-primary mb-8">Untuk Pekerja Lepas (Mahasiswa)</h3>
                 <div class="space-y-6">
                     <div class="flex gap-4 items-start">
                         <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shrink-0 shadow-sm">
@@ -572,7 +572,7 @@
                     Jasa Mahasiswa</a>
                 <a href="{{ route('register') }}"
                     class="bg-[#2a0868] text-white px-8 py-4 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors min-w-[200px]">Daftar
-                    Jadi Freelancer</a>
+                    Jadi Pekerja Lepas</a>
             </div>
         </div>
     </section>

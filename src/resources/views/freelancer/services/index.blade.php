@@ -116,9 +116,9 @@
                             </td>
                             <td class="px-6 py-5">
                                 @if($service->type === 'project')
-                                    <span class="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Project</span>
+                                    <span class="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Proyek</span>
                                 @else
-                                    <span class="bg-indigo-100 text-indigo-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Non-Project</span>
+                                    <span class="bg-indigo-100 text-indigo-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Non-Proyek</span>
                                 @endif
                             </td>
                             <td class="px-6 py-5 font-bold text-gray-900">

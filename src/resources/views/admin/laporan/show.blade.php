@@ -179,7 +179,7 @@
 
             {{-- Terlapor --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest mb-4">Terlapor (Freelancer)</p>
+                <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest mb-4">Terlapor (Pekerja Lepas)</p>
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-lg flex-shrink-0">
                         {{ strtoupper(substr($report->reported->name ?? 'F', 0, 1)) }}

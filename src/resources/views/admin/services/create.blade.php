@@ -21,14 +21,14 @@
               class="space-y-6">
             @csrf
 
-            {{-- Freelancer --}}
+            {{-- Pekerja Lepas --}}
             <div>
                 <label for="freelancer_id" class="block text-xs font-extrabold uppercase tracking-widest text-gray-500 mb-2">
-                    Freelancer <span class="text-red-500">*</span>
+                    Pekerja Lepas <span class="text-red-500">*</span>
                 </label>
                 <select name="freelancer_id" id="freelancer_id" required
                         class="w-full px-4 py-3 text-sm border @error('freelancer_id') border-red-400 @else border-gray-200 @enderror rounded-xl outline-none focus:border-brand-primary transition-colors bg-white">
-                    <option value="">— Pilih Freelancer —</option>
+                    <option value="">— Pilih Pekerja Lepas —</option>
                     {{-- Ambil semua user dengan role freelancer --}}
                     @foreach(\App\Models\User::where('role', 'freelancer')->orderBy('name')->get() as $user)
                         <option value="{{ $user->id }}" {{ old('freelancer_id') == $user->id ? 'selected' : '' }}>
@@ -80,8 +80,8 @@
                     </label>
                     <select name="type" id="type" required
                             class="w-full px-4 py-3 text-sm border @error('type') border-red-400 @else border-gray-200 @enderror rounded-xl outline-none focus:border-brand-primary transition-colors bg-white">
-                        <option value="non_project" {{ old('type') === 'non_project' ? 'selected' : '' }}>Non-Project</option>
-                        <option value="project"     {{ old('type') === 'project'     ? 'selected' : '' }}>Project</option>
+                        <option value="non_project" {{ old('type') === 'non_project' ? 'selected' : '' }}>Non-Proyek</option>
+                        <option value="project"     {{ old('type') === 'project'     ? 'selected' : '' }}>Proyek</option>
                     </select>
                     @error('type')
                         <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>

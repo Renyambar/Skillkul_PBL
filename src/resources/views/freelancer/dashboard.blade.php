@@ -1,5 +1,5 @@
 @extends('layouts.freelancer')
-@section('title', 'Dashboard Freelancer - SkillKul')
+@section('title', 'Dasbor Pekerja Lepas - SkillKul')
 @section('content')
     <div class="p-8 lg:p-10">
         {{-- Header --}}
@@ -102,7 +102,7 @@
                 </table>
             </div>
 
-            {{-- Auto-Portfolio Engine --}}
+            {{-- Auto-Portofolio Engine --}}
             <div class="lg:col-span-4">
                 <div
                     class="bg-gradient-to-br from-[#2a0e88] to-[#160655] rounded-2xl p-7 text-white shadow-xl relative overflow-hidden h-full flex flex-col justify-between">
@@ -111,7 +111,7 @@
                         <!-- <span
                             class="inline-block bg-white/10 px-3 py-1 rounded-full text-[9px] font-extrabold tracking-widest uppercase mb-4 border border-white/10">Fitur
                             Utama</span> -->
-                        <h3 class="text-xl font-extrabold mb-3">Sistem Auto-Portfolio</h3>
+                        <h3 class="text-xl font-extrabold mb-3">Sistem Auto-Portofolio</h3>
                         <p class="text-indigo-200 text-xs leading-relaxed mb-6">Buat PDF portofolio profesional secara
                             instan. Kami hanya mengurasi proyek dengan ulasan bintang 4 ke atas untuk memastikan karya
                             terbaik Anda bersinar.</p>

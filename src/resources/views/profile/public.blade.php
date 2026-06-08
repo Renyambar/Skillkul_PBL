@@ -1,5 +1,5 @@
 @extends('layouts.client')
-@section('title', 'Profil Freelancer - SkillKul')
+@section('title', 'Profil Pekerja Lepas - SkillKul')
 @section('content')
 <div class="max-w-5xl mx-auto px-6 lg:px-8 py-10">
     {{-- Profile Header --}}

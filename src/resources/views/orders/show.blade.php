@@ -1,4 +1,4 @@
-@extends('layouts.client')
+@extends(auth()->check() && auth()->id() === $order->freelancer_id ? 'layouts.freelancer' : 'layouts.client')
 @section('title', 'Detail Pesanan #' . substr($order->id, 0, 8) . ' - SkillKul')
 @section('content')
 @php
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-400 mb-0.5">Freelancer</p>
+                        <p class="text-xs text-gray-400 mb-0.5">Pekerja Lepas</p>
                         <div class="flex items-center gap-2">
                             <div class="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-700">
                                 {{ strtoupper(substr($order->freelancer->name ?? 'F', 0, 1)) }}
@@ -176,7 +176,7 @@
 
                 @if($order->freelancer_result_link)
                 <div>
-                    <h3 class="font-bold text-gray-900 mb-2">Hasil Pekerjaan Freelancer</h3>
+                    <h3 class="font-bold text-gray-900 mb-2">Hasil Pekerjaan Pekerja Lepas</h3>
                     <a href="{{ $order->freelancer_result_link }}" target="_blank" rel="noopener"
                        class="inline-flex items-center gap-2 text-green-700 hover:text-green-900 font-semibold text-sm bg-green-50 hover:bg-green-100 px-4 py-2.5 rounded-xl border border-green-100 transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -290,7 +290,7 @@
                 @endif
             </div>
 
-            {{-- ── Tombol Aksi (Client Only) ─────────────────── --}}
+            {{-- ── Tombol Aksi (Klien Only) ─────────────────── --}}
             @if($isClient)
 
                 {{-- Status: Belum Bayar → Lanjutkan Pembayaran --}}
@@ -367,10 +367,15 @@
 
                     {{-- Auto-complete info --}}
                     @if($order->submitted_at)
-                    @php $autoAt = $order->submitted_at->addHours(48); $hoursLeft = max(0, now()->diffInHours($autoAt, false)); @endphp
+                    @php
+                        $autoAt = $order->submitted_at->addHours(48);
+                        $minutesLeft = max(0, now()->diffInMinutes($autoAt, false));
+                        $hoursLeft = intdiv($minutesLeft, 60);
+                        $minsLeft = $minutesLeft % 60;
+                    @endphp
                     @if(now()->lessThan($autoAt))
                     <div class="bg-amber-50 border border-amber-100 rounded-xl p-3">
-                        <p class="text-xs text-amber-700 text-center">⏰ Auto-selesai dalam <strong>{{ $hoursLeft }} jam</strong></p>
+                        <p class="text-xs text-amber-700 text-center">⏰ Auto-selesai dalam <strong>{{ $hoursLeft }} jam {{ $minsLeft }} menit</strong></p>
                     </div>
                     @endif
                     @endif
@@ -466,18 +471,18 @@
 
             @endif {{-- end isClient --}}
 
-            {{-- ── Tombol Laporkan Freelancer (Client Only) ──── --}}
+            {{-- ── Tombol Laporkan Pekerja Lepas (Klien Only) ──── --}}
             @if($isClient && in_array($order->status, ['in_progress', 'delivered', 'completed', 'canceled', 'revision']))
             <div class="border-t border-gray-100 pt-4">
                 <a href="{{ route('laporan.buat', ['order_id' => $order->id]) }}"
                    class="w-full flex items-center justify-center gap-2 text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 py-2.5 rounded-xl border border-red-100 transition-all">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
-                    Laporkan Freelancer
+                    Laporkan Pekerja Lepas
                 </a>
             </div>
             @endif
 
-            {{-- ── Tombol Aksi (Freelancer Only) ────────────── --}}
+            {{-- ── Tombol Aksi (Pekerja Lepas Only) ────────────── --}}
             @if($isFreelancer)
                 @if(in_array($order->status, ['paid', 'in_progress', 'revision']))
                 <div x-data="{ open: false }" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
@@ -497,10 +502,24 @@
                     </form>
                 </div>
                 @elseif($order->status === 'delivered')
+                @php
+                    $autoText = 'Auto-selesai dalam 48 jam jika klien tidak merespons.';
+                    if ($order->submitted_at) {
+                        $autoAt = $order->submitted_at->addHours(48);
+                        if (now()->lessThan($autoAt)) {
+                            $minutesLeft = max(0, now()->diffInMinutes($autoAt, false));
+                            $hoursLeft = intdiv($minutesLeft, 60);
+                            $minsLeft = $minutesLeft % 60;
+                            $autoText = "Auto-selesai dalam {$hoursLeft} jam {$minsLeft} menit jika klien tidak merespons.";
+                        } else {
+                            $autoText = "Auto-selesai segera.";
+                        }
+                    }
+                @endphp
                 <div class="bg-purple-50 border border-purple-100 rounded-2xl p-5 text-center">
                     <svg class="w-8 h-8 text-purple-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <p class="font-bold text-purple-800 text-sm">Menunggu Konfirmasi Klien</p>
-                    <p class="text-xs text-purple-600 mt-1">Hasil sudah dikirim. Auto-selesai dalam 48 jam jika klien tidak merespons.</p>
+                    <p class="text-xs text-purple-600 mt-1">Hasil sudah dikirim. {{ $autoText }}</p>
                 </div>
                 @elseif($order->status === 'completed')
                 <div class="bg-green-50 border border-green-100 rounded-2xl p-5 text-center">
@@ -509,6 +528,9 @@
                     <p class="text-xs text-green-600 mt-1">Dana sudah diteruskan ke wallet Anda.</p>
                 </div>
                 @endif
+
+
+
             @endif
 
         </div>

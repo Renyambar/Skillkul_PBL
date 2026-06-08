@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'SkillKul - Portal Freelancer')</title>
+    <title>@yield('title', 'SkillKul - Portal Pekerja Lepas')</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -30,7 +30,7 @@
             <div class="px-6 py-8">
                 {{-- Brand --}}
                 <div class="mb-10">
-                    <h2 class="text-lg font-extrabold text-white tracking-tight">Portal Freelancer</h2>
+                    <h2 class="text-lg font-extrabold text-white tracking-tight">Portal Pekerja Lepas</h2>
                     <p class="text-[10px] text-indigo-300 font-semibold mt-1">Entrepreneur Akademik</p>
                 </div>
 
@@ -47,6 +47,10 @@
                     <a href="{{ route('freelancer.pesanan') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('freelancer.pesanan') ? 'bg-brand-primary text-white shadow-lg shadow-indigo-900/30' : 'text-indigo-200 hover:bg-white/5 hover:text-white' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                         Pesanan Masuk
+                    </a>
+                    <a href="{{ route('freelancer.portfolio.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('freelancer.portfolio.*') ? 'bg-brand-primary text-white shadow-lg shadow-indigo-900/30' : 'text-indigo-200 hover:bg-white/5 hover:text-white' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        Portofolio
                     </a>
                     <a href="{{ route('freelancer.invoice.create') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all {{ request()->routeIs('freelancer.invoice.*') ? 'bg-brand-primary text-white shadow-lg shadow-indigo-900/30' : 'text-indigo-200 hover:bg-white/5 hover:text-white' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -78,7 +82,7 @@
                     <div class="flex items-center gap-3 mb-3">
                         <img src="{{ $photo }}" alt="{{ $user?->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-indigo-400/30">
                         <div class="min-w-0">
-                            <p class="text-sm font-bold text-white truncate">{{ $user?->name ?? 'Freelancer' }}</p>
+                            <p class="text-sm font-bold text-white truncate">{{ $user?->name ?? 'Pekerja Lepas' }}</p>
                             <p class="text-[10px] text-indigo-300">Mahasiswa Aktif</p>
                         </div>
                     </div>

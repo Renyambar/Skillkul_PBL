@@ -58,7 +58,7 @@
                         <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-yellow-100 text-yellow-800 tracking-wider">Belum Dibayar</span>
                     </div>
                     <p class="font-bold text-gray-900 text-sm">{{ $order->service->title ?? '—' }}</p>
-                    <p class="text-xs text-gray-500">Freelancer: {{ $order->freelancer->name ?? '—' }}</p>
+                    <p class="text-xs text-gray-500">Pekerja Lepas: {{ $order->freelancer->name ?? '—' }}</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <p class="font-extrabold text-indigo-600">Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
@@ -108,7 +108,7 @@
                                 {{ $order->service->title ?? 'Layanan tidak ditemukan' }}
                             </h3>
                             <p class="text-xs text-gray-500 mt-0.5">
-                                Freelancer: <span class="font-medium text-gray-700">{{ $order->freelancer->name ?? '—' }}</span>
+                                Pekerja Lepas: <span class="font-medium text-gray-700">{{ $order->freelancer->name ?? '—' }}</span>
                                 &bull; {{ $order->created_at->locale('id')->isoFormat('D MMM YYYY') }}
                             </p>
                         </div>

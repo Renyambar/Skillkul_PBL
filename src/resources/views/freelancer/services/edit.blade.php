@@ -41,7 +41,7 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-900 mb-2">Judul Jasa</label>
                     <input type="text" name="title" value="{{ old('title', $service->title) }}"
-                           placeholder="Contoh: Pembuatan Dashboard Analitik Data Excel"
+                           placeholder="Contoh: Pembuatan Dasbor Analitik Data Excel"
                            class="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-brand-primary focus:ring-2 focus:ring-indigo-100 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-900 transition-all outline-none">
                     <p class="text-[10px] text-gray-400 mt-2">Gunakan judul yang jelas dan spesifik agar mudah ditemukan.</p>
                 </div>
@@ -71,7 +71,7 @@
                         <label class="cursor-pointer border-2 rounded-2xl p-5 transition-all {{ old('type', $service->type) === 'non_project' ? 'border-brand-primary bg-indigo-50/50' : 'border-gray-100 bg-gray-50/50 hover:border-gray-300' }}" data-type="non_project">
                             <input type="radio" name="type" value="non_project" class="sr-only" {{ old('type', $service->type) === 'non_project' ? 'checked' : '' }}>
                             <div class="flex justify-between items-start mb-1">
-                                <span class="text-xs font-black tracking-widest uppercase {{ old('type', $service->type) === 'non_project' ? 'text-brand-primary' : 'text-gray-700' }}">Non-Project</span>
+                                <span class="text-xs font-black tracking-widest uppercase {{ old('type', $service->type) === 'non_project' ? 'text-brand-primary' : 'text-gray-700' }}">Non-Proyek</span>
                                 <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center {{ old('type', $service->type) === 'non_project' ? 'border-brand-primary bg-brand-primary' : 'border-gray-300 bg-white' }}">
                                     @if(old('type', $service->type) === 'non_project')
                                         <div class="w-2 h-2 rounded-full bg-white"></div>
@@ -83,7 +83,7 @@
                         <label class="cursor-pointer border-2 rounded-2xl p-5 transition-all {{ old('type', $service->type) === 'project' ? 'border-brand-primary bg-indigo-50/50' : 'border-gray-100 bg-gray-50/50 hover:border-gray-300' }}" data-type="project">
                             <input type="radio" name="type" value="project" class="sr-only" {{ old('type', $service->type) === 'project' ? 'checked' : '' }}>
                             <div class="flex justify-between items-start mb-1">
-                                <span class="text-xs font-black tracking-widest uppercase {{ old('type', $service->type) === 'project' ? 'text-brand-primary' : 'text-gray-700' }}">Project Based</span>
+                                <span class="text-xs font-black tracking-widest uppercase {{ old('type', $service->type) === 'project' ? 'text-brand-primary' : 'text-gray-700' }}">Proyek Based</span>
                                 <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center {{ old('type', $service->type) === 'project' ? 'border-brand-primary bg-brand-primary' : 'border-gray-300 bg-white' }}">
                                     @if(old('type', $service->type) === 'project')
                                         <div class="w-2 h-2 rounded-full bg-white"></div>

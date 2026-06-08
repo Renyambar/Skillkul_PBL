@@ -102,7 +102,7 @@
                             <h3 class="text-xl font-bold text-gray-900">{{ auth()->user()->name }}</h3>
                             <p class="text-sm text-gray-600 mt-1">
                                 @if(auth()->user()->role === 'freelancer')
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">Freelancer</span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">Pekerja Lepas</span>
                                 @else
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">Klien</span>
                                 @endif

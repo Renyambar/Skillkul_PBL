@@ -83,13 +83,13 @@
                                 class="block w-full bg-gray-100 border-transparent text-gray-900 rounded-2xl focus:ring-brand-primary focus:border-brand-primary sm:text-sm py-3 px-4 font-medium">
                                 <option value="" disabled selected>Pilih peran</option>
                                 <option value="client">Klien</option>
-                                <option value="freelancer">Freelancer</option>
+                                <option value="freelancer">Pekerja Lepas</option>
                             </select>
                             <x-input-error :messages="$errors->get('role')" class="mt-1" />
                         </div>
                     </div>
 
-                    {{-- NIM: hanya tampil untuk Freelancer --}}
+                    {{-- NIM: hanya tampil untuk Pekerja Lepas --}}
                     <div x-show="selectedRole === 'freelancer'" x-transition style="display:none;">
                         <label for="nim" class="block text-[11px] font-extrabold text-brand-secondary uppercase tracking-widest mb-1.5">
                             NIM <span class="text-gray-400 font-normal normal-case tracking-normal">(Nomor Induk Mahasiswa)</span>

@@ -51,9 +51,9 @@
                                 {{ $st['label'] }}
                             </span>
                             @if($order->type === 'project')
-                                <span class="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Project</span>
+                                <span class="bg-orange-100 text-orange-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Proyek</span>
                             @else
-                                <span class="bg-indigo-100 text-indigo-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Non-Project</span>
+                                <span class="bg-indigo-100 text-indigo-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Non-Proyek</span>
                             @endif
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-1">{{ $order->service->title ?? 'Layanan tidak ditemukan' }}</h3>

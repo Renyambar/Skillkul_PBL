@@ -59,8 +59,8 @@
                     </label>
                     <select name="type" id="type" required
                             class="w-full px-4 py-3 text-sm border @error('type') border-red-400 @else border-gray-200 @enderror rounded-xl outline-none focus:border-brand-primary transition-colors bg-white">
-                        <option value="non_project" {{ old('type', $service->type) === 'non_project' ? 'selected' : '' }}>Non-Project</option>
-                        <option value="project"     {{ old('type', $service->type) === 'project'     ? 'selected' : '' }}>Project</option>
+                        <option value="non_project" {{ old('type', $service->type) === 'non_project' ? 'selected' : '' }}>Non-Proyek</option>
+                        <option value="project"     {{ old('type', $service->type) === 'project'     ? 'selected' : '' }}>Proyek</option>
                     </select>
                     @error('type')
                         <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>

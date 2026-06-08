@@ -47,13 +47,13 @@
                         id="filter-non-project"
                         class="px-5 py-2 rounded-full text-sm font-semibold transition-colors flex items-center gap-1.5
                                       {{ request('type') == 'non_project' ? 'bg-white text-green-700' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
-                        💰 Non-Project (Harga Pas)
+                        💰 Non-Proyek (Harga Pas)
                     </a>
                     <a href="{{ route('katalog', array_merge(request()->except('type', 'page'), ['type' => 'project'])) }}"
                         id="filter-project"
                         class="px-5 py-2 rounded-full text-sm font-semibold transition-colors flex items-center gap-1.5
                                       {{ request('type') == 'project' ? 'bg-white text-orange-700' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
-                        🤝 Project (Bisa Nego)
+                        🤝 Proyek (Bisa Nego)
                     </a>
                 </div>
             </form>
@@ -185,7 +185,7 @@
                                 {{ $service->title }}
                             </h3>
 
-                            {{-- Freelancer --}}
+                            {{-- Pekerja Lepas --}}
                             <div class="flex items-center gap-2 mb-4">
                                 @if($service->freelancer)
                                     @if($service->freelancer->profile_photo_path)
@@ -198,13 +198,13 @@
                                         </div>
                                     @endif
                                     <span
-                                        class="text-xs text-gray-500 font-medium truncate">{{ $service->freelancer->name ?? 'Freelancer' }}</span>
+                                        class="text-xs text-gray-500 font-medium truncate">{{ $service->freelancer->name ?? 'Pekerja Lepas' }}</span>
                                 @else
                                     <div
                                         class="w-6 h-6 rounded-full bg-gray-200 text-gray-400 text-[10px] font-extrabold flex items-center justify-center flex-shrink-0">
                                         ?
                                     </div>
-                                    <span class="text-xs text-gray-400 font-medium">Freelancer Tidak Ditemukan</span>
+                                    <span class="text-xs text-gray-400 font-medium">Pekerja Lepas Tidak Ditemukan</span>
                                 @endif
                                 <span class="flex items-center gap-0.5 text-yellow-500 text-xs ml-auto flex-shrink-0">
                                     ★ <span class="text-gray-600 font-bold">4.8</span>
@@ -259,7 +259,7 @@
             </div>
         </div>
 
-        {{-- ── Auto Portfolio Banner ── --}}
+        {{-- ── Auto Portofolio Banner ── --}}
         <div class="bg-brand-primary rounded-3xl p-8 md:p-10 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5">
             </div>

@@ -172,6 +172,30 @@ class Order extends Model
     // ─── Accessors ───────────────────────────────────────────
 
     /**
+     * Cek apakah order ini berasal dari service bertipe 'project'.
+     * Digunakan untuk filter eligibilitas portfolio.
+     */
+    public function getIsProjectTypeAttribute(): bool
+    {
+        return $this->service?->type === 'project';
+    }
+
+    /**
+     * Cek apakah order ini bisa ditambahkan ke portfolio.
+     *
+     * Kondisi:
+     * 1. Status harus 'completed'
+     * 2. Service harus bertipe 'project'
+     * 3. Belum ada record portfolio untuk order ini
+     */
+    public function getCanAddToPortfolioAttribute(): bool
+    {
+        return $this->status === 'completed'
+            && $this->is_project_type
+            && ! $this->portfolio()->exists();
+    }
+
+    /**
      * Cek apakah client masih bisa meminta revisi.
      * Digunakan di view untuk menampilkan/menyembunyikan tombol revisi.
      */

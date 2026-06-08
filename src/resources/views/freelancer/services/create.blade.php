@@ -47,7 +47,7 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-900 mb-2">Judul Jasa</label>
                         <input type="text" name="title" value="{{ old('title') }}"
-                            placeholder="Contoh: Pembuatan Dashboard Analitik Data Excel"
+                            placeholder="Contoh: Pembuatan Dasbor Analitik Data Excel"
                             class="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-brand-primary focus:ring-2 focus:ring-indigo-100 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-900 transition-all outline-none">
                         <p class="text-[10px] text-gray-400 mt-2">Gunakan judul yang jelas dan spesifik agar mudah
                             ditemukan.</p>
@@ -88,7 +88,7 @@
                             <label class="cursor-pointer border-2 rounded-2xl p-5 transition-all" data-type="non_project">
                                 <input type="radio" name="type" value="non_project" class="sr-only" {{ old('type', 'non_project') === 'non_project' ? 'checked' : '' }}>
                                 <div class="flex justify-between items-start mb-1">
-                                    <span class="type-label text-xs font-black tracking-widest uppercase">Non-Project</span>
+                                    <span class="type-label text-xs font-black tracking-widest uppercase">Non-Proyek</span>
                                     <div class="radio-dot w-5 h-5 rounded-full border-2 flex items-center justify-center">
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                             <label class="cursor-pointer border-2 rounded-2xl p-5 transition-all" data-type="project">
                                 <input type="radio" name="type" value="project" class="sr-only" {{ old('type') === 'project' ? 'checked' : '' }}>
                                 <div class="flex justify-between items-start mb-1">
-                                    <span class="type-label text-xs font-black tracking-widest uppercase">Project
+                                    <span class="type-label text-xs font-black tracking-widest uppercase">Proyek
                                         Based</span>
                                     <div class="radio-dot w-5 h-5 rounded-full border-2 flex items-center justify-center">
                                     </div>
@@ -184,7 +184,7 @@
                     <span
                         class="inline-block bg-white/10 px-3 py-1 rounded-full text-[9px] font-extrabold tracking-widest uppercase mb-4 border border-white/10">Fitur
                         Asisten</span>
-                    <h3 class="text-xl font-bold mb-3">Auto-Portfolio Helper</h3>
+                    <h3 class="text-xl font-bold mb-3">Auto-Portofolio Helper</h3>
                     <p class="text-indigo-200 text-[11px] leading-relaxed mb-8">Sistem kami akan membantu memoles deskripsi jasa
                         Anda agar terlihat lebih profesional di mata klien korporat.</p>
                     <button
@@ -208,7 +208,7 @@
                             <div>
                                 <p class="text-xs font-bold text-gray-900">Tanggapan Cepat</p>
                                 <p class="text-[10px] text-gray-500 leading-relaxed">Pastikan nomor WA aktif untuk tipe
-                                    Project Based.</p>
+                                    Proyek Based.</p>
                             </div>
                         </div>
                     </div>
@@ -277,7 +277,7 @@
                     }
                 });
 
-                // Toggle field harga maksimal (hanya tampil untuk Project Based)
+                // Toggle field harga maksimal (hanya tampil untuk Proyek Based)
                 const checkedRadio = document.querySelector('#type-selector input[name="type"]:checked');
                 if (checkedRadio && checkedRadio.value === 'project') {
                     maxContainer.classList.remove('hidden');

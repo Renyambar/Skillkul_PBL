@@ -21,7 +21,7 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @if($navUser && in_array($navUser->role, ['client', 'admin']))
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        Dashboard Klien
+                        Dasbor Klien
                     </x-nav-link>
 
                     <x-nav-link :href="route('katalog')" :active="request()->routeIs('katalog')">
@@ -31,7 +31,7 @@
 
                     @if($navUser && in_array($navUser->role, ['freelancer', 'admin']))
                     <x-nav-link :href="route('freelancer.dasbor')" :active="request()->routeIs('freelancer.dasbor')">
-                        Dasbor Freelancer
+                        Dasbor Pekerja Lepas
                     </x-nav-link>
                     @endif
                 </div>
@@ -105,7 +105,7 @@
         <div class="pt-2 pb-3 space-y-1">
             @if($navUser && in_array($navUser->role, ['client', 'admin']))
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                Dashboard Klien
+                Dasbor Klien
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('katalog')" :active="request()->routeIs('katalog')">
@@ -115,7 +115,7 @@
 
             @if($navUser && in_array($navUser->role, ['freelancer', 'admin']))
             <x-responsive-nav-link :href="route('freelancer.dasbor')" :active="request()->routeIs('freelancer.dasbor')">
-                Dasbor Freelancer
+                Dasbor Pekerja Lepas
             </x-responsive-nav-link>
             @endif
         </div>

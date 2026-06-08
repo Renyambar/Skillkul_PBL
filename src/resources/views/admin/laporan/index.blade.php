@@ -130,7 +130,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold text-gray-900 text-xs">{{ $report->reported->name ?? 'Dihapus' }}</p>
-                                    <p class="text-[10px] text-gray-400">Freelancer</p>
+                                    <p class="text-[10px] text-gray-400">Pekerja Lepas</p>
                                 </div>
                             </div>
                         </td>

@@ -50,9 +50,9 @@
                         {{ $service->category?->name ?? '–' }}
                     </span>
                     @if($service->type === 'project')
-                        <span class="bg-purple-50 text-purple-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Project</span>
+                        <span class="bg-purple-50 text-purple-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Proyek</span>
                     @else
-                        <span class="bg-blue-50 text-blue-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Non-Project</span>
+                        <span class="bg-blue-50 text-blue-700 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Non-Proyek</span>
                     @endif
                     <span class="bg-gray-100 text-gray-500 text-[10px] font-extrabold px-2.5 py-1 rounded-md font-mono">#{{ $service->id }}</span>
                 </div>
@@ -89,9 +89,9 @@
         {{-- ── Right: Sidebar ── --}}
         <div class="w-full lg:w-80 flex-shrink-0 space-y-4">
 
-            {{-- Freelancer --}}
+            {{-- Pekerja Lepas --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                <h2 class="text-xs font-extrabold uppercase tracking-widest text-gray-400 mb-4">Freelancer</h2>
+                <h2 class="text-xs font-extrabold uppercase tracking-widest text-gray-400 mb-4">Pekerja Lepas</h2>
                 <div class="flex items-center gap-3">
                     @if($service->freelancer?->profile_photo_path)
                         <img src="{{ Storage::url($service->freelancer->profile_photo_path) }}"

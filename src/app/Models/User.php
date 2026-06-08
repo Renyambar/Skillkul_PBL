@@ -143,6 +143,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Badge pencapaian freelancer (hanya dari project-based services).
+     */
+    public function achievements()
+    {
+        return $this->hasMany(UserAchievement::class);
+    }
+
+    /**
      * Laporan yang dibuat oleh user ini (sebagai pelapor).
      */
     public function reportsMade()

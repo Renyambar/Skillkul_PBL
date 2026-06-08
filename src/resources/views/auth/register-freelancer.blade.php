@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'SkillKul') }} — Daftar sebagai Freelancer</title>
+    <title>{{ config('app.name', 'SkillKul') }} — Daftar sebagai Pekerja Lepas</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -82,10 +82,10 @@
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
-                    Freelancer
+                    Pekerja Lepas
                 </div>
 
-                <h2 class="text-3xl font-bold text-gray-900 mb-1 tracking-tight">Daftar sebagai Freelancer</h2>
+                <h2 class="text-3xl font-bold text-gray-900 mb-1 tracking-tight">Daftar sebagai Pekerja Lepas</h2>
                 <p class="text-gray-500 text-sm mb-6">Langkah 1 dari 2 — Pilih metode verifikasi mahasiswa.</p>
 
                 {{-- ════════════════════════════════════════════════════════════
@@ -139,7 +139,7 @@
                 </div>
 
                 {{-- ════════════════════════════════════════════════════════════
-                     FORM A: Freelancer via Email Kampus (.ac.id)
+                     FORM A: Pekerja Lepas via Email Kampus (.ac.id)
                      ════════════════════════════════════════════════════════════ --}}
                 <div x-show="verification === 'college'" x-transition.opacity style="display:none;">
                     {{-- Back to choice --}}
@@ -210,7 +210,7 @@
                 </div>
 
                 {{-- ════════════════════════════════════════════════════════════
-                     FORM B: Freelancer via NIM
+                     FORM B: Pekerja Lepas via NIM
                      ════════════════════════════════════════════════════════════ --}}
                 <div x-show="verification === 'nim'" x-transition.opacity style="display:none;">
                     {{-- Back to choice --}}

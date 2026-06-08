@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\PublicPortfolioController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -37,6 +38,9 @@ Route::get('/keamanan', function () {
 Route::get('/katalog', [ServiceController::class, 'index'])->name('katalog');
 Route::get('/jasa/{id}', [ServiceController::class, 'show'])->name('jasa.detail');
 Route::get('/profil/{username}', [ProfileController::class, 'show'])->name('profil.publik');
+
+// Halaman publik portfolio freelancer (tanpa auth)
+Route::get('/portfolio/{username}', [PublicPortfolioController::class, 'show'])->name('portfolio.public');
 
 Route::middleware(['auth'])->group(function () {
     // Dashboard umum — tidak memerlukan 'verified' agar user
@@ -123,10 +127,20 @@ Route::middleware(['auth', 'verified', 'role:freelancer'])->prefix('freelancer')
     Route::post('/pesanan/{id}/kirim-hasil', [OrderController::class, 'submitResult'])->name('pesanan.submitResult');
     Route::post('/pesanan/{id}/kirim-revisi', [OrderController::class, 'submitResult'])->name('pesanan.submitRevision'); // Re-submit after revision
 
-    // ── Portfolio & Auto-Generate PDF ──
+    // ── Portfolio & Project Portfolio System ──
     Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
-    Route::post('/portfolio/generate', [PortfolioController::class, 'generate'])->name('portfolio.generate');
+    Route::get('/portfolio/tambah/{orderId}', [PortfolioController::class, 'create'])->name('portfolio.create');
+    Route::post('/portfolio', [PortfolioController::class, 'store'])->name('portfolio.store');
+    Route::get('/portfolio/{id}/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit');
+    Route::put('/portfolio/{id}', [PortfolioController::class, 'update'])->name('portfolio.update');
+    Route::post('/portfolio/{id}/toggle-visibility', [PortfolioController::class, 'toggleVisibility'])->name('portfolio.toggleVisibility');
+    Route::post('/portfolio/{id}/toggle-featured', [PortfolioController::class, 'toggleFeatured'])->name('portfolio.toggleFeatured');
+    Route::delete('/portfolio/{id}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
+    Route::post('/portfolio/pdf/generate', [PortfolioController::class, 'generatePdf'])->name('portfolio.generatePdf');
+    Route::get('/portfolio/pdf/download-latest', [PortfolioController::class, 'downloadLatest'])->name('portfolio.downloadLatest');
     Route::get('/portfolio/{id}/download', [PortfolioController::class, 'download'])->name('portfolio.download');
+    // Backward-compatible alias
+    Route::post('/portfolio/generate', [PortfolioController::class, 'generatePdf'])->name('portfolio.generate');
 });
 
 // ============================================================
