@@ -3,9 +3,7 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div class="flex flex-col items-center md:items-start gap-2">
             <a href="/" class="text-xl font-extrabold text-brand-dark dark:text-white tracking-tight flex items-center gap-2">
-                <div class="w-8 h-8 bg-brand-primary text-white rounded-lg flex items-center justify-center shadow-md">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </div>
+                <img src="{{ asset('images/logo-3.png') }}" class="w-8 h-8 object-contain rounded-lg shadow-md" alt="SkillKul Logo">
                 Skill<span class="text-brand-primary dark:text-indigo-400">Kul</span>
             </a>
             <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium">&copy; {{ date('Y') }} SkillKul. Rekening Bersama (Escrow) Aman Terjamin.</p>

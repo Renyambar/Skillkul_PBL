@@ -30,9 +30,7 @@
                 <div class="absolute bottom-0 right-0 w-64 h-64 bg-white/10 dark:bg-indigo-500/10 rounded-full blur-[80px]"></div>
 
                 <h1 class="text-3xl font-extrabold mb-10 tracking-tight relative z-10 flex items-center gap-2">
-                    <div class="w-10 h-10 bg-white text-brand-primary rounded-xl flex items-center justify-center shadow-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
+                    <img src="{{ asset('images/logo-3.png') }}" class="w-10 h-10 object-contain rounded-xl shadow-lg" alt="SkillKul Logo">
                     Skill<span class="text-indigo-200 dark:text-indigo-400">Kul</span>
                 </h1>
                 <h2 class="text-4xl lg:text-5xl font-extrabold mb-6 leading-tight tracking-tight relative z-10">Menjembatani Dunia<br>Akademis & Industri</h2>

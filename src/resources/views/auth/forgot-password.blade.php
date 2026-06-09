@@ -33,9 +33,7 @@
                 <div class="absolute bottom-0 right-0 w-64 h-64 bg-white/10 dark:bg-indigo-500/10 rounded-full blur-[80px]"></div>
 
                 <h1 class="text-2xl font-bold mb-10 relative z-10 flex items-center gap-2">
-                    <div class="w-8 h-8 bg-white text-brand-primary rounded-lg flex items-center justify-center shadow-lg">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
+                    <img src="{{ asset('images/logo-3.png') }}" class="w-8 h-8 object-contain rounded-lg shadow-lg" alt="SkillKul Logo">
                     SkillKul
                 </h1>
                 <h2 class="text-4xl font-extrabold mb-4 leading-tight relative z-10">Atur ulang kata sandi dengan aman.</h2>
