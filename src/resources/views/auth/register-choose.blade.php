@@ -29,8 +29,7 @@
                     Anda ingin bergabung sebagai apa?
                 </h1>
                 <p class="text-gray-500 dark:text-gray-400 text-base max-w-md mx-auto">
-                    Pilih peran yang sesuai. Anda selalu bisa membuat akun baru dengan peran berbeda di kemudian hari.
-                </p>
+                    Pilih peran yang sesuai. Anda selalu dapat membuat akun baru dengan peran yang berbeda di kemudian hari.
             </div>
 
             {{-- Kartu Pilihan Role --}}
@@ -53,10 +52,10 @@
 
                         {{-- Title --}}
                         <h2 class="text-2xl font-extrabold text-gray-900 dark:text-white mb-3 tracking-tight">
-                            Saya Mencari Jasa
+                            Saya Mencari Layanan
                         </h2>
                         <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">
-                            Temukan mahasiswa berbakat untuk mengerjakan desain, coding, penulisan, dan berbagai kebutuhan Anda.
+                            Temukan mahasiswa berbakat untuk mengerjakan desain, pemrograman, penulisan, dan berbagai kebutuhan Anda.
                         </p>
 
                         {{-- Bullets --}}
@@ -65,19 +64,19 @@
                                 <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Daftar menggunakan email apa saja
+                                Daftar menggunakan pos-el apa saja
                             </li>
                             <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                                 <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Akses katalog jasa mahasiswa
+                                Akses katalog layanan mahasiswa
                             </li>
                             <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                                 <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Bayar aman dengan Midtrans
+                                Pembayaran aman dengan Midtrans
                             </li>
                         </ul>
 
@@ -113,10 +112,10 @@
 
                         {{-- Title --}}
                         <h2 class="text-2xl font-extrabold text-gray-900 dark:text-white mb-3 tracking-tight">
-                            Saya Menjual Jasa
+                            Saya Menawarkan Layanan
                         </h2>
                         <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">
-                            Jadikan keahlian kuliah Anda sumber penghasilan. Bangun portofolio profesional sambil belajar.
+                            Jadikan keahlian kuliah Anda sebagai sumber penghasilan. Bangun portofolio profesional sambil belajar.
                         </p>
 
                         {{-- Bullets --}}
@@ -125,25 +124,25 @@
                                 <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Verifikasi via email kampus atau NIM
+                                Verifikasi melalui pos-el kampus atau NIM
                             </li>
                             <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                                 <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Auto-generate portofolio dari proyek
+                                Pembuatan portofolio otomatis dari proyek
                             </li>
                             <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                                 <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Cairkan pendapatan ke dompet
+                                Cairkan pendapatan ke dompet digital
                             </li>
                         </ul>
 
                         {{-- CTA Button --}}
                         <div class="w-full flex items-center justify-center gap-2 py-3 px-6 bg-brand-primary dark:bg-indigo-600 group-hover:bg-brand-dark dark:group-hover:bg-indigo-500 rounded-2xl text-sm font-bold text-white transition-all duration-300 shadow-lg shadow-indigo-900/20">
-                            Daftar sebagai Pekerja Lepas
+                            Daftar sebagai Pekerja Lepas (Freelancer)
                             <svg class="w-4 h-4 -translate-x-1 group-hover:translate-x-0 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
@@ -163,7 +162,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    Kembali ke Beranda
+                    Kembali ke Halaman Utama
                 </a>
             </div>
 

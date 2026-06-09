@@ -58,7 +58,7 @@
         </div>
         
         <p class="mt-8 text-sm text-gray-500 dark:text-gray-400 relative z-10 font-medium">
-            &copy; {{ date('Y') }} SkillKul. All rights reserved.
+            &copy; {{ date('Y') }} SkillKul. Seluruh hak cipta dilindungi.
         </p>
     </body>
 </html>

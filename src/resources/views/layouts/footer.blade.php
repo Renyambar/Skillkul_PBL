@@ -6,11 +6,11 @@
                 <img src="{{ asset('images/logo-3.png') }}" class="w-8 h-8 object-contain rounded-lg shadow-md" alt="SkillKul Logo">
                 Skill<span class="text-brand-primary dark:text-indigo-400">Kul</span>
             </a>
-            <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium">&copy; {{ date('Y') }} SkillKul. Rekening Bersama (Escrow) Aman Terjamin.</p>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium">&copy; {{ date('Y') }} SkillKul. Layanan Rekening Bersama (Escrow) Aman dan Terjamin.</p>
         </div>
         <div class="flex flex-wrap gap-6 text-xs font-bold text-gray-500 dark:text-gray-400">
             <a href="#" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Ketentuan Layanan</a>
-            <a href="#" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">FAQ</a>
+            <a href="#" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Pertanyaan Umum (FAQ)</a>
             <a href="/tentang" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Tentang Kami</a>
             <a href="/keamanan" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Pusat Keamanan</a>
         </div>

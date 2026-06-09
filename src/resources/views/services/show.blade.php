@@ -29,9 +29,9 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
                 <div class="absolute bottom-8 left-8 right-8">
                     @if($service->type === 'project')
-                        <span class="inline-block bg-orange-500/90 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg backdrop-blur-sm border border-orange-400/50 mb-4">Harga Nego (Proyek)</span>
+                        <span class="inline-block bg-orange-500/90 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg backdrop-blur-sm border border-orange-400/50 mb-4">Harga Negosiasi (Proyek)</span>
                     @else
-                        <span class="inline-block bg-green-500/90 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg backdrop-blur-sm border border-green-400/50 mb-4">Harga Pas — Langsung Bayar</span>
+                        <span class="inline-block bg-green-500/90 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-lg uppercase tracking-widest shadow-lg backdrop-blur-sm border border-green-400/50 mb-4">Harga Tetap — Langsung Bayar</span>
                     @endif
                     <h1 class="text-3xl md:text-4xl font-extrabold text-white drop-shadow-lg max-w-2xl leading-tight">{{ $service->title }}</h1>
                 </div>
@@ -68,7 +68,7 @@
                             <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span> Tersedia
                         </span>
                     @endif
-                    <span class="text-xs text-gray-400 dark:text-gray-500 font-medium">Waktu respons: ~2 jam</span>
+                    <span class="text-xs text-gray-400 dark:text-gray-500 font-medium">Waktu respons: ±2 jam</span>
                 </div>
             </div>
 
@@ -94,7 +94,7 @@
                     <div class="w-16 h-16 bg-white dark:bg-gray-800 rounded-2xl shadow-sm flex items-center justify-center mb-4">
                         <span class="text-2xl">💬</span>
                     </div>
-                    <p class="text-sm font-bold text-gray-500 dark:text-gray-400">Belum ada ulasan untuk jasa ini.</p>
+                    <p class="text-sm font-bold text-gray-500 dark:text-gray-400">Belum ada ulasan untuk layanan ini.</p>
                     <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Jadilah yang pertama memesan dan memberikan ulasan!</p>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                         <div class="flex items-baseline gap-1 mb-2">
                             <span class="text-3xl font-black tracking-tight">Rp {{ number_format($service->price, 0, ',', '.') }}</span>
                         </div>
-                        <p class="text-indigo-100 dark:text-gray-300 text-sm mb-8 font-medium">Harga sudah tetap. Bayar langsung untuk memulai pesanan.</p>
+                        <p class="text-indigo-100 dark:text-gray-300 text-sm mb-8 font-medium">Harga sudah tetap. Lakukan pembayaran langsung untuk memulai pesanan.</p>
 
                         {{-- Form input pesanan langsung --}}
                         <div class="space-y-4 mb-8">
@@ -135,22 +135,22 @@
 
                         @if($isBusy)
                             <button disabled class="block w-full bg-gray-500/50 text-white font-bold py-4 rounded-xl text-center text-sm cursor-not-allowed border border-white/10 mb-4 backdrop-blur-sm">
-                                🔒 Pekerja Lepas Sedang Sibuk
+                                Pekerja Lepas Sedang Sibuk
                             </button>
-                            <p class="text-[11px] text-indigo-200 dark:text-gray-400 text-center leading-relaxed">Pekerja Lepas sedang dalam Mode Ujian atau menyelesaikan pesanan lain. Harap kembali lagi nanti.</p>
+                            <p class="text-[11px] text-indigo-200 dark:text-gray-400 text-center leading-relaxed">Pekerja lepas (freelancer) sedang dalam masa ujian atau sedang menyelesaikan pesanan lain. Harap kembali lagi nanti.</p>
                         @else
                             <form action="{{ route('order.create', $service->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" id="btn-pesan-langsung" class="block w-full bg-white dark:bg-indigo-500 text-brand-primary dark:text-white font-extrabold py-4 rounded-xl text-center text-sm hover:bg-indigo-50 dark:hover:bg-indigo-400 transition-all shadow-xl shadow-black/10 mb-4 hover:translate-y-[-2px]">
-                                    🛒 Pesan & Bayar Sekarang
+                                    Pesan & Bayar Sekarang
                                 </button>
                             </form>
                             <p class="text-[11px] text-indigo-200 dark:text-gray-400 text-center font-medium mb-4">Anda akan diarahkan ke halaman pembayaran Midtrans.</p>
                         @endif
 
                         <div class="mt-6 bg-green-400/20 dark:bg-green-900/30 border border-green-400/30 dark:border-green-800/50 rounded-xl p-4 flex items-start gap-3 backdrop-blur-sm">
-                            <span class="text-xl">🛡️</span>
-                            <p class="text-xs text-green-100 dark:text-green-300 font-medium leading-relaxed">Pembayaran aman via sistem Escrow. Dana akan ditahan sampai Anda menyetujui hasil pesanan.</p>
+                            <span class="text-xl"></span>
+                            <p class="text-xs text-green-100 dark:text-green-300 font-medium leading-relaxed">Pembayaran aman melalui sistem rekening bersama (escrow). Dana akan ditahan hingga Anda menyetujui hasil pekerjaan.</p>
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                     <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 dark:bg-orange-500/10 rounded-full blur-[40px]"></div>
                     
                     <div class="relative z-10">
-                        <span class="inline-block bg-white/20 dark:bg-gray-800/60 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-white/10 dark:border-gray-700">HARGA NEGO (PROJECT)</span>
+                        <span class="inline-block bg-white/20 dark:bg-gray-800/60 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-white/10 dark:border-gray-700">HARGA NEGO (PROYEK)</span>
 
                         {{-- Range Harga --}}
                         <div class="flex flex-wrap items-center gap-2 mb-2">
@@ -171,7 +171,7 @@
                                 <span class="text-3xl font-black tracking-tight">Rp {{ number_format($service->price_max, 0, ',', '.') }}</span>
                             @endif
                         </div>
-                        <p class="text-indigo-200 dark:text-gray-300 text-sm mb-6 font-medium">Estimasi range harga • Final sesuai kesepakatan</p>
+                        <p class="text-indigo-200 dark:text-gray-300 text-sm mb-6 font-medium">Estimasi rentang harga • Nilai akhir sesuai kesepakatan</p>
 
                         {{-- Indikator range visual --}}
                         <div class="relative h-2.5 bg-white/20 dark:bg-gray-800 rounded-full mb-8">
@@ -189,24 +189,24 @@
                             <div class="space-y-4">
                                 <div class="flex items-start gap-3">
                                     <span class="bg-brand-secondary dark:bg-indigo-600 rounded-full w-6 h-6 flex items-center justify-center shrink-0 font-bold text-xs shadow-sm">1</span>
-                                    <span class="text-sm text-indigo-50 dark:text-gray-300 font-medium leading-tight pt-0.5">Hubungi freelancer via WhatsApp untuk diskusi scope & harga</span>
+                                    <span class="text-sm text-indigo-50 dark:text-gray-300 font-medium leading-tight pt-0.5">Hubungi pekerja lepas (freelancer) melalui WhatsApp untuk mendiskusikan cakupan (scope) dan harga</span>
                                 </div>
                                 <div class="flex items-start gap-3">
                                     <span class="bg-brand-secondary dark:bg-indigo-600 rounded-full w-6 h-6 flex items-center justify-center shrink-0 font-bold text-xs shadow-sm">2</span>
-                                    <span class="text-sm text-indigo-50 dark:text-gray-300 font-medium leading-tight pt-0.5">Pekerja Lepas akan mengirimkan tagihan (invoice) custom</span>
+                                    <span class="text-sm text-indigo-50 dark:text-gray-300 font-medium leading-tight pt-0.5">Pekerja lepas (freelancer) akan mengirimkan faktur (invoice) khusus</span>
                                 </div>
                                 <div class="flex items-start gap-3">
                                     <span class="bg-brand-secondary dark:bg-indigo-600 rounded-full w-6 h-6 flex items-center justify-center shrink-0 font-bold text-xs shadow-sm">3</span>
-                                    <span class="text-sm text-indigo-50 dark:text-gray-300 font-medium leading-tight pt-0.5">Bayar via link invoice yang dikirim freelancer</span>
+                                    <span class="text-sm text-indigo-50 dark:text-gray-300 font-medium leading-tight pt-0.5">Bayar melalui tautan faktur yang dikirim pekerja lepas (freelancer)</span>
                                 </div>
                             </div>
                         </div>
 
                         @if($isBusy)
                             <button disabled class="block w-full bg-gray-500/50 text-white font-bold py-4 rounded-xl text-center text-sm cursor-not-allowed border border-white/10 mb-4 backdrop-blur-sm">
-                                🔒 Pekerja Lepas Sedang Sibuk
+                                Pekerja Lepas (Freelancer) Sedang Sibuk
                             </button>
-                            <p class="text-[11px] text-indigo-200 dark:text-gray-400 text-center leading-relaxed">Pekerja Lepas sedang dalam Mode Ujian atau menyelesaikan pesanan lain.</p>
+                            <p class="text-[11px] text-indigo-200 dark:text-gray-400 text-center leading-relaxed">Pekerja lepas (freelancer) sedang dalam Mode Ujian atau menyelesaikan pesanan lain.</p>
                         @else
                             @php
                                 $waName  = $service->freelancer?->name ?? 'Pekerja Lepas';
@@ -218,14 +218,14 @@
                                 id="btn-nego-wa"
                                 class="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-white font-extrabold py-4 rounded-xl text-center text-sm transition-all shadow-lg shadow-green-500/30 mb-4 hover:translate-y-[-2px]">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                                Nego via WhatsApp
+                                Negosiasi melalui WhatsApp
                             </a>
-                            <p class="text-[11px] text-indigo-200 dark:text-gray-400 text-center mb-4">Diskusikan scope & harga, lalu minta link pembayaran resmi.</p>
+                            <p class="text-[11px] text-indigo-200 dark:text-gray-400 text-center mb-4">Diskusikan cakupan kerja dan harga, lalu minta tautan pembayaran resmi.</p>
                         @endif
 
                         <div class="mt-2 bg-green-400/20 dark:bg-green-900/30 border border-green-400/30 dark:border-green-800/50 rounded-xl p-4 flex items-start gap-3 backdrop-blur-sm">
-                            <span class="text-xl">🛡️</span>
-                            <p class="text-xs text-green-100 dark:text-green-300 font-medium leading-relaxed">Pembayaran aman via sistem Escrow. Dana akan ditahan sampai Anda menyetujui hasil pesanan.</p>
+                            <span class="text-xl"></span>
+                            <p class="text-xs text-green-100 dark:text-green-300 font-medium leading-relaxed">Pembayaran aman melalui sistem rekening bersama (escrow). Dana akan ditahan hingga Anda menyetujui hasil pekerjaan.</p>
                         </div>
                     </div>
                 </div>
@@ -234,13 +234,13 @@
                 {{-- Info Pengiriman --}}
                 <div class="flex gap-4">
                     <div class="flex-1 bg-white dark:bg-brand-darksurface rounded-2xl p-5 border border-gray-100 dark:border-brand-darkborder text-center shadow-sm">
-                        <p class="text-2xl mb-2">⏱</p>
-                        <p class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">Pengerjaan</p>
+                        <p class="text-2xl mb-2"></p>
+                        <p class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">Waktu Pengerjaan</p>
                         <p class="font-bold text-gray-900 dark:text-white text-sm">{{ $service->estimated_label }}</p>
                     </div>
                     <div class="flex-1 bg-white dark:bg-brand-darksurface rounded-2xl p-5 border border-gray-100 dark:border-brand-darkborder text-center shadow-sm">
-                        <p class="text-2xl mb-2">🔄</p>
-                        <p class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">Revisi</p>
+                        <p class="text-2xl mb-2"></p>
+                        <p class="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">Batas Revisi</p>
                         <p class="font-bold text-gray-900 dark:text-white text-sm">Kesepakatan</p>
                     </div>
                 </div>

@@ -27,14 +27,14 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    Ubah pilihan peran
+                    Ubah Pilihan Peran
                 </a>
                 <h1 class="text-3xl font-extrabold mb-2 tracking-tight relative z-10">SkillKul</h1>
                 <h2 class="text-4xl font-extrabold mb-6 leading-tight tracking-tight relative z-10">
                     Temukan Talenta<br>Terbaik Kampus
                 </h2>
                 <p class="text-indigo-200 dark:text-indigo-300 mb-10 text-sm leading-relaxed relative z-10">
-                    Akses ratusan mahasiswa berbakat untuk kebutuhan desain, coding, penulisan, dan banyak lagi.
+                    Akses ratusan mahasiswa berbakat untuk kebutuhan desain, pemrograman, penulisan, dan lain-lain.
                 </p>
 
                 <div class="space-y-3 relative z-10">
@@ -45,8 +45,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="font-bold text-sm">Email Bebas</h3>
-                            <p class="text-xs text-indigo-200 dark:text-indigo-300 mt-0.5">Gmail, Yahoo, Outlook — semua diterima</p>
+                            <h3 class="font-bold text-sm">Pos-el Bebas</h3>
+                            <p class="text-xs text-indigo-200 dark:text-indigo-300 mt-0.5">Gmail, Yahoo, Outlook — semua layanan diterima</p>
                         </div>
                     </div>
                     <div class="bg-white/10 rounded-2xl p-4 flex gap-3 items-center border border-white/10 backdrop-blur-sm">
@@ -82,7 +82,7 @@
                 </div>
 
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">Buat Akun Klien</h2>
-                <p class="text-gray-500 dark:text-gray-400 text-sm mb-8">Gunakan email apa saja untuk mendaftar.</p>
+                <p class="text-gray-500 dark:text-gray-400 text-sm mb-8">Gunakan pos-el apa saja untuk mendaftar.</p>
 
                 <form method="POST" action="{{ route('register.client.store') }}" class="space-y-5" id="form-register-client">
                     @csrf
@@ -98,11 +98,11 @@
 
                     {{-- Email --}}
                     <div>
-                        <label for="email" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Alamat Email</label>
+                        <label for="email" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Alamat Pos-el</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required
                             placeholder="contoh@gmail.com"
                             class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
-                        <p class="mt-1 text-[10px] text-gray-400 dark:text-gray-500">Gmail, Yahoo, Outlook, atau domain apapun diterima.</p>
+                        <p class="mt-1 text-[10px] text-gray-400 dark:text-gray-500">Gmail, Yahoo, Outlook, atau domain apapun apa pun dapat digunakan.</p>
                         <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
                     </div>
 
@@ -111,14 +111,14 @@
                         <div>
                             <label for="password" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Kata Sandi</label>
                             <input id="password" type="password" name="password" required autocomplete="new-password"
-                                placeholder="Min. 8 karakter"
+                                placeholder="Minimal 8 karakter"
                                 class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                             <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
                         </div>
                         <div>
-                            <label for="password_confirmation" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Konfirmasi Sandi</label>
+                            <label for="password_confirmation" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Konfirmasi Kata Sandi</label>
                             <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password"
-                                placeholder="Ulangi kata sandi"
+                                placeholder="Masukkan kembali kata sandi"
                                 class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                     <div class="pt-2">
                         <button type="submit" id="btn-submit-client"
                             class="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-2xl shadow-lg shadow-indigo-900/20 text-sm font-bold text-white bg-brand-primary dark:bg-indigo-600 hover:bg-brand-dark dark:hover:bg-indigo-700 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary dark:focus:ring-offset-gray-900">
-                            Buat Akun & Verifikasi Email
+                            Buat Akun & Verifikasi Pos-el
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
@@ -135,7 +135,7 @@
                     </div>
 
                     <p class="text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-                        Sudah punya akun?
+                        Sudah memiliki akun?
                         <a href="{{ route('login') }}" class="font-bold text-brand-primary dark:text-indigo-400 hover:text-brand-dark dark:hover:text-indigo-300 transition-colors">Masuk di sini</a>
                     </p>
                 </form>

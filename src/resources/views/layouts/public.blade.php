@@ -26,7 +26,7 @@
         </a>
         <div class="hidden md:flex space-x-10 text-sm font-bold text-gray-600 dark:text-gray-400">
             <a href="{{ route('katalog') }}" class="{{ request()->routeIs('katalog') || request()->routeIs('jasa.detail') ? 'text-brand-primary dark:text-indigo-400 border-b-2 border-brand-primary dark:border-indigo-400 pb-1' : 'hover:text-brand-primary dark:hover:text-indigo-400 pb-1 transition-colors' }}">Layanan</a>
-            <a href="{{ route('tentang') }}" class="{{ request()->routeIs('tentang') ? 'text-brand-primary dark:text-indigo-400 border-b-2 border-brand-primary dark:border-indigo-400 pb-1' : 'hover:text-brand-primary dark:hover:text-indigo-400 pb-1 transition-colors' }}">Tentang</a>
+            <a href="{{ route('tentang') }}" class="{{ request()->routeIs('tentang') ? 'text-brand-primary dark:text-indigo-400 border-b-2 border-brand-primary dark:border-indigo-400 pb-1' : 'hover:text-brand-primary dark:hover:text-indigo-400 pb-1 transition-colors' }}">Tentang Kami</a>
             <a href="{{ route('keamanan') }}" class="{{ request()->routeIs('keamanan') ? 'text-brand-primary dark:text-indigo-400 border-b-2 border-brand-primary dark:border-indigo-400 pb-1' : 'hover:text-brand-primary dark:hover:text-indigo-400 pb-1 transition-colors' }}">Keamanan</a>
         </div>
         <div class="flex space-x-3 items-center" x-data="{
@@ -49,7 +49,7 @@
             </button>
 
             @auth
-                <a href="{{ route('dashboard') }}" class="bg-brand-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-brand-dark dark:hover:bg-indigo-900 transition-colors shadow-sm shadow-indigo-500/30">Dasbor</a>
+                <a href="{{ route('dashboard') }}" class="bg-brand-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-brand-dark dark:hover:bg-indigo-900 transition-colors shadow-sm shadow-indigo-500/30">Kembali</a>
             @else
                 <a href="{{ route('login') }}" class="text-sm font-bold text-gray-700 dark:text-gray-300 hover:text-brand-primary dark:hover:text-indigo-400 transition-colors px-4 py-2">Masuk</a>
                 @if (Route::has('register'))

@@ -23,7 +23,7 @@
                         </svg>
                     </div>
                     <input type="text" name="search" id="katalog-search-input" value="{{ request('search') }}"
-                        placeholder="Cari jasa pemrograman, desain, atau pemeriksaan ejaan..."
+                        placeholder="Cari layanan pemrograman, desain, atau pemeriksaan ejaan..."
                         class="w-full bg-transparent py-4 px-4 text-base text-white placeholder:text-white/60 border-0 outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 font-medium">
                     {{-- Pertahankan filter tipe jika sudah dipilih --}}
                     @if(request('type'))
@@ -43,19 +43,19 @@
                     <a href="{{ route('katalog', array_merge(request()->except('type', 'page'), [])) }}" id="filter-semua"
                         class="px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm
                                       {{ !request('type') ? 'bg-white text-brand-primary dark:bg-brand-darksurface dark:text-white' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
-                        🔍 Semua Jenis
+                        Semua Jenis
                     </a>
                     <a href="{{ route('katalog', array_merge(request()->except('type', 'page'), ['type' => 'non_project'])) }}"
                         id="filter-non-project"
                         class="px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm flex items-center gap-1.5
                                       {{ request('type') == 'non_project' ? 'bg-white text-green-700 dark:bg-green-900/40 dark:text-green-300 dark:border-green-800/50' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
-                        💰 Non-Proyek (Harga Pas)
+                        Non-Proyek (Harga Tetap)
                     </a>
                     <a href="{{ route('katalog', array_merge(request()->except('type', 'page'), ['type' => 'project'])) }}"
                         id="filter-project"
                         class="px-6 py-2.5 rounded-full text-sm font-semibold transition-all shadow-sm flex items-center gap-1.5
                                       {{ request('type') == 'project' ? 'bg-white text-orange-700 dark:bg-orange-900/40 dark:text-orange-300 dark:border-orange-800/50' : 'border border-white/20 bg-white/5 text-white hover:bg-white/20' }}">
-                        🤝 Proyek (Bisa Nego)
+                        Proyek (Bisa Negosiasi)
                     </a>
                 </div>
             </form>
@@ -113,7 +113,7 @@
                 <div class="px-5 py-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 text-indigo-700 dark:text-indigo-300 font-bold text-sm rounded-xl border border-indigo-200 dark:border-indigo-800/50 shadow-sm flex items-center gap-2">
                     <span>
                         <span class="text-base font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">{{ $services->total() }}</span>
-                        <span class="ml-1">jasa ditemukan</span>
+                        <span class="ml-1">layanan ditemukan</span>
                     </span>
                 </div>
             </div>
@@ -164,11 +164,11 @@
                             @if($service->type === 'project')
                                 <div
                                     class="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-lg">
-                                    Bisa Nego</div>
+                                    Bisa Negosiasi</div>
                             @else
                                 <div
                                     class="absolute top-4 left-4 bg-green-500 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-lg">
-                                    Harga Pas</div>
+                                    Harga Tetap</div>
                             @endif
 
                             {{-- Kategori badge --}}
@@ -250,10 +250,9 @@
                 <div class="flex-1">
                     <span
                         class="inline-block bg-brand-primary/10 dark:bg-indigo-500/20 text-brand-primary dark:text-indigo-300 text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-widest mb-3">Sistem
-                        Escrow SkillKul</span>
-                    <h3 class="text-2xl font-extrabold text-brand-dark dark:text-white mb-2">Uangmu aman sampai tugas selesai!</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">Kami menahan dana Anda di sistem escrow yang aman.
-                        Pembayaran baru akan diteruskan ke pekerja lepas hanya setelah Anda menyetujui hasil kerjanya secara tuntas.</p>
+                        Rekening Bersama (Escrow) SkillKul</span>
+                    <h3 class="text-2xl font-extrabold text-brand-dark dark:text-white mb-2">Dana Anda aman sampai tugas selesai!</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl">Kami menahan dana Anda di dalam sistem rekening bersama (escrow) yang aman. Pembayaran baru akan diteruskan ke pekerja lepas setelah Anda menyetujui hasil pekerjaannya secara tuntas.</p>
                 </div>
                 <div>
                     <a href="{{ route('keamanan') }}"
@@ -280,16 +279,16 @@
                         KURASI OTOMATIS
                     </span>
                     <h3 class="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight">Pembuatan Portofolio Otomatis</h3>
-                    <p class="text-indigo-200 dark:text-gray-300 text-base leading-relaxed mb-8 max-w-2xl font-medium">Selesaikan tugas, bangun masa depan. Setiap
-                        proyek yang selesai dan mendapat rating ≥ 4 bintang akan otomatis tercatat sebagai portofolio
-                        profesional yang terverifikasi.</p>
+                    <p class="text-indigo-200 dark:text-gray-300 text-base leading-relaxed mb-8 max-w-2xl font-medium">
+                    Selesaikan tugas, bangun masa depan. Setiap proyek yang selesai dan mendapat penilaian (rating) &ge; 4 bintang, secara otomatis akan tercatat sebagai portofolio profesional yang terverifikasi.
+                    </p>
                     <ul class="space-y-3 mb-8">
                         <li class="flex items-center gap-3 text-sm text-indigo-100 dark:text-gray-200 font-medium"><span class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-brand-accent text-xs">✓</span>
                             Integrasi Ulasan Terverifikasi</li>
                         <li class="flex items-center gap-3 text-sm text-indigo-100 dark:text-gray-200 font-medium"><span class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-brand-accent text-xs">✓</span>
                             Cetak PDF Portofolio Otomatis</li>
                         <li class="flex items-center gap-3 text-sm text-indigo-100 dark:text-gray-200 font-medium"><span class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-brand-accent text-xs">✓</span>
-                            Ekspor ke LinkedIn/CV</li>
+                            Ekspor ke LinkedIn / CV</li>
                     </ul>
                     <a href="{{ route('register') }}"
                         class="inline-block bg-brand-accent text-brand-dark px-8 py-3.5 rounded-xl text-sm font-extrabold hover:bg-green-300 dark:hover:bg-green-400 transition-colors shadow-lg">Mulai Sekarang</a>

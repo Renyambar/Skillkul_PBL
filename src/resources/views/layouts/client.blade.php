@@ -40,7 +40,7 @@
                 <div class="hidden md:flex items-center gap-1 mx-auto">
                     <a href="{{ route('dashboard') }}"
                         class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'text-brand-primary dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-brand-primary dark:hover:text-indigo-300 hover:bg-gray-50 dark:hover:bg-gray-800/50' }}">
-                        Beranda
+                        Halaman Utama
                     </a>
                     <a href="{{ route('katalog') }}"
                         class="px-4 py-2 text-sm font-semibold rounded-lg transition-colors {{ request()->routeIs('katalog') || request()->routeIs('jasa.detail') ? 'text-brand-primary dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30' : 'text-gray-600 dark:text-gray-400 hover:text-brand-primary dark:hover:text-indigo-300 hover:bg-gray-50 dark:hover:bg-gray-800/50' }}">

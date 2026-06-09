@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'SkillKul') }} — Daftar sebagai Pekerja Lepas</title>
+    <title>{{ config('app.name', 'SkillKul') }} — Daftar sebagai Pekerja Lepas (Freelancer)</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -37,14 +37,14 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    Ubah pilihan peran
+                    Ubah Pilihan Peran
                 </a>
                 <h1 class="text-3xl font-extrabold mb-2 tracking-tight relative z-10">SkillKul</h1>
                 <h2 class="text-4xl font-extrabold mb-6 leading-tight tracking-tight relative z-10">
                     Monetisasi<br>Keahlian Anda
                 </h2>
                 <p class="text-indigo-200 dark:text-indigo-300 mb-10 text-sm leading-relaxed relative z-10">
-                    Khusus untuk mahasiswa aktif. Verifikasi identitas Anda untuk mulai menerima pesanan.
+                    Khusus untuk mahasiswa aktif. Lakukan verifikasi identitas Anda untuk mulai menerima pesanan.
                 </p>
 
                 <div class="space-y-3 relative z-10">
@@ -56,7 +56,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-sm">Verifikasi Mahasiswa</h3>
-                            <p class="text-xs text-indigo-200 dark:text-indigo-300 mt-0.5">Via email .ac.id atau NIM</p>
+                            <p class="text-xs text-indigo-200 dark:text-indigo-300 mt-0.5">Melalui pos-el mahasiswa atau NIM</p>
                         </div>
                     </div>
                     <div class="bg-white/10 rounded-2xl p-4 flex gap-3 items-center border border-white/10">
@@ -89,10 +89,10 @@
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
-                    Pekerja Lepas
+                    Pekerja Lepas (Freelancer)
                 </div>
 
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">Daftar sebagai Pekerja Lepas</h2>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">Daftar sebagai Pekerja Lepas (Freelancer)</h2>
                 <p class="text-gray-500 dark:text-gray-400 text-sm mb-6">Langkah 1 dari 2 — Pilih metode verifikasi mahasiswa.</p>
 
                 {{-- ════════════════════════════════════════════════════════════
@@ -100,10 +100,10 @@
                      ════════════════════════════════════════════════════════════ --}}
                 <div x-show="verification === ''" x-transition.opacity class="space-y-4">
                     <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
-                        Apakah Anda memiliki email mahasiswa (<span class="text-brand-primary dark:text-indigo-400 font-bold">.ac.id</span>)?
+                        Apakah Anda memiliki pos-el mahasiswa?
                     </p>
 
-                    {{-- Pilihan: YA — Email Kampus --}}
+                    {{-- Pilihan: YA — Email mahasiswa --}}
                     <button type="button" id="btn-choice-college"
                         @click="setVerification('college')"
                         class="group w-full text-left flex items-center gap-4 p-5 rounded-2xl border-2 border-gray-100 dark:border-gray-800 hover:border-brand-primary dark:hover:border-indigo-500 bg-white dark:bg-gray-800/30 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/20 transition-all duration-200">
@@ -113,8 +113,8 @@
                             </svg>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="font-bold text-gray-900 dark:text-white text-sm">Ya, saya punya email kampus</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Daftar menggunakan email <span class="font-semibold text-gray-700 dark:text-gray-300">nama@mahasiswa.kampus.ac.id</span></p>
+                            <p class="font-bold text-gray-900 dark:text-white text-sm">Ya, saya memiliki pos-el mahasiswa</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Daftar menggunakan pos-el <span class="font-semibold text-gray-700 dark:text-gray-300">nama@student.mahasiswa.ac.id</span></p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-brand-primary dark:group-hover:text-indigo-400 flex-shrink-0 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -131,8 +131,8 @@
                             </svg>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="font-bold text-gray-900 dark:text-white text-sm">Tidak, saya daftar dengan NIM</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Gunakan NIM dan email pribadi Anda</p>
+                            <p class="font-bold text-gray-900 dark:text-white text-sm">Tidak, saya ingin mendaftar menggunakan NIM</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Gunakan NIM dan pos-el pribadi Anda</p>
                         </div>
                         <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-brand-primary dark:group-hover:text-indigo-400 flex-shrink-0 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -140,13 +140,13 @@
                     </button>
 
                     <p class="text-center text-sm text-gray-500 dark:text-gray-400 pt-2">
-                        Sudah punya akun?
+                        Sudah memiliki akun?
                         <a href="{{ route('login') }}" class="font-bold text-brand-primary dark:text-indigo-400 hover:text-brand-dark dark:hover:text-indigo-300 transition-colors">Masuk di sini</a>
                     </p>
                 </div>
 
                 {{-- ════════════════════════════════════════════════════════════
-                     FORM A: Pekerja Lepas via Email Kampus (.ac.id)
+                     FORM A: Pekerja Lepas via Email mahasiswa (.ac.id)
                      ════════════════════════════════════════════════════════════ --}}
                 <div x-show="verification === 'college'" x-transition.opacity style="display:none;">
                     {{-- Back to choice --}}
@@ -155,16 +155,16 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                         </svg>
-                        Ubah pilihan verifikasi
+                        Ubah Pilihan Verifikasi
                     </button>
 
                     <div class="inline-flex items-center gap-1.5 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
-                        Verifikasi via Email Kampus
+                        Verifikasi melalui Pos-el mahasiswa
                     </div>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">Email kampus Anda (<span class="font-semibold text-brand-primary dark:text-indigo-400">.ac.id</span>) berfungsi sebagai bukti status mahasiswa.</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">Pos-el mahasiswa Andaberfungsi sebagai bukti status mahasiswa.</p>
 
                     <form method="POST" action="{{ route('register.freelancer.college') }}" class="space-y-4" id="form-freelancer-college">
                         @csrf
@@ -180,9 +180,9 @@
                         </div>
 
                         <div>
-                            <label for="email_college" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Email Kampus</label>
+                            <label for="email_college" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Pos-el mahasiswa</label>
                             <input id="email_college" type="email" name="email" value="{{ old('email') }}" required
-                                placeholder="nama@mahasiswa.kampus.ac.id"
+                                placeholder="nama@student.kampus.ac.id"
                                 class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                             <p class="mt-1 text-[10px] text-indigo-500 dark:text-indigo-400 font-medium">⚠ Wajib menggunakan domain .ac.id</p>
                             <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
@@ -192,14 +192,14 @@
                             <div>
                                 <label for="password_college" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Kata Sandi</label>
                                 <input id="password_college" type="password" name="password" required autocomplete="new-password"
-                                    placeholder="Min. 8 karakter"
+                                    placeholder="Minimal 8 karakter"
                                     class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                                 <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
                             </div>
                             <div>
-                                <label for="password_confirmation_college" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Konfirmasi Sandi</label>
+                                <label for="password_confirmation_college" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Konfirmasi Kata Sandi</label>
                                 <input id="password_confirmation_college" type="password" name="password_confirmation" required autocomplete="new-password"
-                                    placeholder="Ulangi sandi"
+                                    placeholder="Masukkan kembali kata sandi"
                                     class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                         <div class="pt-2">
                             <button type="submit" id="btn-submit-college"
                                 class="w-full flex justify-center items-center gap-2 py-4 px-4 rounded-2xl shadow-lg shadow-indigo-900/20 text-sm font-bold text-white bg-brand-primary dark:bg-indigo-600 hover:bg-brand-dark dark:hover:bg-indigo-700 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary dark:focus:ring-offset-gray-900">
-                                Daftar & Verifikasi Email
+                                Daftar & Verifikasi Pos-el
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                                 </svg>
@@ -226,14 +226,14 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                         </svg>
-                        Ubah pilihan verifikasi
+                        Ubah Pilihan Verifikasi
                     </button>
 
                     <div class="inline-flex items-center gap-1.5 bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0"/>
                         </svg>
-                        Verifikasi via NIM
+                        Verifikasi melalui NIM
                     </div>
                     <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">
                         Masukkan NIM Anda sebagai bukti status mahasiswa.
@@ -261,16 +261,15 @@
                                 maxlength="11"
                                 pattern="\d{11}"
                                 class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 font-mono tracking-widest transition-colors">
-                            <p class="mt-1 text-[10px] text-gray-400 dark:text-gray-500">11 digit angka · 2 digit tahun masuk · 41070 kode institusi · 4 digit nomor urut</p>
                             <x-input-error :messages="$errors->get('nim')" class="mt-1.5" />
                         </div>
 
                         <div>
-                            <label for="email_nim" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Email Pribadi</label>
+                            <label for="email_nim" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Pos-el Pribadi</label>
                             <input id="email_nim" type="email" name="email" value="{{ old('email') }}" required
                                 placeholder="contoh@gmail.com"
                                 class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
-                            <p class="mt-1 text-[10px] text-gray-400 dark:text-gray-500">Link verifikasi akan dikirim ke email ini.</p>
+                            <p class="mt-1 text-[10px] text-gray-400 dark:text-gray-500">Tautan verifikasi akan dikirim ke pos-el ini.</p>
                             <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
                         </div>
 
@@ -278,14 +277,14 @@
                             <div>
                                 <label for="password_nim" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Kata Sandi</label>
                                 <input id="password_nim" type="password" name="password" required autocomplete="new-password"
-                                    placeholder="Min. 8 karakter"
+                                    placeholder="Minimal 8 karakter"
                                     class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                                 <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
                             </div>
                             <div>
-                                <label for="password_confirmation_nim" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Konfirmasi Sandi</label>
+                                <label for="password_confirmation_nim" class="block text-[11px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1.5">Konfirmasi Kata Sandi</label>
                                 <input id="password_confirmation_nim" type="password" name="password_confirmation" required autocomplete="new-password"
-                                    placeholder="Ulangi sandi"
+                                    placeholder="Masukkan kembali kata sandi"
                                     class="block w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:ring-brand-primary dark:focus:ring-indigo-500 focus:border-brand-primary dark:focus:border-indigo-500 sm:text-sm py-3 px-4 font-medium placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                             </div>
                         </div>
@@ -293,7 +292,7 @@
                         <div class="pt-2">
                             <button type="submit" id="btn-submit-nim"
                                 class="w-full flex justify-center items-center gap-2 py-4 px-4 rounded-2xl shadow-lg shadow-indigo-900/20 text-sm font-bold text-white bg-brand-primary dark:bg-indigo-600 hover:bg-brand-dark dark:hover:bg-indigo-700 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary dark:focus:ring-offset-gray-900">
-                                Daftar & Verifikasi Email
+                                Daftar & Verifikasi Pos-el
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                                 </svg>

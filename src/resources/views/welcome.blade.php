@@ -14,11 +14,11 @@
             </span>
             <h1 class="text-5xl md:text-7xl font-extrabold text-brand-dark dark:text-white leading-[1.1] tracking-tight">
                 Menjembatani<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-purple-500 dark:from-indigo-400 dark:to-purple-400">Dunia Akademis</span><br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-purple-500 dark:from-indigo-400 dark:to-purple-400">Dunia Akademik</span><br>
                 &amp; Industri
             </h1>
             <p class="text-gray-600 dark:text-gray-400 md:text-lg max-w-lg leading-relaxed font-medium">
-                Platform kurasi untuk mahasiswa bertalenta dalam membangun portofolio profesional dan karier wirausaha sejak masa kuliah.
+                Platform penyedia layanan terkurasi bagi mahasiswa berbakat untuk membangun portofolio profesional dan karier wirausaha sejak masa kuliah.
             </p>
 
             {{-- ── Search Bar Fungsional ── --}}
@@ -28,7 +28,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     <input type="text" name="search" id="hero-search-input"
-                        placeholder="Cari jasa desain, coding, penulisan…"
+                        placeholder="Cari jasa desain, pemrograman, penulisan…"
                         class="w-full pl-12 pr-4 py-4 text-sm bg-white dark:bg-gray-800 border-2 border-transparent dark:border-gray-700 rounded-2xl outline-none focus:border-brand-primary dark:focus:border-indigo-500 focus:ring-4 focus:ring-brand-primary/10 dark:focus:ring-indigo-500/20 transition-all shadow-lg shadow-gray-200/50 dark:shadow-none font-medium text-gray-700 dark:text-gray-200 placeholder-gray-400">
                 </div>
                 <button type="submit" id="hero-search-btn"
@@ -49,7 +49,7 @@
                     @if($categories->count() > 4)
                         <a href="{{ route('katalog') }}"
                             class="text-xs font-bold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-transparent dark:border-gray-700 px-4 py-2 rounded-xl transition-colors">
-                            +{{ $categories->count() - 4 }} lainnya
+                            lainnya
                         </a>
                     @endif
                 @endif
@@ -69,9 +69,9 @@
                     <div class="bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 p-2 rounded-xl">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                     </div>
-                    <span class="font-extrabold text-sm text-brand-dark dark:text-white">Bakat Terverifikasi</span>
+                    <span class="font-extrabold text-sm text-brand-dark dark:text-white">Talenta Terverifikasi</span>
                 </div>
-                <p class="text-xs text-gray-600 dark:text-gray-400 font-medium leading-relaxed">Hanya mahasiswa berprestasi dengan portofolio terkurasi.</p>
+                <p class="text-xs text-gray-600 dark:text-gray-400 font-medium leading-relaxed">Hanya mahasiswa berprestasi dengan portofolio yang telah terkurasi.</p>
             </div>
         </div>
     </section>
@@ -81,7 +81,7 @@
         <div class="max-w-7xl mx-auto px-6 md:px-16">
             <div class="text-center mb-20 space-y-4">
                 <p class="text-xs font-extrabold text-brand-primary dark:text-indigo-400 tracking-widest uppercase">EKSKLUSIF DI SKILLKUL</p>
-                <h2 class="text-4xl md:text-5xl font-extrabold text-brand-dark dark:text-white tracking-tight">Fitur Utama untuk Masa Depanmu</h2>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-brand-dark dark:text-white tracking-tight">Fitur Utama untuk Masa Depan Anda</h2>
                 <p class="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto font-medium">Inovasi digital yang dirancang khusus untuk ekosistem pendidikan dan profesional.</p>
             </div>
 
@@ -91,9 +91,9 @@
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
                     <div class="relative z-10">
                         <span class="inline-block bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-6 border border-white/10">FITUR INOVATIF</span>
-                        <h3 class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight">Auto-Portofolio Generator</h3>
+                        <h3 class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight">Pembuat Portofolio Otomatis</h3>
                         <p class="text-indigo-200 text-base max-w-md leading-relaxed mb-16">
-                            Sistem otomatis yang merangkum proyek menjadi portofolio profesional siap kerja.
+                            Sistem otomatis yang merangkum proyek menjadi portofolio profesional yang siap kerja.
                         </p>
                     </div>
                     <!-- Abstract Design Elements -->
@@ -118,7 +118,7 @@
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                         </div>
                         <h3 class="text-2xl font-extrabold text-brand-dark dark:text-white mb-4">Mode Ujian</h3>
-                        <p class="text-gray-500 dark:text-gray-400 leading-relaxed font-medium">Nonaktifkan pesanan sementara saat minggu UAS/UTS agar kamu tetap fokus pada studi akademik.</p>
+                        <p class="text-gray-500 dark:text-gray-400 leading-relaxed font-medium">Nonaktifkan pesanan sementara waktu selama pekan UTS/UAS agar Anda dapat tetap fokus pada studi akademik.</p>
                     </div>
                     <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 mt-8 flex justify-between items-center shadow-sm border border-gray-100 dark:border-gray-700">
                         <span class="text-sm font-bold text-brand-dark dark:text-white">Status Akademik</span>
@@ -135,9 +135,9 @@
                             <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
                             AMAN & TERPERCAYA
                         </span>
-                        <h3 class="text-3xl font-extrabold text-brand-dark dark:text-white">Pembayaran Escrow Midtrans</h3>
+                        <h3 class="text-3xl font-extrabold text-brand-dark dark:text-white">Pembayaran Rekening Bersama (Escrow) Midtrans</h3>
                         <p class="text-gray-500 dark:text-gray-400 text-lg leading-relaxed font-medium">
-                            Dana aman 100%. Kami menjaga dana Anda di sistem rekening bersama dan hanya melepaskannya setelah tugas dikonfirmasi selesai serta sesuai standar.
+                            Dana aman 100%. Kami menjaga dana Anda di dalam sistem rekening bersama dan hanya akan meneruskannya setelah tugas dikonfirmasi selesai serta memenuhi standar.
                         </p>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-900 rounded-[2rem] p-8 border border-gray-200 dark:border-gray-700 md:w-1/2 w-full relative overflow-hidden">
@@ -146,14 +146,14 @@
                         
                         <div class="flex justify-between items-end mb-8 relative z-10">
                             <span class="text-sm font-bold text-gray-500 dark:text-gray-400">Total Proyek</span>
-                            <span class="text-3xl font-extrabold text-brand-primary dark:text-indigo-400">Rp 2.500.000</span>
+                            <span class="text-3xl font-extrabold text-brand-primary dark:text-indigo-400">Rp2.500.000</span>
                         </div>
                         <div class="space-y-5 relative z-10">
                             <div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
                                 <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 flex items-center justify-center">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                                 </div>
-                                <span class="font-bold text-gray-900 dark:text-white">Dana Tertahan (Escrow)</span>
+                                <span class="font-bold text-gray-900 dark:text-white">Dana Ditahan (Escrow)</span>
                             </div>
                             <div class="flex items-center gap-4 p-4 opacity-60">
                                 <div class="w-10 h-10 rounded-full border-2 border-gray-300 dark:border-gray-600 border-dashed flex items-center justify-center">
@@ -173,7 +173,7 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
             <div>
                 <p class="text-xs font-extrabold text-brand-primary dark:text-indigo-400 tracking-widest uppercase mb-2">TERBARU DI SKILLKUL</p>
-                <h2 class="text-4xl font-extrabold text-brand-dark dark:text-white tracking-tight">Jasa Unggulan</h2>
+                <h2 class="text-4xl font-extrabold text-brand-dark dark:text-white tracking-tight">Layanan Unggulan</h2>
             </div>
             <a href="{{ route('katalog') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm font-bold text-brand-dark dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-sm">
                 Lihat Semua
@@ -213,9 +213,9 @@
                             {{-- Badges --}}
                             <div class="absolute top-4 left-4 flex gap-2">
                                 @if($svc->type === 'project')
-                                    <span class="bg-orange-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-sm">Bisa Nego</span>
+                                    <span class="bg-orange-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-sm">Bisa Negosiasi</span>
                                 @else
-                                    <span class="bg-green-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-sm">Harga Pas</span>
+                                    <span class="bg-green-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider shadow-sm">Harga Tetap</span>
                                 @endif
                             </div>
 
@@ -280,7 +280,7 @@
                 @endfor
             </div>
             <h2 class="text-3xl md:text-5xl font-extrabold text-white leading-[1.3] mx-auto max-w-4xl tracking-tight mb-12">
-                "SkillKul bukan sekadar platform pencarian kerja. Ini adalah jaminan keamanan bagi klien sekaligus panggung pembuktian bagi mahasiswa."
+                "SkillKul bukan sekadar platform pencarian kerja. Platform ini memberikan jaminan keamanan bagi klien, sekaligus menjadi panggung pembuktian bagi mahasiswa."
             </h2>
             <div class="flex flex-col items-center">
                 <div class="w-20 h-20 rounded-full border-4 border-brand-accent/30 overflow-hidden mb-4 p-1">
@@ -297,15 +297,15 @@
         <div class="bg-gradient-to-r from-brand-primary to-indigo-800 rounded-[3rem] shadow-2xl p-12 md:p-20 text-center border border-white/10 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             
-            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight relative z-10">Siap Memulai Perjalanan Profesionalmu?</h2>
-            <p class="text-indigo-100 text-lg md:text-xl mb-12 max-w-2xl mx-auto relative z-10">Bergabunglah dengan ribuan mahasiswa dan klien yang telah terhubung di ekosistem SkillKul.</p>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight relative z-10">Siap Memulai Perjalanan Profesional Anda?</h2>
+            <p class="text-indigo-100 text-lg md:text-xl mb-12 max-w-2xl mx-auto relative z-10">Bergabunglah dengan ribuan mahasiswa dan klien yang telah terhubung di dalam ekosistem SkillKul.</p>
             
             <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
                 <a href="{{ route('katalog') }}" class="bg-white text-brand-dark px-8 py-4 rounded-2xl text-base font-bold hover:bg-gray-50 transition-colors shadow-lg">
-                    Cari Jasa Mahasiswa
+                    Cari Layanan Mahasiswa
                 </a>
                 <a href="{{ route('register') }}" class="bg-brand-dark text-white px-8 py-4 rounded-2xl text-base font-bold hover:bg-black transition-colors shadow-lg border border-white/10">
-                    Daftar Jadi Pekerja Lepas
+                    Daftar Sebagai Pekerja Lepas (Freelancer)
                 </a>
             </div>
         </div>

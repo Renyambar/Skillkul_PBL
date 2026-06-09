@@ -45,11 +45,11 @@ class DatabaseSeeder extends Seeder
         // ─── 3. Kategori Jasa ─────────────────────────────────────────────────
         $categories = [
             ['name' => 'Desain Presentasi',  'description' => 'Bikin slide PPT keren dan estetik buat tugas akhir atau semhas.'],
-            ['name' => 'Joki Tugas Koding',  'description' => 'Bantuan mengerjakan tugas Web, Java, Python, dll.'],
-            ['name' => 'Ketikan & Makalah',  'description' => 'Pembuatan makalah, merangkum materi, dan terjemahan.'],
-            ['name' => 'Video Editing',      'description' => 'Edit video tugas kelompok agar terlihat profesional.'],
+            ['name' => 'Bantuan Tugas Pemrograman',  'description' => 'Bantuan mengerjakan tugas Web, Java, Python, dll.'],
+            ['name' => 'Pengetikan & Makalah',  'description' => 'Pembuatan makalah, merangkum materi, dan terjemahan.'],
+            ['name' => 'Penyuntingan Video',      'description' => 'Edit video tugas kelompok agar terlihat profesional.'],
             ['name' => 'Desain Grafis',      'description' => 'Poster, banner, infografis, dan aset visual lainnya.'],
-            ['name' => 'Terjemahan',         'description' => 'Alih bahasa dokumen Indonesia-Inggris dan sebaliknya.'],
+            //['name' => 'Terjemahan',         'description' => 'Alih bahasa dokumen Indonesia-Inggris dan sebaliknya.'],
         ];
         foreach ($categories as $cat) {
             Category::create($cat);

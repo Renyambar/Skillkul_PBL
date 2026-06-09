@@ -5,7 +5,7 @@
 <div class="max-w-6xl mx-auto px-6 lg:px-12 py-10 transition-colors duration-300">
     <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-primary dark:text-indigo-400 tracking-widest uppercase mb-4">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-        CHECKOUT AMAN
+        PEMBAYARAN AMAN
     </span>
     <h1 class="text-2xl md:text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight mb-8">
         {{ $order->service->title ?? 'Detail Pesanan' }}
@@ -37,7 +37,7 @@
                             <svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         </div>
                         <div>
-                            <p class="text-sm font-bold">Pekerja Lepas</p>
+                            <p class="text-sm font-bold">Pekerja Lepas (Freelancer)</p>
                             <p class="text-[10px] text-indigo-300">{{ $order->freelancer->name ?? '-' }}</p>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
 
                 <div class="space-y-3 mb-6 text-sm">
                     <div class="flex justify-between">
-                        <span class="text-gray-500 dark:text-gray-400">Subtotal Jasa</span>
+                        <span class="text-gray-500 dark:text-gray-400">Subtotal Layanan</span>
                         <span class="font-bold text-gray-900 dark:text-white">
                             IDR {{ number_format($order->total_price, 0, ',', '.') }}
                         </span>
@@ -106,9 +106,9 @@
                         <svg class="w-3 h-3 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                     </div>
                     <div>
-                        <h4 class="text-sm font-bold text-green-800 dark:text-green-400">Jaminan Escrow</h4>
+                        <h4 class="text-sm font-bold text-green-800 dark:text-green-400">Jaminan Rekening Bersama (Escrow)</h4>
                         <p class="text-[10px] text-green-700 dark:text-green-300/80 leading-relaxed">
-                            Seluruh biaya ditahan Escrow SkillKul. Pekerja Lepas baru menerima pembayaran setelah Anda menyetujui hasil kerja.
+                            Seluruh dana Anda ditahan oleh sistem rekening bersama (escrow) SkillKul. Pekerja lepas baru akan menerima pembayaran setelah Anda menyetujui hasil pekerjaan.
                         </p>
                     </div>
                 </div>
@@ -146,12 +146,12 @@
                 @endif
 
                 <p class="text-center text-[10px] text-gray-400 dark:text-gray-500 mt-4 uppercase tracking-wider font-semibold">
-                    Pembayaran aman via Midtrans &bull; Order #{{ substr($order->id, 0, 8) }}
+                    Pembayaran aman melalui Midtrans &bull; Pesanan #{{ substr($order->id, 0, 8) }}
                 </p>
 
                 <div class="mt-6 pt-4 border-t border-gray-100 dark:border-brand-darkborder flex items-center gap-2 text-gray-400 dark:text-gray-500 text-xs transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    <span>Pekerja Lepas Akademik Terverifikasi</span>
+                    <span>Pekerja Lepas (Freelancer) Akademik Terverifikasi</span>
                 </div>
             </div>
         </div>
@@ -232,7 +232,7 @@
         // Pastikan Snap.js sudah dimuat
         if (typeof window.snap === 'undefined') {
             console.error('[SkillKul] window.snap tidak tersedia!');
-            showBanner('error', '⚠️ Sistem pembayaran belum siap. Tunggu beberapa detik lalu coba lagi.');
+            showBanner('error', 'Sistem pembayaran belum siap. Tunggu beberapa detik lalu coba lagi.');
             return;
         }
 
@@ -292,7 +292,7 @@
                     console.log('[SkillKul] Pembayaran pending:', result);
                     showBanner(
                         'pending',
-                        '🕐 Menunggu pembayaran. Selesaikan pembayaran sesuai instruksi yang dikirimkan.'
+                        'Menunggu pembayaran. Selesaikan pembayaran sesuai instruksi yang dikirimkan.'
                     );
                     setButtonLoading(false);
                 },
