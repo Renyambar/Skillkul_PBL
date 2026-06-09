@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Admin - Manajemen User')
+@section('title', 'Admin - Manajemen Pengguna')
 
 @section('content')
 <div class="p-8 lg:p-10 relative min-h-screen transition-colors duration-300">
@@ -7,7 +7,7 @@
     {{-- ── Header ── --}}
     <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
         <div>
-            <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight">Manajemen User</h1>
+            <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight">Manajemen Pengguna</h1>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Monitor dan kelola seluruh akun pengguna SkillKul.</p>
         </div>
     </div>
@@ -24,7 +24,7 @@
             {{-- Toast Notification di Bottom Right --}}
             <div id="error-toast" class="fixed bottom-6 right-6 z-50 max-w-sm bg-[#e53e3e] dark:bg-red-900 text-white rounded-2xl shadow-2xl p-4 pr-10 flex items-start gap-3 border border-red-500 dark:border-red-700 transition-all duration-300 hover:scale-[1.02] transform">
                 <div class="text-xs leading-relaxed font-semibold">
-                    **Gagal Mengaktifkan: Akun dengan status email NONAKTIF tidak dapat diaktifkan secara manual. Pengguna harus memverifikasi email mereka terlebih dahulu.
+                    **Gagal Mengaktifkan: Akun dengan status pos-el NONAKTIF tidak dapat diaktifkan secara manual. Pengguna harus memverifikasi pos-el mereka terlebih dahulu.
                 </div>
                 <button onclick="document.getElementById('error-toast').remove()" class="absolute top-3.5 right-3 text-white/70 hover:text-white shrink-0 text-[10px] font-bold cursor-pointer transition-colors bg-white/10 hover:bg-white/20 rounded-full w-6 h-6 flex items-center justify-center focus:outline-none">
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -40,13 +40,13 @@
 
     {{-- ── Statistik Cards ── --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        {{-- Total User --}}
+        {{-- Total Pengguna --}}
         <div class="bg-white dark:bg-brand-darksurface rounded-3xl border border-gray-100 dark:border-brand-darkborder shadow-sm p-6 hover:shadow-md transition-shadow">
             <div class="flex items-center gap-3 mb-4">
                 <div class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </div>
-                <p class="text-[11px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Total User</p>
+                <p class="text-[11px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Total Pengguna</p>
             </div>
             <p class="text-4xl font-black text-brand-dark dark:text-white">{{ $stats['total'] }}</p>
         </div>
@@ -88,12 +88,12 @@
     <form method="GET" action="{{ route('admin.users.index') }}"
           class="bg-white dark:bg-brand-darksurface rounded-3xl border border-gray-100 dark:border-brand-darkborder shadow-sm p-6 mb-8 flex flex-wrap gap-4 items-end">
 
-        {{-- Filter Role --}}
+        {{-- Filter Peran --}}
         <div class="flex flex-col gap-2 min-w-[160px]">
-            <label class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Role</label>
+            <label class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Peran</label>
             <select name="role"
                     class="border border-gray-200 dark:border-gray-700 rounded-xl text-sm px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-primary dark:focus:ring-indigo-500 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-medium appearance-none transition-colors">
-                <option value="">Semua Role</option>
+                <option value="">Semua Peran</option>
                 <option value="client"     {{ request('role') === 'client'     ? 'selected' : '' }}>Klien</option>
                 <option value="freelancer" {{ request('role') === 'freelancer' ? 'selected' : '' }}>Pekerja Lepas</option>
                 <option value="admin"      {{ request('role') === 'admin'      ? 'selected' : '' }}>Admin</option>
@@ -102,7 +102,7 @@
 
         {{-- Search Name/Email --}}
         <div class="flex flex-col gap-2 flex-1 min-w-[200px]">
-            <label class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Cari Nama / Email</label>
+            <label class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Cari Nama / Pos-el</label>
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -110,7 +110,7 @@
                 <input type="text"
                        name="search"
                        value="{{ request('search') }}"
-                       placeholder="Contoh: budi, budi@email.com..."
+                       placeholder="Contoh: budi, budi@pos-el.com..."
                        class="w-full border border-gray-200 dark:border-gray-700 rounded-xl text-sm pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-primary dark:focus:ring-indigo-500 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 font-medium transition-colors">
             </div>
         </div>
@@ -130,7 +130,7 @@
         </div>
     </form>
 
-    {{-- ── Tabel User ── --}}
+    {{-- ── Tabel Pengguna ── --}}
     <div class="bg-white dark:bg-brand-darksurface rounded-3xl border border-gray-100 dark:border-brand-darkborder shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
@@ -138,8 +138,8 @@
                     <tr class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/30">
                         <th class="px-6 py-5 whitespace-nowrap">Nama</th>
                         <th class="px-6 py-5 whitespace-nowrap">No. Telp</th>
-                        <th class="px-6 py-5 whitespace-nowrap">Role</th>
-                        <th class="px-6 py-5 whitespace-nowrap">Status Email</th>
+                        <th class="px-6 py-5 whitespace-nowrap">Peran</th>
+                        <th class="px-6 py-5 whitespace-nowrap">Status Pos-el</th>
                         <th class="px-6 py-5 whitespace-nowrap">Bergabung</th>
                         <th class="px-6 py-5 text-right whitespace-nowrap">Aksi</th>
                     </tr>
@@ -170,7 +170,7 @@
                             {{ $user->phone_number ?? '—' }}
                         </td>
 
-                        {{-- Role Badge --}}
+                        {{-- Peran Badge --}}
                         <td class="px-6 py-4">
                             @php
                                 $roleBadge = match($user->role) {
@@ -180,11 +180,11 @@
                                 };
                             @endphp
                             <span class="text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider {{ $roleBadge }} inline-block">
-                                {{ ucfirst($user->role) }}
+                                {{ $user->role === 'client' ? 'Klien' : ($user->role === 'freelancer' ? 'Pekerja Lepas' : 'Admin') }}
                             </span>
                         </td>
 
-                        {{-- Status Email (aktif / nonaktif) --}}
+                        {{-- Status Pos-el (aktif / nonaktif) --}}
                         <td class="px-6 py-4">
                             @if($user->email_verified_at)
                                 <span class="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-100 dark:border-green-800/50 text-[10px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider inline-block">
@@ -236,7 +236,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </div>
-                            <p class="font-bold text-gray-600 dark:text-gray-400">Tidak ada user ditemukan</p>
+                            <p class="font-bold text-gray-600 dark:text-gray-400">Tidak ada pengguna ditemukan</p>
                             <p class="text-xs mt-1">Coba ubah filter atau kata kunci pencarian Anda.</p>
                         </td>
                     </tr>
@@ -250,7 +250,7 @@
         <div class="px-6 py-5 border-t border-gray-100 dark:border-gray-800 bg-gray-50/30 dark:bg-gray-900/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500 dark:text-gray-400 font-medium">
             <span>
                 Menampilkan {{ $users->firstItem() }}–{{ $users->lastItem() }}
-                dari <strong class="text-brand-dark dark:text-white font-black">{{ $users->total() }}</strong> user
+                dari <strong class="text-brand-dark dark:text-white font-black">{{ $users->total() }}</strong> pengguna
             </span>
             <div>
                 {{ $users->links() }}

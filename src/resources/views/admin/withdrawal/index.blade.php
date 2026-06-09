@@ -1,10 +1,10 @@
 @extends('layouts.admin')
-@section('title', 'Manajemen Withdrawal - Admin SkillKul')
+@section('title', 'Manajemen Pencairan Saldo - Admin SkillKul')
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-colors duration-300">
     <div class="mb-8">
-        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Manajemen Withdrawal</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Review dan proses request penarikan saldo dari pengguna.</p>
+        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Manajemen Pencairan Saldo</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Review dan proses permintaan penarikan saldo dari pengguna.</p>
     </div>
 
     @if(session('success'))
@@ -50,14 +50,14 @@
         @endforeach
     </div>
 
-    {{-- Tabel Withdrawal --}}
+    {{-- Tabel Pencairan Saldo --}}
     <div class="bg-white dark:bg-brand-darksurface rounded-3xl border border-gray-100 dark:border-brand-darkborder shadow-sm overflow-hidden">
         @if($withdrawals->isEmpty())
             <div class="p-20 text-center">
                 <div class="w-16 h-16 mx-auto bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl flex items-center justify-center mb-4">
                     <svg class="w-8 h-8 text-gray-400 dark:text-gray-500 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 </div>
-                <p class="font-bold text-gray-600 dark:text-gray-400">Tidak ada request withdrawal.</p>
+                <p class="font-bold text-gray-600 dark:text-gray-400">Tidak ada permintaan pencairan saldo.</p>
                 <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 font-medium">Belum ada data untuk status ini.</p>
             </div>
         @else
@@ -84,7 +84,7 @@
                                     <div>
                                         <div class="font-bold text-gray-900 dark:text-white text-xs">{{ $w->user->name }}</div>
                                         <div class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">{{ $w->user->email }}</div>
-                                        <div class="text-[10px] text-indigo-500 dark:text-indigo-400 font-extrabold uppercase tracking-wider mt-1">{{ $w->user->role }}</div>
+                                        <div class="text-[10px] text-indigo-500 dark:text-indigo-400 font-extrabold uppercase tracking-wider mt-1">{{ $w->user->role === 'client' ? 'Klien' : ($w->user->role === 'freelancer' ? 'Pekerja Lepas' : 'Admin') }}</div>
                                     </div>
                                 </div>
                             </td>
@@ -94,7 +94,7 @@
                                 <div class="text-[10px] text-gray-500 dark:text-gray-400 font-medium mt-1 uppercase tracking-wider">a/n {{ $w->account_holder }}</div>
                             </td>
                             <td class="px-6 py-5 text-right font-black text-gray-900 dark:text-white whitespace-nowrap text-sm">
-                                Rp {{ number_format($w->amount, 0, ',', '.') }}
+                                Rp{{ number_format($w->amount, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-5 text-center">
                                 @php
@@ -122,7 +122,7 @@
                                     {{-- Approve (pending only) --}}
                                     @if($w->status === 'pending')
                                         <form action="{{ route('admin.withdrawal.approve', $w->id) }}" method="POST"
-                                              onsubmit="return confirm('Setujui withdrawal Rp {{ number_format($w->amount, 0, ',', '.') }} dari {{ $w->user->name }}?')">
+                                              onsubmit="return confirm('Setujui penarikan saldo Rp{{ number_format($w->amount, 0, ',', '.') }} dari {{ $w->user->name }}?')">
                                             @csrf
                                             <button type="submit"
                                                 class="w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-bold rounded-xl transition-colors shadow-sm shadow-blue-200 dark:shadow-none whitespace-nowrap">
@@ -134,7 +134,7 @@
                                     {{-- Complete (approved only) --}}
                                     @if($w->status === 'approved')
                                         <form action="{{ route('admin.withdrawal.complete', $w->id) }}" method="POST"
-                                              onsubmit="return confirm('Konfirmasi transfer Rp {{ number_format($w->amount, 0, ',', '.') }} sudah dikirim ke {{ $w->bank_name }} {{ $w->account_number }}?')">
+                                              onsubmit="return confirm('Konfirmasi transfer Rp{{ number_format($w->amount, 0, ',', '.') }} sudah dikirim ke {{ $w->bank_name }} {{ $w->account_number }}?')">
                                             @csrf
                                             <button type="submit"
                                                 class="w-full sm:w-auto px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-[11px] font-bold rounded-xl transition-colors shadow-sm shadow-green-200 dark:shadow-none whitespace-nowrap">

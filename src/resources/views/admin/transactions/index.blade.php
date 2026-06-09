@@ -1,10 +1,10 @@
 @extends('layouts.admin')
-@section('title', 'Ledger Transaksi - Admin SkillKul')
+@section('title', 'Catatan Transaksi - Admin SkillKul')
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-colors duration-300">
     <div class="mb-8">
-        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Ledger Transaksi Wallet</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Catatan immutable semua perubahan saldo wallet di seluruh platform.</p>
+        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">Catatan Transaksi Dompet</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Catatan semua perubahan saldo dompet di seluruh platform.</p>
     </div>
 
     {{-- Summary Stats --}}
@@ -12,20 +12,20 @@
         <div class="bg-white dark:bg-brand-darksurface rounded-3xl border border-green-100 dark:border-green-900/50 p-6 shadow-sm relative overflow-hidden">
             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-green-500/5 rounded-full blur-xl"></div>
             <p class="text-[11px] font-extrabold text-green-600 dark:text-green-500 uppercase tracking-widest mb-2 relative z-10">Total Kredit (Masuk)</p>
-            <p class="text-3xl font-black text-green-600 dark:text-green-400 relative z-10">+ Rp {{ number_format($totalCredits, 0, ',', '.') }}</p>
-            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-2 font-medium relative z-10">Escrow release + Refund</p>
+            <p class="text-3xl font-black text-green-600 dark:text-green-400 relative z-10">+Rp{{ number_format($totalCredits, 0, ',', '.') }}</p>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-2 font-medium relative z-10">Pelepasan rekening bersama + Pengembalian dana</p>
         </div>
         <div class="bg-white dark:bg-brand-darksurface rounded-3xl border border-red-100 dark:border-red-900/50 p-6 shadow-sm relative overflow-hidden">
             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-red-500/5 rounded-full blur-xl"></div>
             <p class="text-[11px] font-extrabold text-red-500 dark:text-red-400 uppercase tracking-widest mb-2 relative z-10">Total Debit (Keluar)</p>
-            <p class="text-3xl font-black text-red-500 dark:text-red-400 relative z-10">- Rp {{ number_format($totalDebits, 0, ',', '.') }}</p>
-            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-2 font-medium relative z-10">Withdrawal completed</p>
+            <p class="text-3xl font-black text-red-500 dark:text-red-400 relative z-10">-Rp{{ number_format($totalDebits, 0, ',', '.') }}</p>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-2 font-medium relative z-10">Pencairan saldo selesai</p>
         </div>
         <div class="bg-white dark:bg-brand-darksurface rounded-3xl border border-indigo-100 dark:border-indigo-900/50 p-6 shadow-sm relative overflow-hidden">
             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl"></div>
             <p class="text-[11px] font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-2 relative z-10">Net Saldo Platform</p>
             <p class="text-3xl font-black text-indigo-600 dark:text-indigo-400 relative z-10">
-                Rp {{ number_format($totalCredits - $totalDebits, 0, ',', '.') }}
+                Rp{{ number_format($totalCredits - $totalDebits, 0, ',', '.') }}
             </p>
             <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-2 font-medium relative z-10">Kredit - Debit</p>
         </div>
@@ -38,7 +38,7 @@
             <label class="block text-[10px] font-extrabold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">Tipe</label>
             <select name="type" class="w-full sm:w-auto px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-primary dark:focus:ring-indigo-500 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 appearance-none font-medium transition-colors">
                 <option value="">Semua</option>
-                <option value="credit" {{ request('type') === 'credit' ? 'selected' : '' }}>Credit (Masuk)</option>
+                <option value="credit" {{ request('type') === 'credit' ? 'selected' : '' }}>Kredit (Masuk)</option>
                 <option value="debit" {{ request('type') === 'debit' ? 'selected' : '' }}>Debit (Keluar)</option>
             </select>
         </div>
@@ -46,16 +46,16 @@
             <label class="block text-[10px] font-extrabold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">Kategori</label>
             <select name="category" class="w-full sm:w-auto px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-primary dark:focus:ring-indigo-500 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 appearance-none font-medium transition-colors">
                 <option value="">Semua</option>
-                <option value="escrow_release" {{ request('category') === 'escrow_release' ? 'selected' : '' }}>Escrow Release</option>
-                <option value="refund" {{ request('category') === 'refund' ? 'selected' : '' }}>Refund</option>
-                <option value="withdrawal" {{ request('category') === 'withdrawal' ? 'selected' : '' }}>Withdrawal</option>
-                <option value="withdrawal_reversal" {{ request('category') === 'withdrawal_reversal' ? 'selected' : '' }}>Withdrawal Reversal</option>
+                <option value="escrow_release" {{ request('category') === 'escrow_release' ? 'selected' : '' }}>Pelepasan Rekening Bersama</option>
+                <option value="refund" {{ request('category') === 'refund' ? 'selected' : '' }}>Pengembalian Dana</option>
+                <option value="withdrawal" {{ request('category') === 'withdrawal' ? 'selected' : '' }}>Pencairan Saldo</option>
+                <option value="withdrawal_reversal" {{ request('category') === 'withdrawal_reversal' ? 'selected' : '' }}>Pembatalan Pencairan Saldo</option>
             </select>
         </div>
         <div>
-            <label class="block text-[10px] font-extrabold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">User ID</label>
+            <label class="block text-[10px] font-extrabold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">ID Pengguna</label>
             <input type="number" name="user_id" value="{{ request('user_id') }}"
-                placeholder="ID user..."
+                placeholder="ID pengguna..."
                 class="w-full sm:w-32 px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-primary dark:focus:ring-indigo-500 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-colors">
         </div>
         <div class="flex gap-3 mt-2 sm:mt-0 w-full sm:w-auto">
@@ -81,7 +81,7 @@
                     <span class="text-sm text-indigo-500 dark:text-indigo-400 font-medium ml-1">(difilter)</span>
                 @endif
             </h3>
-            <span class="text-[11px] text-gray-500 dark:text-gray-400 font-mono bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700">Ledger bersifat immutable — tidak dapat diubah</span>
+            <span class="text-[11px] text-gray-500 dark:text-gray-400 font-mono bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700">Catatan transaksi tidak dapat diubah</span>
         </div>
 
         @if($transactions->isEmpty())
@@ -98,7 +98,7 @@
                     <thead>
                         <tr class="text-[10px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/30">
                             <th class="px-6 py-5 whitespace-nowrap">#</th>
-                            <th class="px-6 py-5 whitespace-nowrap">User</th>
+                            <th class="px-6 py-5 whitespace-nowrap">Pengguna</th>
                             <th class="px-6 py-5 whitespace-nowrap">Keterangan</th>
                             <th class="px-6 py-5 text-center whitespace-nowrap">Tipe</th>
                             <th class="px-6 py-5 text-center whitespace-nowrap">Kategori</th>
@@ -124,18 +124,18 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="font-bold text-gray-900 dark:text-white text-xs">{{ $tx->user?->name ?? '—' }}</div>
-                                <div class="text-gray-500 dark:text-gray-400 text-[10px] font-medium capitalize mt-0.5">{{ $tx->user?->role }}</div>
+                                <div class="text-gray-500 dark:text-gray-400 text-[10px] font-medium capitalize mt-0.5">{{ $tx->user?->role === 'client' ? 'Klien' : ($tx->user?->role === 'freelancer' ? 'Pekerja Lepas' : ($tx->user?->role === 'admin' ? 'Admin' : '—')) }}</div>
                             </td>
                             <td class="px-6 py-4 max-w-[200px]">
                                 <div class="text-xs text-gray-700 dark:text-gray-300 font-medium truncate" title="{{ $tx->description }}">{{ $tx->description }}</div>
                                 @if($tx->order_id)
                                     <div class="text-[10px] text-gray-500 dark:text-gray-400 font-mono mt-1.5">
-                                        <span class="bg-gray-50 dark:bg-gray-800 px-1.5 py-0.5 rounded border border-gray-100 dark:border-gray-700 font-bold">Ord #{{ substr($tx->order_id, 0, 8) }}</span>
+                                        <span class="bg-gray-50 dark:bg-gray-800 px-1.5 py-0.5 rounded border border-gray-100 dark:border-gray-700 font-bold">Psn #{{ substr($tx->order_id, 0, 8) }}</span>
                                     </div>
                                 @endif
                                 @if($tx->withdrawal_id)
                                     <div class="text-[10px] text-orange-500 dark:text-orange-400 font-mono mt-1.5">
-                                        <span class="bg-orange-50 dark:bg-orange-900/20 px-1.5 py-0.5 rounded border border-orange-100 dark:border-orange-800/50 font-bold">W/D #{{ $tx->withdrawal_id }}</span>
+                                        <span class="bg-orange-50 dark:bg-orange-900/20 px-1.5 py-0.5 rounded border border-orange-100 dark:border-orange-800/50 font-bold">Tarik #{{ $tx->withdrawal_id }}</span>
                                     </div>
                                 @endif
                             </td>
@@ -154,13 +154,13 @@
                             </td>
                             <td class="px-6 py-4 text-right font-black text-[13px] whitespace-nowrap
                                 {{ $tx->type === 'credit' ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400' }}">
-                                {{ $tx->type === 'credit' ? '+' : '-' }} Rp {{ number_format($tx->amount, 0, ',', '.') }}
+                                {{ $tx->type === 'credit' ? '+' : '-' }}Rp{{ number_format($tx->amount, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-4 text-right text-[11px] font-mono text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                Rp {{ number_format($tx->balance_before, 0, ',', '.') }}
+                                Rp{{ number_format($tx->balance_before, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-4 text-right text-[11px] font-mono font-bold text-gray-800 dark:text-gray-200 whitespace-nowrap bg-gray-50/50 dark:bg-gray-800/20">
-                                Rp {{ number_format($tx->balance_after, 0, ',', '.') }}
+                                Rp{{ number_format($tx->balance_after, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-4 text-[11px] font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">
                                 {{ $tx->created_at->format('d M Y') }}<br>

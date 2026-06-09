@@ -14,7 +14,7 @@
     {{-- Header --}}
     <div class="mb-6">
         <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">Tambahkan ke Portofolio</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Review data project dan lengkapi informasi tambahan.</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Review data proyek dan lengkapi informasi tambahan.</p>
     </div>
 
     {{-- Preview Order Card --}}
@@ -72,7 +72,7 @@
         {{-- Pekerja Lepas Role --}}
         <div>
             <label for="freelancer_role" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5">
-                Role Anda di Proyek Ini
+                Peran Anda di Proyek Ini
                 <span class="text-gray-400 dark:text-gray-500 font-normal">(Opsional)</span>
             </label>
             <input type="text"
@@ -84,13 +84,13 @@
             @error('freelancer_role')
             <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
             @enderror
-            <p class="mt-1 text-xs text-gray-400 dark:text-gray-500">Deskripsikan peran spesifik Anda dalam project ini.</p>
+            <p class="mt-1 text-xs text-gray-400 dark:text-gray-500">Deskripsikan peran spesifik Anda dalam proyek ini.</p>
         </div>
 
         {{-- Cloud Link --}}
         <div>
             <label for="cloud_link" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5">
-                Link Hasil Kerja
+                Tautan Hasil Pekerjaan
                 <span class="text-gray-400 dark:text-gray-500 font-normal">(Opsional)</span>
             </label>
             <input type="url"
@@ -103,7 +103,7 @@
             <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
             @enderror
             @if($order->freelancer_result_link)
-            <p class="mt-1 text-xs text-gray-400 dark:text-gray-500">Pre-filled dari link hasil kerja yang Anda kirimkan ke client. Bisa diganti.</p>
+            <p class="mt-1 text-xs text-gray-400 dark:text-gray-500">Isian otomatis dari tautan hasil pekerjaan yang Anda kirimkan ke klien. Bisa diganti.</p>
             @endif
         </div>
 
@@ -111,14 +111,14 @@
         <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50 rounded-xl p-4 flex gap-3 transition-colors">
             <svg class="w-5 h-5 text-blue-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <div>
-                <p class="text-xs font-bold text-blue-800 dark:text-blue-300 mb-1">Data yang akan ditampilkan di portfolio:</p>
+                <p class="text-xs font-bold text-blue-800 dark:text-blue-300 mb-1">Data yang akan ditampilkan di portofolio:</p>
                 <ul class="text-xs text-blue-700 dark:text-blue-400 space-y-0.5 list-disc list-inside">
-                    <li>Judul & deskripsi project (dari layanan)</li>
-                    <li>Kategori project</li>
-                    <li>Durasi pengerjaan (otomatis dari tanggal order)</li>
+                    <li>Judul & deskripsi proyek (dari layanan)</li>
+                    <li>Kategori proyek</li>
+                    <li>Durasi pengerjaan (otomatis dari tanggal pesanan)</li>
                     <li>Tanggal selesai</li>
-                    <li>Rating & testimoni client</li>
-                    <li>Role Anda & link hasil kerja (yang Anda isi di atas)</li>
+                    <li>Rating & testimoni klien</li>
+                    <li>Peran Anda & tautan hasil pekerjaan (yang Anda isi di atas)</li>
                 </ul>
             </div>
         </div>

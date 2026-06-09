@@ -112,7 +112,7 @@
                     <div class="relative z-10">
                         <span class="inline-block bg-white/20 dark:bg-gray-800/60 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-white/10 dark:border-gray-700">HARGA TETAP</span>
                         <div class="flex items-baseline gap-1 mb-2">
-                            <span class="text-3xl font-black tracking-tight">Rp {{ number_format($service->price, 0, ',', '.') }}</span>
+                            <span class="text-3xl font-black tracking-tight">Rp{{ number_format($service->price, 0, ',', '.') }}</span>
                         </div>
                         <p class="text-indigo-100 dark:text-gray-300 text-sm mb-8 font-medium">Harga sudah tetap. Lakukan pembayaran langsung untuk memulai pesanan.</p>
 
@@ -161,14 +161,14 @@
                     <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 dark:bg-orange-500/10 rounded-full blur-[40px]"></div>
                     
                     <div class="relative z-10">
-                        <span class="inline-block bg-white/20 dark:bg-gray-800/60 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-white/10 dark:border-gray-700">HARGA NEGO (PROYEK)</span>
+                        <span class="inline-block bg-white/20 dark:bg-gray-800/60 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-white/10 dark:border-gray-700">HARGA NEGOSIASI (PROYEK)</span>
 
                         {{-- Range Harga --}}
                         <div class="flex flex-wrap items-center gap-2 mb-2">
-                            <span class="text-3xl font-black tracking-tight">Rp {{ number_format($service->price, 0, ',', '.') }}</span>
+                            <span class="text-3xl font-black tracking-tight">Rp{{ number_format($service->price, 0, ',', '.') }}</span>
                             @if($service->price_max)
                                 <span class="text-indigo-300 font-bold text-xl">–</span>
-                                <span class="text-3xl font-black tracking-tight">Rp {{ number_format($service->price_max, 0, ',', '.') }}</span>
+                                <span class="text-3xl font-black tracking-tight">Rp{{ number_format($service->price_max, 0, ',', '.') }}</span>
                             @endif
                         </div>
                         <p class="text-indigo-200 dark:text-gray-300 text-sm mb-6 font-medium">Estimasi rentang harga • Nilai akhir sesuai kesepakatan</p>
@@ -211,7 +211,7 @@
                             @php
                                 $waName  = $service->freelancer?->name ?? 'Pekerja Lepas';
                                 $waPhone = preg_replace('/[^0-9]/', '', $service->freelancer?->phone_number ?? '62');
-                                $waText  = 'Halo ' . $waName . ', saya tertarik dengan jasa "' . $service->title . '" di SkillKul. Bisakah kita diskusikan detail proyeknya?';
+                                $waText  = 'Halo ' . $waName . ', saya tertarik dengan layanan "' . $service->title . '" di SkillKul. Bisakah kita diskusikan detail proyeknya?';
                             @endphp
                             <a href="https://wa.me/{{ $waPhone }}?text={{ urlencode($waText) }}"
                                 target="_blank"

@@ -1,16 +1,16 @@
 @extends('layouts.admin')
-@section('title', 'Admin - Detail Jasa')
+@section('title', 'Admin - Detail Layanan')
 
 @section('content')
 <div class="p-8 lg:p-10 transition-colors duration-300">
 
     {{-- ── Breadcrumb ── --}}
     <div class="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-8">
-        <a href="{{ route('admin.services.index') }}" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Katalog Jasa</a>
+        <a href="{{ route('admin.services.index') }}" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Katalog Layanan</a>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
         </svg>
-        <span class="text-gray-800 dark:text-gray-200">Detail Jasa</span>
+        <span class="text-gray-800 dark:text-gray-200">Detail Layanan</span>
     </div>
 
     <div class="flex flex-col lg:flex-row gap-8 items-start">
@@ -140,12 +140,12 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
                             </svg>
-                            Nonaktifkan Jasa
+                            Nonaktifkan Layanan
                         @else
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
-                            Aktifkan Jasa
+                            Aktifkan Layanan
                         @endif
                     </button>
                 </form>

@@ -10,7 +10,7 @@
         </div>
         <a href="{{ route('freelancer.jasa.create') }}" class="inline-flex items-center gap-2 bg-brand-primary dark:bg-indigo-600 hover:bg-brand-dark dark:hover:bg-indigo-500 text-white text-sm font-bold px-6 py-3 rounded-xl transition-all shadow-md dark:shadow-none">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-            Buka Layanan Jasa Baru
+            Buka Layanan Baru
         </a>
     </div>
 
@@ -31,7 +31,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <div class="bg-white dark:bg-brand-darksurface rounded-2xl p-6 border border-gray-100 dark:border-brand-darkborder shadow-sm flex items-center justify-between transition-colors">
             <div>
-                <p class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Total Jasa</p>
+                <p class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Total Layanan</p>
                 <h3 class="text-3xl font-black text-gray-900 dark:text-white">{{ $stats['total'] ?? 0 }}</h3>
             </div>
             <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-brand-primary dark:text-indigo-400">
@@ -40,7 +40,7 @@
         </div>
         <div class="bg-white dark:bg-brand-darksurface rounded-2xl p-6 border border-gray-100 dark:border-brand-darkborder shadow-sm flex items-center justify-between transition-colors">
             <div>
-                <p class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Jasa Aktif</p>
+                <p class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Layanan Aktif</p>
                 <h3 class="text-3xl font-black text-green-600 dark:text-green-400">{{ $stats['aktif'] ?? 0 }}</h3>
             </div>
             <div class="w-12 h-12 bg-green-50 dark:bg-green-900/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-400">
@@ -76,11 +76,11 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                     </svg>
                 </div>
-                <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Belum ada jasa yang Anda buat.</h3>
-                <p class="text-[13px] font-medium text-gray-500 dark:text-gray-400 mb-6 max-w-sm">Mulai tawarkan keahlian Anda dengan membuka layanan jasa baru ke platform.</p>
+                <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Belum ada layanan yang Anda buat.</h3>
+                <p class="text-[13px] font-medium text-gray-500 dark:text-gray-400 mb-6 max-w-sm">Mulai tawarkan keahlian Anda dengan membuka layanan baru ke platform.</p>
                 <a href="{{ route('freelancer.jasa.create') }}" class="inline-flex items-center gap-2 bg-brand-primary dark:bg-indigo-600 hover:bg-brand-dark dark:hover:bg-indigo-500 text-white text-sm font-bold px-6 py-3.5 rounded-xl transition-all shadow-md dark:shadow-none">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    Buka Jasa Baru
+                    Buka Layanan Baru
                 </a>
             </div>
         @else
@@ -88,7 +88,7 @@
                 <table class="w-full text-left text-sm whitespace-nowrap">
                     <thead>
                         <tr class="text-[10px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
-                            <th class="px-6 py-5">Judul Jasa</th>
+                            <th class="px-6 py-5">Judul Layanan</th>
                             <th class="px-6 py-5">Tipe</th>
                             <th class="px-6 py-5">Harga</th>
                             <th class="px-6 py-5 text-center">Pesanan</th>
@@ -124,7 +124,7 @@
                                 @endif
                             </td>
                             <td class="px-6 py-5 font-bold text-gray-900 dark:text-white">
-                                Rp {{ number_format($service->price ?? 0, 0, ',', '.') }}
+                                Rp{{ number_format($service->price ?? 0, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-5 text-center">
                                 <span class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[11px] font-bold px-3 py-1.5 rounded-full">{{ $service->orders_count ?? ($service->orders ? $service->orders->count() : 0) }}</span>
@@ -133,7 +133,7 @@
                                 {{-- Toggle Aktif / Non-Aktif Form --}}
                                 <form action="{{ route('freelancer.jasa.toggle', $service->id) }}" method="POST" class="flex justify-center">
                                     @csrf
-                                    <button type="submit" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-primary/50 dark:focus:ring-indigo-500/50 {{ $service->is_active ? 'bg-green-500 dark:bg-green-500' : 'bg-gray-300 dark:bg-gray-600' }}" role="switch" aria-checked="{{ $service->is_active ? 'true' : 'false' }}" title="Ubah Status Jasa">
+                                    <button type="submit" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-primary/50 dark:focus:ring-indigo-500/50 {{ $service->is_active ? 'bg-green-500 dark:bg-green-500' : 'bg-gray-300 dark:bg-gray-600' }}" role="switch" aria-checked="{{ $service->is_active ? 'true' : 'false' }}" title="Ubah Status Layanan">
                                         <span class="sr-only">Toggle layanan</span>
                                         <span aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {{ $service->is_active ? 'translate-x-5' : 'translate-x-0' }}"></span>
                                     </button>
@@ -143,14 +143,14 @@
                                 <div class="flex items-center justify-end gap-2" x-data="{ showModal: false }">
                                     {{-- Edit --}}
                                     <a href="{{ route('freelancer.jasa.edit', $service->id) }}"
-                                       class="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors focus:ring-2 focus:ring-indigo-500/50" title="Edit Jasa">
+                                       class="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors focus:ring-2 focus:ring-indigo-500/50" title="Edit Layanan">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                         </svg>
                                     </a>
                                     
                                     {{-- Hapus (Buka Modal) --}}
-                                    <button @click="showModal = true" type="button" class="p-2.5 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 hover:text-red-800 dark:hover:text-red-300 transition-colors focus:ring-2 focus:ring-red-500/50" title="Hapus Jasa">
+                                    <button @click="showModal = true" type="button" class="p-2.5 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 hover:text-red-800 dark:hover:text-red-300 transition-colors focus:ring-2 focus:ring-red-500/50" title="Hapus Layanan">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
@@ -170,9 +170,9 @@
                                                             <svg class="h-6 w-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                                                         </div>
                                                         <div class="mt-4 text-center sm:mt-0 sm:ml-5 sm:text-left">
-                                                            <h3 class="text-xl font-black text-gray-900 dark:text-white" id="modal-title">Hapus Jasa</h3>
+                                                            <h3 class="text-xl font-black text-gray-900 dark:text-white" id="modal-title">Hapus Layanan</h3>
                                                             <div class="mt-3">
-                                                                <p class="text-[13px] font-medium text-gray-500 dark:text-gray-400 whitespace-normal leading-relaxed">Apakah Anda yakin ingin menghapus jasa <strong class="text-gray-900 dark:text-white">"{{ $service->title }}"</strong>? Tindakan ini tidak dapat dibatalkan.</p>
+                                                                <p class="text-[13px] font-medium text-gray-500 dark:text-gray-400 whitespace-normal leading-relaxed">Apakah Anda yakin ingin menghapus layanan <strong class="text-gray-900 dark:text-white">"{{ $service->title }}"</strong>? Tindakan ini tidak dapat dibatalkan.</p>
                                                             </div>
                                                         </div>
                                                     </div>

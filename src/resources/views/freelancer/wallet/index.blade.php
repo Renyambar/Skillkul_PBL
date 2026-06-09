@@ -35,10 +35,10 @@
         <div class="relative z-10">
             <p class="text-indigo-200 text-xs font-bold uppercase tracking-widest mb-3">SALDO TERSEDIA</p>
             <h2 class="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight">
-                Rp {{ number_format($balance ?? 0, 0, ',', '.') }}
+                Rp{{ number_format($balance ?? 0, 0, ',', '.') }}
             </h2>
             <p class="text-indigo-200 text-xs mb-6">
-                Dana bersih dari escrow — setelah potongan fee platform {{ config('skillkul.platform_fee_percent', 8) }}%
+                Dana bersih dari rekening bersama (escrow) — setelah potongan biaya platform {{ config('skillkul.platform_fee_percent', 8) }}%
             </p>
             <div class="flex flex-wrap gap-3">
                 <a href="{{ route('withdrawal.create') }}"
@@ -70,7 +70,7 @@
                 </div>
                 <h4 class="text-base font-bold text-gray-900 dark:text-white mb-1">Belum ada transaksi</h4>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Dana dari order yang selesai akan otomatis masuk ke saldo Anda.
+                    Dana dari pesanan yang selesai akan otomatis masuk ke saldo Anda.
                 </p>
             </div>
         @else
@@ -95,7 +95,7 @@
                                 <div class="truncate">{{ $tx->description }}</div>
                                 @if($tx->order)
                                     <div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                                        Order #{{ substr($tx->order_id, 0, 8) }}...
+                                        Pesanan #{{ substr($tx->order_id, 0, 8) }}...
                                         @if($tx->order->service) · {{ $tx->order->service->title }} @endif
                                     </div>
                                 @endif
@@ -110,10 +110,10 @@
                             </td>
                             <td class="px-6 py-4 text-right font-extrabold whitespace-nowrap
                                 {{ $tx->type === 'credit' ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400' }}">
-                                {{ $tx->type === 'credit' ? '+' : '-' }} Rp {{ number_format($tx->amount, 0, ',', '.') }}
+                                {{ $tx->type === 'credit' ? '+' : '-' }}Rp{{ number_format($tx->amount, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-4 text-right text-gray-700 dark:text-gray-300 font-semibold whitespace-nowrap">
-                                Rp {{ number_format($tx->balance_after, 0, ',', '.') }}
+                                Rp{{ number_format($tx->balance_after, 0, ',', '.') }}
                             </td>
                         </tr>
                         @endforeach

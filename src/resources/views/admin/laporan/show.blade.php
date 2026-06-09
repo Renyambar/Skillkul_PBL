@@ -170,7 +170,7 @@
                             </div>
                         </div>
 
-                        {{-- Opsi suspend user jika diselesaikan --}}
+                        {{-- Opsi tangguhkan pengguna jika diselesaikan --}}
                         <div x-show="action === 'diselesaikan'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                             <label class="flex items-center gap-4 p-4 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/50 rounded-2xl cursor-pointer hover:bg-red-100 dark:hover:bg-red-900/20 transition-colors relative overflow-hidden group">
                                 <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-red-500/5 rounded-full blur-xl group-hover:scale-110 transition-transform"></div>
@@ -180,10 +180,10 @@
                                 </div>
                                 <div class="relative z-10">
                                     <p class="text-sm font-black text-red-800 dark:text-red-400 flex items-center gap-2">
-                                        Suspend akun terlapor
+                                        Tangguhkan akun terlapor
                                         <span class="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 text-[9px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">Aksi Berat</span>
                                     </p>
-                                    <p class="text-[11px] font-medium text-red-600 dark:text-red-500 mt-0.5">Akun <strong class="font-extrabold">{{ $report->reported->name ?? 'user' }}</strong> akan dinonaktifkan dari platform</p>
+                                    <p class="text-[11px] font-medium text-red-600 dark:text-red-500 mt-0.5">Akun <strong class="font-extrabold">{{ $report->reported->name ?? 'pengguna' }}</strong> akan dinonaktifkan dari platform</p>
                                 </div>
                             </label>
                         </div>
@@ -222,7 +222,7 @@
                         {{ strtoupper(substr($report->reporter->name ?? 'U', 0, 1)) }}
                     </div>
                     <div class="min-w-0">
-                        <p class="font-bold text-gray-900 dark:text-white truncate">{{ $report->reporter->name ?? 'User Dihapus' }}</p>
+                        <p class="font-bold text-gray-900 dark:text-white truncate">{{ $report->reporter->name ?? 'Pengguna Dihapus' }}</p>
                         <p class="text-[11px] font-medium text-gray-500 dark:text-gray-400 truncate mt-0.5">{{ $report->reporter->email ?? '-' }}</p>
                     </div>
                 </div>
@@ -233,7 +233,7 @@
                 <div class="absolute right-0 top-0 w-24 h-24 bg-orange-50 dark:bg-orange-900/10 rounded-bl-full -z-10"></div>
                 <p class="text-[11px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-5 flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    Terlapor (Pekerja)
+                    Terlapor (Pekerja Lepas)
                 </p>
                 <div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-700/50">
                     <div class="w-12 h-12 rounded-xl bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 flex items-center justify-center font-black text-xl flex-shrink-0 shadow-inner border border-orange-200 dark:border-orange-800/30">
@@ -241,11 +241,11 @@
                     </div>
                     <div class="min-w-0">
                         <p class="font-bold text-gray-900 dark:text-white truncate flex items-center gap-2">
-                            {{ $report->reported->name ?? 'User Dihapus' }}
+                            {{ $report->reported->name ?? 'Pengguna Dihapus' }}
                             @if($report->reported)
                                 <span class="inline-block text-[9px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider
                                     {{ $report->reported->is_active ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400' }}">
-                                    {{ $report->reported->is_active ? 'Aktif' : 'Disuspend' }}
+                                    {{ $report->reported->is_active ? 'Aktif' : 'Ditangguhkan' }}
                                 </span>
                             @endif
                         </p>
@@ -254,7 +254,7 @@
                 </div>
                 @if($report->reported)
                 <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800/50 flex justify-between items-center">
-                    <p class="text-[11px] font-bold text-gray-500 dark:text-gray-400">Total laporan ke user ini:</p>
+                    <p class="text-[11px] font-bold text-gray-500 dark:text-gray-400">Total laporan ke pengguna ini:</p>
                     <span class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-xs font-black px-3 py-1 rounded-lg border border-gray-200 dark:border-gray-700">
                         {{ $report->reported->reportsReceived()->count() }}
                     </span>
@@ -274,7 +274,7 @@
                     @csrf
                     <button type="submit" class="w-full bg-red-600 dark:bg-red-500/20 text-white dark:text-red-400 border border-transparent dark:border-red-500/30 py-3.5 rounded-xl text-[11px] uppercase tracking-wider font-black hover:bg-red-700 dark:hover:bg-red-500/30 transition-colors shadow-sm dark:shadow-none flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        Suspend Akun Terlapor
+                        Tangguhkan Akun Terlapor
                     </button>
                 </form>
             </div>

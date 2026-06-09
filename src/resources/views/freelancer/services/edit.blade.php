@@ -1,5 +1,5 @@
 @extends('layouts.freelancer')
-@section('title', 'Edit Jasa - SkillKul')
+@section('title', 'Edit Layanan - SkillKul')
 @section('content')
 <div class="p-8 lg:p-10 transition-colors duration-300">
     {{-- Header --}}
@@ -9,13 +9,13 @@
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
             </svg>
-            <span class="text-gray-600 dark:text-gray-300 font-semibold">Edit Jasa</span>
+            <span class="text-gray-600 dark:text-gray-300 font-semibold">Edit Layanan</span>
         </div>
         <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-primary dark:text-indigo-400 tracking-widest uppercase mb-3">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
             EDIT LAYANAN
         </span>
-        <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight mb-2">Edit Jasa</h1>
+        <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight mb-2">Edit Layanan</h1>
         <p class="text-gray-500 dark:text-gray-400 text-sm max-w-2xl">Perbarui detail layanan Anda agar tetap relevan dan menarik bagi calon klien.</p>
     </div>
 
@@ -39,7 +39,7 @@
 
                 {{-- Judul --}}
                 <div>
-                    <label class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Judul Jasa</label>
+                    <label class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Judul Layanan</label>
                     <input type="text" name="title" value="{{ old('title', $service->title) }}"
                            placeholder="Contoh: Pembuatan Dasbor Analitik Data Excel"
                            class="w-full bg-gray-50 dark:bg-gray-800/50 border border-transparent dark:border-gray-700 focus:bg-white dark:focus:bg-brand-darksurface focus:border-brand-primary dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-900 dark:text-white transition-all outline-none">
@@ -78,7 +78,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium leading-relaxed">Layanan dengan harga pasti. Cocok untuk jasa standar.</p>
+                            <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium leading-relaxed">Layanan dengan harga pasti. Cocok untuk layanan standar.</p>
                         </label>
                         <label class="cursor-pointer border-2 rounded-2xl p-5 transition-all {{ old('type', $service->type) === 'project' ? 'border-brand-primary bg-indigo-50/50 shadow-sm dark:border-indigo-500 dark:bg-indigo-900/20' : 'border-gray-100 bg-gray-50/50 dark:border-gray-700 dark:bg-gray-800/50' }}" data-type="project">
                             <input type="radio" name="type" value="project" class="sr-only" {{ old('type', $service->type) === 'project' ? 'checked' : '' }}>
@@ -90,14 +90,14 @@
                                     @endif
                                 </div>
                             </div>
-                            <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium leading-relaxed">Nego via WhatsApp. Untuk pekerjaan kompleks.</p>
+                            <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium leading-relaxed">Negosiasi melalui WhatsApp. Untuk pekerjaan kompleks.</p>
                         </label>
                     </div>
                 </div>
 
                 {{-- Price --}}
                 <div class="bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-800/30 rounded-2xl p-6 transition-colors">
-                    <label class="block text-sm font-bold text-gray-900 dark:text-white mb-3">Harga Jasa (IDR)</label>
+                    <label class="block text-sm font-bold text-gray-900 dark:text-white mb-3">Harga Layanan (IDR)</label>
                     <div class="relative">
                         <span class="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-green-700 dark:text-green-500">Rp</span>
                         <input type="number" name="price" value="{{ old('price', $service->price) }}"
@@ -124,7 +124,7 @@
 
                 {{-- Upload Gambar --}}
                 <div>
-                    <label class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Gambar Jasa</label>
+                    <label class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Gambar Layanan</label>
                     @if($service->image)
                         <div class="mb-3">
                             <img src="{{ Storage::url($service->image) }}" class="w-32 h-24 object-cover rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
@@ -166,7 +166,7 @@
         <div class="lg:col-span-4 space-y-6">
             {{-- Info Jasa --}}
             <div class="bg-white dark:bg-brand-darksurface rounded-2xl p-6 border border-gray-100 dark:border-brand-darkborder shadow-sm transition-colors">
-                <h4 class="text-[10px] font-extrabold tracking-widest text-gray-400 dark:text-gray-500 uppercase mb-4">INFO JASA</h4>
+                <h4 class="text-[10px] font-extrabold tracking-widest text-gray-400 dark:text-gray-500 uppercase mb-4">INFO LAYANAN</h4>
                 <div class="space-y-3">
                     <div>
                         <p class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Status</p>
@@ -199,7 +199,7 @@
                         <span class="text-green-500 mt-0.5">✓</span>
                         <div>
                             <p class="text-xs font-bold text-gray-900 dark:text-white">Upload Portofolio</p>
-                            <p class="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed">Jasa dengan gambar portofolio asli memiliki konversi 3x lebih tinggi.</p>
+                            <p class="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed">Layanan dengan gambar portofolio asli memiliki konversi 3x lebih tinggi.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3">

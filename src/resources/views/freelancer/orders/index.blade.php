@@ -58,7 +58,7 @@
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">{{ $order->service->title ?? 'Layanan tidak ditemukan' }}</h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                            Klien: <span class="font-medium text-gray-700 dark:text-gray-300">{{ $order->client->name ?? 'User tidak ditemukan' }}</span>
+                            Klien: <span class="font-medium text-gray-700 dark:text-gray-300">{{ $order->client->name ?? 'Pengguna tidak ditemukan' }}</span>
                         </p>
                         <p class="text-xs text-gray-400 flex items-center gap-1.5">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,7 +72,7 @@
                     <div class="flex flex-col lg:items-end w-full lg:w-96 gap-4 border-t lg:border-t-0 pt-4 lg:pt-0 border-gray-100 dark:border-gray-800">
                         <div class="text-left lg:text-right w-full flex lg:flex-col justify-between lg:justify-start items-center lg:items-end">
                             <p class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Total Nilai</p>
-                            <p class="text-lg font-extrabold text-brand-primary dark:text-indigo-400">Rp {{ number_format($order->total_price ?? $order->price, 0, ',', '.') }}</p>
+                            <p class="text-lg font-extrabold text-brand-primary dark:text-indigo-400">Rp{{ number_format($order->total_price ?? $order->price, 0, ',', '.') }}</p>
                         </div>
                         
                         <div class="w-full">
@@ -86,8 +86,8 @@
                                     <div x-show="open" x-transition class="mt-3 bg-indigo-50 dark:bg-indigo-900/10 rounded-xl p-4 border border-indigo-100 dark:border-indigo-800/30 text-left w-full">
                                         <form action="{{ route('freelancer.pesanan.submitResult', $order->id) }}" method="POST">
                                             @csrf
-                                            <label class="block text-[10px] font-extrabold text-indigo-800 dark:text-indigo-400 uppercase tracking-widest mb-2">Link Hasil Kerja (Google Drive)</label>
-                                            <input type="url" name="freelancer_result_link" placeholder="Link Google Drive hasil kerja" required class="w-full bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white outline-none focus:border-brand-primary dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand-primary dark:focus:ring-indigo-500 mb-3 transition-colors">
+                                            <label class="block text-[10px] font-extrabold text-indigo-800 dark:text-indigo-400 uppercase tracking-widest mb-2">Tautan Hasil Pekerjaan (Google Drive)</label>
+                                            <input type="url" name="freelancer_result_link" placeholder="Tautan Google Drive hasil pekerjaan" required class="w-full bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white outline-none focus:border-brand-primary dark:focus:border-indigo-500 focus:ring-1 focus:ring-brand-primary dark:focus:ring-indigo-500 mb-3 transition-colors">
                                             <button type="submit" class="w-full bg-green-600 dark:bg-green-500 text-white py-2 rounded-lg text-xs font-bold hover:bg-green-700 dark:hover:bg-green-600 transition-colors">Serahkan Hasil</button>
                                         </form>
                                     </div>

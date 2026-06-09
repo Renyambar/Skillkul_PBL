@@ -1,22 +1,22 @@
 @extends('layouts.admin')
-@section('title', 'Admin - Tambah Jasa')
+@section('title', 'Admin - Tambah Layanan')
 
 @section('content')
 <div class="p-8 lg:p-10 transition-colors duration-300">
 
     {{-- ── Breadcrumb ── --}}
     <div class="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-8">
-        <a href="{{ route('admin.services.index') }}" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Katalog Jasa</a>
+        <a href="{{ route('admin.services.index') }}" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Katalog Layanan</a>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
         </svg>
-        <span class="text-gray-800 dark:text-gray-200">Tambah Jasa Baru</span>
+        <span class="text-gray-800 dark:text-gray-200">Tambah Layanan Baru</span>
     </div>
 
     <div class="max-w-3xl">
         <div class="mb-8">
-            <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight mb-2">Tambah Jasa Baru</h1>
-            <p class="text-[13px] font-medium text-gray-500 dark:text-gray-400">Isi data jasa yang akan ditampilkan di katalog platform.</p>
+            <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight mb-2">Tambah Layanan Baru</h1>
+            <p class="text-[13px] font-medium text-gray-500 dark:text-gray-400">Isi data layanan yang akan ditampilkan di katalog platform.</p>
         </div>
 
         <form method="POST" action="{{ route('admin.services.store') }}" enctype="multipart/form-data"
@@ -52,7 +52,7 @@
             {{-- Judul --}}
             <div>
                 <label for="title" class="block text-[11px] font-extrabold uppercase tracking-widest text-gray-700 dark:text-gray-300 mb-2.5">
-                    Judul Jasa <span class="text-red-500">*</span>
+                    Judul Layanan <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <input type="text" name="title" id="title" value="{{ old('title') }}"
@@ -146,7 +146,7 @@
                     Deskripsi <span class="text-red-500">*</span>
                 </label>
                 <textarea name="description" id="description" rows="5" required
-                          placeholder="Jelaskan detail jasa yang ditawarkan, termasuk apa yang akan diterima klien…"
+                          placeholder="Jelaskan detail layanan yang ditawarkan, termasuk apa yang akan diterima klien…"
                           class="w-full px-5 py-4 text-[13px] font-medium border @error('description') border-red-400 dark:border-red-500/50 @else border-gray-200 dark:border-gray-700 @enderror rounded-2xl outline-none focus:ring-2 focus:ring-brand-primary/20 dark:focus:ring-indigo-500/20 focus:border-brand-primary dark:focus:border-indigo-500 transition-all bg-gray-50 dark:bg-gray-800/50 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none">{{ old('description') }}</textarea>
                 @error('description')
                     <p class="mt-2 text-[11px] font-bold text-red-500 flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>{{ $message }}</p>
@@ -188,8 +188,8 @@
                     <div class="w-12 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
                 </label>
                 <div>
-                    <p class="text-[13px] font-black text-gray-900 dark:text-white">Aktifkan Jasa</p>
-                    <p class="text-[11px] font-medium text-gray-500 dark:text-gray-400 mt-0.5">Jasa akan langsung tampil di katalog publik setelah disimpan</p>
+                    <p class="text-[13px] font-black text-gray-900 dark:text-white">Aktifkan Layanan</p>
+                    <p class="text-[11px] font-medium text-gray-500 dark:text-gray-400 mt-0.5">Layanan akan langsung tampil di katalog publik setelah disimpan</p>
                 </div>
             </div>
 
@@ -198,7 +198,7 @@
                 <button type="submit" id="submit-btn"
                         class="w-full sm:w-auto bg-brand-primary dark:bg-indigo-600 text-white font-black text-[13px] px-8 py-3.5 rounded-xl hover:bg-brand-dark dark:hover:bg-indigo-500 transition-colors shadow-sm dark:shadow-none flex items-center justify-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                    Simpan Jasa
+                    Simpan Layanan
                 </button>
                 <a href="{{ route('admin.services.index') }}"
                    class="w-full sm:w-auto text-center text-gray-600 dark:text-gray-300 font-bold text-[13px] px-6 py-3.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-700">

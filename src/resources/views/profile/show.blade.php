@@ -152,7 +152,7 @@
                     <!-- Info Box -->
                     <div class="mt-6 p-4 bg-blue-50 dark:bg-indigo-900/20 border-l-4 border-blue-500 dark:border-indigo-500 rounded-lg transition-colors">
                         <p class="text-sm text-blue-800 dark:text-indigo-300">
-                            <strong>💡 Info:</strong> Ketika Mode Ujian aktif, button "Pesan Jasa" akan disembunyikan dari profil Anda di marketplace. Klien tidak bisa membuat pesanan baru.
+                            <strong>💡 Info:</strong> Ketika Mode Ujian aktif, tombol "Pesan Jasa" akan disembunyikan dari profil Anda di lokapasar. Klien tidak bisa membuat pesanan baru.
                         </p>
                     </div>
                 </div>

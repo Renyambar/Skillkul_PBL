@@ -78,7 +78,7 @@ class Service extends Model
      * 3. Tidak ada pesanan 'in_progress' untuk jasa ini (kapasitas 1-on-1)
      *
      * Digunakan di ServiceController::index() untuk memastikan hanya jasa
-     * yang benar-benar tersedia yang tampil di marketplace.
+     * yang benar-benar tersedia yang tampil di lokapasar.
      */
     public function scopeAvailableInCatalog($query)
     {
@@ -99,10 +99,10 @@ class Service extends Model
     public function getPriceRangeAttribute(): string
     {
         if ($this->type === 'project' && $this->price_max) {
-            return 'Rp ' . number_format($this->price, 0, ',', '.') .
-                   ' – Rp ' . number_format($this->price_max, 0, ',', '.');
+            return 'Rp' . number_format($this->price, 0, ',', '.') .
+                   ' – Rp' . number_format($this->price_max, 0, ',', '.');
         }
-        return 'Rp ' . number_format($this->price, 0, ',', '.');
+        return 'Rp' . number_format($this->price, 0, ',', '.');
     }
 
     /**

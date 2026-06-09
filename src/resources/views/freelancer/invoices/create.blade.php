@@ -28,22 +28,22 @@
 
                 {{-- Email Klien --}}
                 <div>
-                    <label for="client_email" class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Email Klien</label>
+                    <label for="client_email" class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Pos-el Klien</label>
                     <input type="email" id="client_email" name="client_email" value="{{ old('client_email') }}"
                         placeholder="contoh@email.com"
                         class="w-full bg-gray-50 dark:bg-gray-800/50 border border-transparent dark:border-gray-700 focus:bg-white dark:focus:bg-brand-darksurface focus:border-brand-primary dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all outline-none @error('client_email') border-red-400 bg-red-50 dark:bg-red-900/10 dark:border-red-800/50 @enderror">
                     @error('client_email')
                         <p class="text-xs text-red-500 mt-1.5">{{ $message }}</p>
                     @enderror
-                    <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-2">Email harus terdaftar sebagai pengguna di SkillKul.</p>
+                    <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-2">Pos-el harus terdaftar sebagai pengguna di SkillKul.</p>
                 </div>
 
                 {{-- Pilih Jasa --}}
                 <div>
-                    <label for="service_id" class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Pilih Jasa</label>
+                    <label for="service_id" class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Pilih Layanan</label>
                     <select id="service_id" name="service_id"
                         class="w-full bg-gray-50 dark:bg-gray-800/50 border border-transparent dark:border-gray-700 focus:bg-white dark:focus:bg-brand-darksurface focus:border-brand-primary dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-900 dark:text-gray-300 transition-all outline-none appearance-none custom-select @error('service_id') border-red-400 bg-red-50 dark:bg-red-900/10 dark:border-red-800/50 @enderror">
-                        <option value="" class="dark:bg-gray-800">— Pilih jasa yang ingin ditagih —</option>
+                        <option value="" class="dark:bg-gray-800">— Pilih layanan yang ingin ditagih —</option>
                         @foreach($services as $service)
                             <option value="{{ $service->id }}" data-title="{{ $service->title }}"
                                 {{ old('service_id') == $service->id ? 'selected' : '' }} class="dark:bg-gray-800">
@@ -58,7 +58,7 @@
                     @if($services->isEmpty())
                         <p class="text-xs text-amber-600 dark:text-amber-500 mt-2 flex items-center gap-1">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Anda belum memiliki jasa yang aktif. <a href="{{ route('freelancer.jasa.create') }}" class="underline font-bold hover:text-amber-700 dark:hover:text-amber-400">Buat jasa baru</a>
+                            Anda belum memiliki layanan yang aktif. <a href="{{ route('freelancer.jasa.create') }}" class="underline font-bold hover:text-amber-700 dark:hover:text-amber-400">Buat layanan baru</a>
                         </p>
                     @endif
                 </div>
@@ -75,7 +75,7 @@
                     @error('total_price')
                         <p class="text-xs text-red-500 mt-1.5">{{ $message }}</p>
                     @enderror
-                    <p class="text-[10px] font-bold text-green-700 dark:text-green-400 mt-3 flex items-center gap-1.5 opacity-80">ℹ️ Harga final yang telah disepakati via WhatsApp. Minimum Rp 10.000.</p>
+                    <p class="text-[10px] font-bold text-green-700 dark:text-green-400 mt-3 flex items-center gap-1.5 opacity-80">ℹ️ Harga final yang telah disepakati via WhatsApp. Minimum Rp10.000.</p>
                 </div>
 
                 {{-- Catatan --}}
@@ -118,7 +118,7 @@
                             <span id="previewEmail" class="font-medium text-gray-400 dark:text-gray-500">–</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-500 dark:text-gray-400">Jasa</span>
+                            <span class="text-gray-500 dark:text-gray-400">Layanan</span>
                             <span id="previewService" class="font-medium text-gray-400 dark:text-gray-500 text-right max-w-[180px] truncate">–</span>
                         </div>
                         <div class="flex justify-between">
@@ -128,7 +128,7 @@
                     </div>
                     <div class="bg-gradient-to-br from-[#2a0e88] to-[#160655] dark:from-indigo-900 dark:to-brand-darksurface text-white p-4 rounded-xl border border-transparent dark:border-brand-darkborder transition-colors">
                         <p class="text-[10px] text-indigo-300 dark:text-indigo-400 font-bold uppercase">Total Tagihan Rekening Bersama (Escrow)</p>
-                        <h3 id="previewPrice" class="text-2xl font-black mt-1">Rp –</h3>
+                        <h3 id="previewPrice" class="text-2xl font-black mt-1">Rp–</h3>
                     </div>
                 </div>
             </div>
@@ -161,8 +161,8 @@
 
         // Format angka ke Rupiah
         function formatRupiah(angka) {
-            if (!angka || isNaN(angka)) return 'Rp –';
-            return 'Rp ' + Number(angka).toLocaleString('id-ID');
+            if (!angka || isNaN(angka)) return 'Rp–';
+            return 'Rp' + Number(angka).toLocaleString('id-ID');
         }
 
         emailInput.addEventListener('input', function () {

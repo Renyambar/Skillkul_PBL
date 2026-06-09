@@ -1,5 +1,5 @@
 @extends('layouts.freelancer')
-@section('title', 'Buka Jasa Baru - SkillKul')
+@section('title', 'Buka Layanan Baru - SkillKul')
 @section('content')
     <div class="p-8 lg:p-10 transition-colors duration-300">
         {{-- Header --}}
@@ -10,7 +10,7 @@
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
                 </svg>
-                <span class="text-gray-600 dark:text-gray-300 font-semibold">Buka Jasa Baru</span>
+                <span class="text-gray-600 dark:text-gray-300 font-semibold">Buka Layanan Baru</span>
             </div>
             <span
                 class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-brand-primary dark:text-indigo-400 tracking-widest uppercase mb-3">
@@ -20,8 +20,8 @@
                 </svg>
                 MODUL PUBLISHER
             </span>
-            <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight mb-2">Buka Jasa Baru</h1>
-            <p class="text-gray-500 dark:text-gray-400 text-sm max-w-2xl">Transformasikan keahlian akademikmu menjadi layanan profesional yang
+            <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight mb-2">Buka Layanan Baru</h1>
+            <p class="text-gray-500 dark:text-gray-400 text-sm max-w-2xl">Transformasikan keahlian akademik Anda menjadi layanan profesional yang
                 siap dipesan oleh klien.</p>
         </div>
 
@@ -45,7 +45,7 @@
 
                     {{-- Judul --}}
                     <div>
-                        <label class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Judul Jasa</label>
+                        <label class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Judul Layanan</label>
                         <input type="text" name="title" value="{{ old('title') }}"
                             placeholder="Contoh: Pembuatan Dasbor Analitik Data Excel"
                             class="w-full bg-gray-50 dark:bg-gray-800/50 border border-transparent dark:border-gray-700 focus:bg-white dark:focus:bg-brand-darksurface focus:border-brand-primary dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 rounded-xl px-4 py-3.5 text-sm font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all outline-none">
@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                                 <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium leading-relaxed">Layanan dengan harga pasti.
-                                    Cocok untuk jasa standar.</p>
+                                    Cocok untuk layanan standar.</p>
                             </label>
                             <label class="cursor-pointer border-2 rounded-2xl p-5 transition-all" data-type="project">
                                 <input type="radio" name="type" value="project" class="sr-only" {{ old('type') === 'project' ? 'checked' : '' }}>
@@ -103,7 +103,7 @@
                                     <div class="radio-dot w-5 h-5 rounded-full border-2 flex items-center justify-center">
                                     </div>
                                 </div>
-                                <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium leading-relaxed">Nego via WhatsApp. Untuk
+                                <p class="text-[11px] text-gray-500 dark:text-gray-400 font-medium leading-relaxed">Negosiasi melalui WhatsApp. Untuk
                                     pekerjaan kompleks.</p>
                             </label>
                         </div>
@@ -111,7 +111,7 @@
 
                     {{-- Price --}}
                     <div class="bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-800/30 rounded-2xl p-6 transition-colors">
-                        <label class="block text-sm font-bold text-gray-900 dark:text-white mb-3">Harga Jasa (IDR)</label>
+                        <label class="block text-sm font-bold text-gray-900 dark:text-white mb-3">Harga Layanan (IDR)</label>
                         <div class="relative">
                             <span class="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-green-700 dark:text-green-500">Rp</span>
                             <input type="number" name="price" value="{{ old('price') }}" placeholder="150000"
@@ -139,7 +139,7 @@
 
                     {{-- Upload Gambar --}}
                     <div>
-                        <label class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Gambar Jasa (Opsional)</label>
+                        <label class="block text-sm font-bold text-gray-900 dark:text-white mb-2">Gambar Layanan (Opsional)</label>
                         <input type="file" name="image" accept="image/jpg,image/jpeg,image/png,image/webp"
                             class="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-indigo-50 dark:file:bg-indigo-900/30 file:text-indigo-700 dark:file:text-indigo-400 hover:file:bg-indigo-100 dark:hover:file:bg-indigo-900/50 transition-all">
                         <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-2">Format: JPG, JPEG, PNG, WEBP. Maks 2MB.</p>
@@ -162,7 +162,7 @@
                             <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </div>
                         <p class="text-[10px] font-semibold text-blue-600 dark:text-blue-400 mt-2 leading-relaxed opacity-80">
-                            ⏱ Deadline order akan otomatis dihitung dari tanggal pembayaran + estimasi ini. Jika kosong, deadline tidak di-set otomatis.
+                            ⏱ Batas waktu pesanan akan otomatis dihitung dari tanggal pembayaran + estimasi ini. Jika kosong, batas waktu tidak diatur otomatis.
                         </p>
                     </div>
 
@@ -171,27 +171,13 @@
                             class="text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-4 py-2 transition-colors">Batal</a>
                         <button type="submit"
                             class="bg-brand-primary dark:bg-indigo-600 text-white px-8 py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-brand-dark dark:hover:bg-indigo-500 transition-all">Terbitkan
-                            Jasa</button>
+                            Layanan</button>
                     </div>
                 </form>
             </div>
 
             {{-- Right Cards --}}
             <div class="lg:col-span-4 space-y-6">
-                <div
-                    class="bg-gradient-to-br from-[#2a0e88] to-[#160655] dark:from-indigo-900 dark:to-brand-darksurface rounded-2xl p-7 text-white shadow-xl relative overflow-hidden transition-colors border border-transparent dark:border-brand-darkborder">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
-                    <span
-                        class="inline-block bg-white/10 px-3 py-1 rounded-full text-[9px] font-extrabold tracking-widest uppercase mb-4 border border-white/10">Fitur
-                        Asisten</span>
-                    <h3 class="text-xl font-bold mb-3">Auto-Portofolio Helper</h3>
-                    <p class="text-indigo-200 text-[11px] leading-relaxed mb-8">Sistem kami akan membantu memoles deskripsi jasa
-                        Anda agar terlihat lebih profesional di mata klien korporat.</p>
-                    <button
-                        class="w-full bg-white dark:bg-gray-800 text-[#2a0e88] dark:text-indigo-300 font-bold py-3 rounded-xl text-xs flex justify-center items-center gap-2 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors shadow-lg">⚡
-                        Optimalkan Deskripsi Jasa</button>
-                </div>
-
                 <div class="bg-white dark:bg-brand-darksurface rounded-2xl p-6 border border-gray-100 dark:border-brand-darkborder transition-colors shadow-sm">
                     <h4 class="text-[10px] font-extrabold tracking-widest text-gray-900 dark:text-gray-100 uppercase mb-4">TIPS SUKSES</h4>
                     <div class="space-y-4">
@@ -199,7 +185,7 @@
                             <span class="text-green-500 mt-0.5">✓</span>
                             <div>
                                 <p class="text-xs font-bold text-gray-900 dark:text-white">Unggah Portofolio</p>
-                                <p class="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed">Jasa dengan gambar portofolio asli
+                                <p class="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed">Layanan dengan gambar portofolio asli
                                     memiliki konversi 3x lebih tinggi.</p>
                             </div>
                         </div>

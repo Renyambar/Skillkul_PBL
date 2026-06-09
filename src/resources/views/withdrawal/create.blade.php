@@ -1,5 +1,5 @@
 @extends('layouts.' . (auth()->user()->role === 'freelancer' ? 'freelancer' : 'client'))
-@section('title', 'Tarik Saldo - SkillKul')
+@section('title', 'Cairkan Saldo - SkillKul')
 @section('content')
 <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <div class="mb-8">
@@ -9,8 +9,8 @@
             </svg>
             Kembali
         </a>
-        <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Tarik Saldo</h1>
-        <p class="text-sm text-gray-500 mt-1">Transfer saldo wallet ke rekening bank Anda.</p>
+        <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Cairkan Saldo</h1>
+        <p class="text-sm text-gray-500 mt-1">Transfer saldo dompet ke rekening bank Anda.</p>
     </div>
 
     @if(session('error'))
@@ -23,7 +23,7 @@
     <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 mb-6 flex items-center justify-between">
         <div>
             <p class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">Saldo Tersedia</p>
-            <p class="text-2xl font-extrabold text-indigo-700">Rp {{ number_format($balance, 0, ',', '.') }}</p>
+            <p class="text-2xl font-extrabold text-indigo-700">Rp{{ number_format($balance, 0, ',', '.') }}</p>
         </div>
         <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,15 +42,15 @@
                         d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
                 <div>
-                    <p class="font-bold text-yellow-800 text-sm">Ada Request Aktif</p>
+                    <p class="font-bold text-yellow-800 text-sm">Ada Permintaan Aktif</p>
                     <p class="text-yellow-700 text-xs mt-1">
-                        Anda memiliki penarikan <strong>Rp {{ number_format($pendingWithdrawal->amount, 0, ',', '.') }}</strong>
+                        Anda memiliki pencairan <strong>Rp{{ number_format($pendingWithdrawal->amount, 0, ',', '.') }}</strong>
                         yang sedang diproses (status: <strong>{{ $pendingWithdrawal->status_label }}</strong>).
                         Harap tunggu hingga selesai sebelum mengajukan yang baru.
                     </p>
                     <a href="{{ route('withdrawal.history') }}"
                        class="inline-block mt-2 text-xs text-yellow-700 font-bold underline">
-                        Lihat Riwayat Penarikan →
+                        Lihat Riwayat Pencairan Saldo →
                     </a>
                 </div>
             </div>
@@ -106,8 +106,8 @@
 
                 <div>
                     <label for="amount" class="block text-sm font-semibold text-gray-700 mb-1.5">
-                        Nominal Penarikan
-                        <span class="font-normal text-gray-400">(Min. Rp {{ number_format($minAmount, 0, ',', '.') }})</span>
+                        Nominal Pencairan
+                        <span class="font-normal text-gray-400">(Min. Rp{{ number_format($minAmount, 0, ',', '.') }})</span>
                     </label>
                     <div class="relative">
                         <span class="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">Rp</span>
@@ -124,19 +124,19 @@
                     <button type="button"
                         onclick="document.getElementById('amount').value = {{ $balance }}"
                         class="mt-1.5 text-xs text-indigo-600 font-semibold hover:underline">
-                        Tarik semua (Rp {{ number_format($balance, 0, ',', '.') }})
+                        Cairkan semua (Rp{{ number_format($balance, 0, ',', '.') }})
                     </button>
                 </div>
 
                 <div class="bg-gray-50 rounded-xl p-4 text-xs text-gray-500 space-y-1">
-                    <p>• Penarikan diproses manual oleh admin dalam 1-2 hari kerja.</p>
+                    <p>• Pencairan saldo diproses manual oleh admin dalam 1-2 hari kerja.</p>
                     <p>• Saldo baru dikurangi setelah transfer selesai dikonfirmasi.</p>
                     <p>• Pastikan data rekening bank sudah benar sebelum submit.</p>
                 </div>
 
                 <button type="submit"
                     class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-colors text-sm">
-                    Ajukan Penarikan
+                    Ajukan Pencairan Saldo
                 </button>
             </form>
         </div>
@@ -150,8 +150,8 @@
             </div>
             <h4 class="font-bold text-gray-900 mb-1">Saldo Belum Mencukupi</h4>
             <p class="text-sm text-gray-500">
-                Minimal penarikan adalah Rp {{ number_format($minAmount, 0, ',', '.') }}.
-                Saldo Anda saat ini: <strong>Rp {{ number_format($balance, 0, ',', '.') }}</strong>.
+                Minimal pencairan adalah Rp{{ number_format($minAmount, 0, ',', '.') }}.
+                Saldo Anda saat ini: <strong>Rp{{ number_format($balance, 0, ',', '.') }}</strong>.
             </p>
         </div>
     @endif

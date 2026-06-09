@@ -70,7 +70,7 @@
                     @csrf
 
                     <div>
-                        <label for="email" class="block text-xs font-extrabold text-brand-secondary dark:text-gray-400 uppercase tracking-widest mb-2">Email</label>
+                        <label for="email" class="block text-xs font-extrabold text-brand-secondary dark:text-gray-400 uppercase tracking-widest mb-2">Pos-el</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <span class="text-gray-400 dark:text-gray-500 text-lg font-medium">@</span>

@@ -5,7 +5,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
             <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Dompet Saya</h1>
-            <p class="text-sm text-gray-500 mt-1">Saldo dari refund order yang dibatalkan.</p>
+            <p class="text-sm text-gray-500 mt-1">Saldo dari pengembalian dana pesanan yang dibatalkan.</p>
         </div>
         <a href="{{ route('withdrawal.create') }}"
            class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-colors shadow-sm">
@@ -13,7 +13,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            Tarik Saldo
+            Cairkan Saldo
         </a>
     </div>
 
@@ -33,21 +33,21 @@
         <div class="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
         <div class="absolute bottom-0 left-1/4 w-32 h-32 bg-emerald-400/20 rounded-full blur-xl"></div>
         <div class="relative z-10">
-            <p class="text-emerald-200 text-xs font-bold uppercase tracking-widest mb-3">SALDO WALLET</p>
+            <p class="text-emerald-200 text-xs font-bold uppercase tracking-widest mb-3">SALDO DOMPET</p>
             <h2 class="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight">
-                Rp {{ number_format($balance ?? 0, 0, ',', '.') }}
+                Rp{{ number_format($balance ?? 0, 0, ',', '.') }}
             </h2>
             <p class="text-emerald-200 text-xs mb-6">
-                Saldo dari refund order. Bisa digunakan untuk order baru atau ditarik.
+                Saldo dari pengembalian dana pesanan. Bisa digunakan untuk pesanan baru atau dicairkan.
             </p>
             <div class="flex flex-wrap gap-3">
                 <a href="{{ route('katalog') }}"
                    class="bg-white text-emerald-700 px-6 py-3 rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors shadow-sm inline-flex items-center gap-2">
-                    Gunakan untuk Order Baru
+                    Gunakan untuk Pesanan Baru
                 </a>
                 <a href="{{ route('withdrawal.create') }}"
                    class="bg-white/20 text-white border border-white/30 px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/30 transition-colors inline-flex items-center gap-2">
-                    Tarik Saldo
+                    Cairkan Saldo
                 </a>
             </div>
         </div>
@@ -56,7 +56,7 @@
     {{-- Riwayat Ledger --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div class="p-6 border-b border-gray-100">
-            <h3 class="font-bold text-gray-900 text-lg">Riwayat Transaksi Wallet</h3>
+            <h3 class="font-bold text-gray-900 text-lg">Riwayat Transaksi Dompet</h3>
         </div>
 
         @if($transactions->isEmpty())
@@ -69,7 +69,7 @@
                 </div>
                 <h4 class="text-base font-bold text-gray-900 mb-1">Belum ada transaksi</h4>
                 <p class="text-sm text-gray-500">
-                    Refund dari order yang dibatalkan akan muncul di sini.
+                    Pengembalian dana dari pesanan yang dibatalkan akan muncul di sini.
                 </p>
             </div>
         @else
@@ -94,7 +94,7 @@
                                 <div class="truncate">{{ $tx->description }}</div>
                                 @if($tx->order)
                                     <div class="text-xs text-gray-400 mt-0.5">
-                                        Order #{{ substr($tx->order_id, 0, 8) }}...
+                                        Pesanan #{{ substr($tx->order_id, 0, 8) }}...
                                     </div>
                                 @endif
                             </td>
@@ -108,10 +108,10 @@
                             </td>
                             <td class="px-6 py-4 text-right font-extrabold whitespace-nowrap
                                 {{ $tx->type === 'credit' ? 'text-green-600' : 'text-red-500' }}">
-                                {{ $tx->type === 'credit' ? '+' : '-' }} Rp {{ number_format($tx->amount, 0, ',', '.') }}
+                                {{ $tx->type === 'credit' ? '+' : '-' }} Rp{{ number_format($tx->amount, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-4 text-right text-gray-700 font-semibold whitespace-nowrap">
-                                Rp {{ number_format($tx->balance_after, 0, ',', '.') }}
+                                Rp{{ number_format($tx->balance_after, 0, ',', '.') }}
                             </td>
                         </tr>
                         @endforeach

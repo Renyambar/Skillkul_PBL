@@ -31,7 +31,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <div class="bg-white dark:bg-brand-darksurface rounded-3xl p-8 border border-gray-100 dark:border-brand-darkborder shadow-sm hover:shadow-lg transition-all duration-300">
                 <p class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">TOTAL PENDAPATAN</p>
-                <h3 class="text-3xl font-extrabold text-brand-dark dark:text-white">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</h3>
+                <h3 class="text-3xl font-extrabold text-brand-dark dark:text-white">Rp{{ number_format($totalPendapatan, 0, ',', '.') }}</h3>
                 <p class="text-xs text-green-600 dark:text-green-400 font-bold mt-2 flex items-center gap-1">📈 Pencapaian Anda</p>
             </div>
             <div class="bg-white dark:bg-brand-darksurface rounded-3xl p-8 border border-gray-100 dark:border-brand-darkborder shadow-sm hover:shadow-lg transition-all duration-300">
@@ -43,7 +43,7 @@
                 <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-brand-accent/20 dark:bg-brand-accent/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
                 <div class="relative z-10">
                     <p class="text-[10px] font-extrabold text-green-700 dark:text-green-400 uppercase tracking-widest mb-3">SALDO DOMPET</p>
-                    <h3 class="text-3xl font-extrabold text-brand-dark dark:text-white">Rp {{ number_format($saldoDompet, 0, ',', '.') }}</h3>
+                    <h3 class="text-3xl font-extrabold text-brand-dark dark:text-white">Rp{{ number_format($saldoDompet, 0, ',', '.') }}</h3>
                     <a href="{{ route('freelancer.dompet') }}"
                         class="mt-4 inline-flex items-center gap-2 bg-brand-accent hover:bg-green-400 dark:bg-brand-accent dark:hover:bg-green-500 text-brand-dark text-xs font-extrabold px-5 py-2.5 rounded-xl transition-all shadow-sm">
                         Tarik ke Bank

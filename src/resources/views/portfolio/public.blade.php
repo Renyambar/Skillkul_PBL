@@ -332,7 +332,7 @@
     <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-2">
             <span class="text-indigo-600 font-extrabold text-lg">SkillKul</span>
-            <span class="text-gray-400 text-sm">— Marketplace Jasa Mahasiswa</span>
+            <span class="text-gray-400 text-sm">— Lokapasar Jasa Mahasiswa</span>
         </div>
         <a href="{{ route('katalog') }}"
            class="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-colors">

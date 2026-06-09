@@ -11,7 +11,7 @@
         <div>
             <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 tracking-widest uppercase mb-2">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                Proyek Portofolio System
+                Sistem Portofolio Proyek
             </span>
             <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">Portofolio Saya</h1>
             <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Kelola dan tampilkan karya terbaik Anda kepada dunia.</p>
@@ -148,16 +148,16 @@
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-sm font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
                 <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                Portofolio Projects
+                Proyek Portofolio
             </h3>
-            <span class="text-xs text-gray-400 dark:text-gray-500">Total: {{ $portfolios->total() }} project</span>
+            <span class="text-xs text-gray-400 dark:text-gray-500">Total: {{ $portfolios->total() }} proyek</span>
         </div>
 
         @if($portfolios->isEmpty())
         <div class="bg-white dark:bg-brand-darksurface rounded-2xl border border-dashed border-gray-200 dark:border-gray-700 p-16 text-center transition-colors">
             <div class="text-5xl mb-4">📂</div>
             <h3 class="text-base font-bold text-gray-700 dark:text-gray-300 mb-1">Belum Ada Portofolio</h3>
-            <p class="text-sm text-gray-400 dark:text-gray-500 max-w-sm mx-auto">Selesaikan pesanan project dan tambahkan ke portfolio dari daftar di atas.</p>
+            <p class="text-sm text-gray-400 dark:text-gray-500 max-w-sm mx-auto">Selesaikan pesanan proyek dan tambahkan ke portofolio dari daftar di atas.</p>
         </div>
         @else
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -225,7 +225,7 @@
                     <a href="{{ $portfolio->cloud_link }}" target="_blank"
                        class="inline-flex items-center gap-1 text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold hover:underline mb-3">
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                        Lihat Hasil Kerja
+                        Lihat Hasil Pekerjaan
                     </a>
                     @endif
 
@@ -250,10 +250,10 @@
                         @if($portfolio->is_portfolio)
                         <form action="{{ route('freelancer.portfolio.toggleFeatured', $portfolio->id) }}" method="POST">
                             @csrf
-                            <button type="submit" title="{{ $portfolio->is_featured ? 'Hapus dari Featured' : 'Jadikan Featured' }}"
+                            <button type="submit" title="{{ $portfolio->is_featured ? 'Hapus dari Unggulan' : 'Jadikan Unggulan' }}"
                                     class="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg font-semibold transition-colors {{ $portfolio->is_featured ? 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-500 hover:bg-yellow-100 dark:hover:bg-yellow-900/40' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 hover:text-yellow-700 dark:hover:text-yellow-500' }}">
                                 <svg class="w-3.5 h-3.5" fill="{{ $portfolio->is_featured ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                                Featured
+                                Unggulan
                             </button>
                         </form>
                         @endif
@@ -267,7 +267,7 @@
 
                         {{-- Hapus --}}
                         <form action="{{ route('freelancer.portfolio.destroy', $portfolio->id) }}" method="POST"
-                              onsubmit="return confirm('Hapus project ini dari portfolio?')">
+                               onsubmit="return confirm('Hapus proyek ini dari portofolio?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit"

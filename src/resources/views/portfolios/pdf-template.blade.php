@@ -284,7 +284,7 @@
 
     {{-- ── Footer ── --}}
     <div class="footer">
-        <p>Dokumen ini diterbitkan oleh <span class="footer-brand">SkillKul — Marketplace Jasa Mahasiswa</span></p>
+        <p>Dokumen ini diterbitkan oleh <span class="footer-brand">SkillKul — Lokapasar Jasa Mahasiswa</span></p>
         <p style="margin-top: 3px;">Generated on {{ $generated_at }} &bull; Verifikasi keaslian di <strong>skillkul.id</strong></p>
     </div>
 

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Admin - Kategori Jasa')
+@section('title', 'Admin - Kategori Layanan')
 
 @section('content')
 <div class="p-8 lg:p-10 relative min-h-screen transition-colors duration-300">
@@ -8,7 +8,7 @@
     <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
         <div>
             <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight">Manajemen Kategori</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Kelola kategori jasa yang tersedia di marketplace SkillKul.</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Kelola kategori layanan yang tersedia di lokapasar SkillKul.</p>
         </div>
         <a href="{{ route('admin.categories.create') }}"
            class="flex items-center gap-2 bg-brand-primary dark:bg-indigo-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-sm hover:bg-indigo-700 dark:hover:bg-indigo-500 transition-all hover:-translate-y-0.5">
@@ -38,7 +38,7 @@
                 <tr>
                     <th class="px-6 py-5 text-left text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest whitespace-nowrap">Kategori</th>
                     <th class="px-6 py-5 text-left text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest hidden md:table-cell whitespace-nowrap">Deskripsi</th>
-                    <th class="px-6 py-5 text-center text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest whitespace-nowrap">Jasa Aktif</th>
+                    <th class="px-6 py-5 text-center text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest whitespace-nowrap">Layanan Aktif</th>
                     <th class="px-6 py-5 text-center text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest whitespace-nowrap">Status</th>
                     <th class="px-6 py-5 text-right text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest whitespace-nowrap">Aksi</th>
                 </tr>
@@ -80,7 +80,7 @@
                                     Edit
                                 </a>
                                 <form action="{{ route('admin.categories.destroy', $category) }}" method="POST"
-                                      onsubmit="return confirm('Hapus kategori \'{{ $category->name }}\'? Jasa yang sudah dibuat akan tetap ada, tetapi tidak bisa memilih kategori ini lagi.')"
+                                      onsubmit="return confirm('Hapus kategori \'{{ $category->name }}\'? Layanan yang sudah dibuat akan tetap ada, tetapi tidak bisa memilih kategori ini lagi.')"
                                       class="inline-block">
                                     @csrf
                                     @method('DELETE')
@@ -100,7 +100,7 @@
                             <span class="text-3xl opacity-50">🏷️</span>
                         </div>
                         <p class="font-bold text-gray-600 dark:text-gray-400">Belum ada kategori</p>
-                        <p class="text-xs mt-1 font-medium">Tambahkan kategori pertama untuk marketplace!</p>
+                        <p class="text-xs mt-1 font-medium">Tambahkan kategori pertama untuk lokapasar!</p>
                     </td>
                 </tr>
                 @endforelse

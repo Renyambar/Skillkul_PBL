@@ -41,7 +41,7 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('katalog')" :active="request()->routeIs('katalog')" class="text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-indigo-400 font-semibold tracking-wide">
-                        Katalog Jasa
+                        Katalog Layanan
                     </x-nav-link>
                     @endif
 
@@ -131,7 +131,7 @@
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('katalog')" :active="request()->routeIs('katalog')" class="dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800">
-                Katalog Jasa
+                Katalog Layanan
             </x-responsive-nav-link>
             @endif
 
@@ -170,9 +170,9 @@
             </div>
             @else
             <div class="px-4 space-y-1 pb-3">
-                <a href="{{ route('login') }}" class="block w-full text-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 font-bold mb-2">Log in</a>
+                <a href="{{ route('login') }}" class="block w-full text-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 font-bold mb-2">Masuk</a>
                 @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="block w-full text-center px-4 py-2 bg-brand-primary text-white rounded-xl font-bold">Register</a>
+                    <a href="{{ route('register') }}" class="block w-full text-center px-4 py-2 bg-brand-primary text-white rounded-xl font-bold">Daftar</a>
                 @endif
             </div>
             @endauth

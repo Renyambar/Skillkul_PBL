@@ -180,7 +180,7 @@
                     <a href="{{ $order->freelancer_result_link }}" target="_blank" rel="noopener"
                        class="inline-flex items-center gap-2 text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 font-semibold text-sm bg-green-50 dark:bg-green-900/30 hover:bg-green-100 dark:hover:bg-green-900/50 px-4 py-2.5 rounded-xl border border-green-100 dark:border-green-800/50 transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        Buka Hasil Kerja
+                        Buka Hasil Pekerjaan
                     </a>
                 </div>
                 @endif
@@ -219,7 +219,7 @@
                         </p>
                         @if($order->escrow && $order->escrow->status === 'refunded')
                         <p class="text-sm text-red-700 dark:text-red-300 mt-1">
-                            ✓ Dana <strong>Rp {{ number_format($order->escrow->amount, 0, ',', '.') }}</strong> telah dikembalikan ke Wallet SkillKul Anda.
+                            ✓ Dana <strong>Rp{{ number_format($order->escrow->amount, 0, ',', '.') }}</strong> telah dikembalikan ke Dompet SkillKul Anda.
                         </p>
                         @endif
                     </div>
@@ -266,15 +266,15 @@
                 <div class="space-y-2.5 text-sm">
                     <div class="flex justify-between text-gray-600 dark:text-gray-400">
                         <span>Harga Layanan</span>
-                        <span class="font-medium text-gray-900 dark:text-white">Rp {{ number_format($serviceFee, 0, ',', '.') }}</span>
+                        <span class="font-medium text-gray-900 dark:text-white">Rp{{ number_format($serviceFee, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between text-gray-600 dark:text-gray-400">
                         <span>Biaya Platform ({{ $feePercent }}%)</span>
-                        <span class="font-medium text-gray-900 dark:text-white">Rp {{ number_format($platformFee, 0, ',', '.') }}</span>
+                        <span class="font-medium text-gray-900 dark:text-white">Rp{{ number_format($platformFee, 0, ',', '.') }}</span>
                     </div>
                     <div class="border-t border-gray-100 dark:border-brand-darkborder pt-2.5 flex justify-between">
                         <span class="font-bold text-gray-900 dark:text-white">Total</span>
-                        <span class="font-extrabold text-brand-primary dark:text-indigo-400 text-base">Rp {{ number_format($total, 0, ',', '.') }}</span>
+                        <span class="font-extrabold text-brand-primary dark:text-indigo-400 text-base">Rp{{ number_format($total, 0, ',', '.') }}</span>
                     </div>
                 </div>
 
@@ -283,8 +283,8 @@
                 <div class="mt-4 bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/50 rounded-xl p-3.5 flex items-start gap-2 transition-colors">
                     <svg class="w-4 h-4 text-green-600 dark:text-green-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     <div>
-                        <p class="text-xs font-bold text-green-800 dark:text-green-400">Dilindungi Escrow SkillKul</p>
-                        <p class="text-[10px] text-green-700 dark:text-green-300 mt-0.5 leading-relaxed">Dana Anda ditahan aman & diteruskan ke freelancer hanya setelah Anda menerima hasil kerja.</p>
+                        <p class="text-xs font-bold text-green-800 dark:text-green-400">Dilindungi Rekening Bersama (Escrow) SkillKul</p>
+                        <p class="text-[10px] text-green-700 dark:text-green-300 mt-0.5 leading-relaxed">Dana Anda ditahan aman & diteruskan ke pekerja lepas hanya setelah Anda menerima hasil pekerjaan.</p>
                     </div>
                 </div>
                 @endif
@@ -326,7 +326,7 @@
                             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" @click="showRevisi = false"></div>
                             <div x-transition class="relative bg-white dark:bg-brand-darksurface rounded-2xl shadow-2xl max-w-md w-full p-6 z-10 border border-gray-100 dark:border-brand-darkborder">
                                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Permintaan Revisi</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Jelaskan secara detail apa yang perlu direvisi oleh freelancer.</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Jelaskan secara detail apa yang perlu direvisi oleh pekerja lepas.</p>
                                 <form action="{{ route('orders.requestRevision', $order->id) }}" method="POST" class="space-y-4">
                                     @csrf
                                     <div>
@@ -385,7 +385,7 @@
                         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" @click="showModal = false"></div>
                         <div x-transition class="relative bg-white dark:bg-brand-darksurface rounded-2xl shadow-2xl max-w-md w-full p-6 z-10 border border-gray-100 dark:border-brand-darkborder">
                             <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Terima & Beri Ulasan</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Dana escrow akan diteruskan ke freelancer setelah konfirmasi ini.</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Dana rekening bersama akan diteruskan ke pekerja lepas setelah konfirmasi ini.</p>
                             <form action="{{ route('orders.accept', $order->id) }}" method="POST">
                                 @csrf
                                 <div x-data="{ rating: 5 }" class="mb-5">
@@ -450,7 +450,7 @@
                             </div>
                             <div class="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/50 rounded-xl p-3.5 mb-5 transition-colors">
                                 <p class="text-sm text-green-800 dark:text-green-400 font-semibold">
-                                    ✓ Dana <strong>Rp {{ number_format($order->total_price, 0, ',', '.') }}</strong> akan dikembalikan ke Wallet SkillKul Anda.
+                                    ✓ Dana <strong>Rp{{ number_format($order->total_price, 0, ',', '.') }}</strong> akan dikembalikan ke Dompet SkillKul Anda.
                                 </p>
                             </div>
                             <form action="{{ route('orders.cancel', $order->id) }}" method="POST">
@@ -525,7 +525,7 @@
                 <div class="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/50 rounded-2xl p-5 text-center transition-colors">
                     <svg class="w-8 h-8 text-green-400 dark:text-green-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <p class="font-bold text-green-800 dark:text-green-400 text-sm">Pesanan Selesai!</p>
-                    <p class="text-xs text-green-600 dark:text-green-300 mt-1">Dana sudah diteruskan ke wallet Anda.</p>
+                    <p class="text-xs text-green-600 dark:text-green-300 mt-1">Dana sudah diteruskan ke dompet Anda.</p>
                 </div>
                 @endif
 

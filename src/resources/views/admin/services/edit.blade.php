@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Admin - Edit Jasa')
+@section('title', 'Admin - Edit Layanan')
 
 @section('content')
 <div class="p-8 lg:p-10 transition-colors duration-300">
 
     {{-- ── Breadcrumb ── --}}
     <div class="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-8">
-        <a href="{{ route('admin.services.index') }}" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Katalog Jasa</a>
+        <a href="{{ route('admin.services.index') }}" class="hover:text-brand-primary dark:hover:text-indigo-400 transition-colors">Katalog Layanan</a>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
         </svg>
@@ -15,8 +15,8 @@
 
     <div class="max-w-3xl">
         <div class="mb-8">
-            <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight mb-2">Edit Jasa</h1>
-            <p class="text-[13px] font-medium text-gray-500 dark:text-gray-400">Perbarui informasi jasa yang terdaftar di katalog.</p>
+            <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight mb-2">Edit Layanan</h1>
+            <p class="text-[13px] font-medium text-gray-500 dark:text-gray-400">Perbarui informasi layanan yang terdaftar di katalog.</p>
         </div>
 
         <form method="POST" action="{{ route('admin.services.update', $service) }}" enctype="multipart/form-data"
@@ -29,7 +29,7 @@
             {{-- Judul --}}
             <div>
                 <label for="title" class="block text-[11px] font-extrabold uppercase tracking-widest text-gray-700 dark:text-gray-300 mb-2.5">
-                    Judul Jasa <span class="text-red-500">*</span>
+                    Judul Layanan <span class="text-red-500">*</span>
                 </label>
                 <div class="relative">
                     <input type="text" name="title" id="title" value="{{ old('title', $service->title) }}"
@@ -171,8 +171,8 @@
                     <div class="w-12 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-primary"></div>
                 </label>
                 <div>
-                    <p class="text-[13px] font-black text-gray-900 dark:text-white">Aktifkan Jasa</p>
-                    <p class="text-[11px] font-medium text-gray-500 dark:text-gray-400 mt-0.5">Jasa tampil di katalog publik jika diaktifkan</p>
+                    <p class="text-[13px] font-black text-gray-900 dark:text-white">Aktifkan Layanan</p>
+                    <p class="text-[11px] font-medium text-gray-500 dark:text-gray-400 mt-0.5">Layanan tampil di katalog publik jika diaktifkan</p>
                 </div>
             </div>
 
@@ -195,14 +195,14 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
-                        Hapus Jasa
+                        Hapus Layanan
                     </button>
                 </div>
             </div>
         </form>
         
         <form id="delete-form" method="POST" action="{{ route('admin.services.destroy', $service) }}" class="hidden"
-              onsubmit="return confirm('Yakin ingin menghapus jasa ini? Tindakan ini tidak dapat dibatalkan.')">
+              onsubmit="return confirm('Yakin ingin menghapus layanan ini? Tindakan ini tidak dapat dibatalkan.')">
             @csrf
             @method('DELETE')
         </form>

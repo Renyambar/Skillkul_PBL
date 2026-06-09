@@ -51,7 +51,7 @@
                     @enderror
                 </div>
 
-                {{-- Info jasa yang menggunakan --}}
+                {{-- Info layanan yang menggunakan --}}
                 <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl p-5">
                     <p class="text-xs font-extrabold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -59,7 +59,7 @@
                     </p>
                     <p class="text-sm text-gray-700 dark:text-gray-300 font-medium">
                         Kategori ini digunakan oleh
-                        <strong class="text-gray-900 dark:text-white">{{ $category->services()->count() }}</strong> jasa
+                        <strong class="text-gray-900 dark:text-white">{{ $category->services()->count() }}</strong> layanan
                         (<strong class="text-green-600 dark:text-green-400">{{ $category->services()->where('is_active', true)->count() }}</strong> aktif).
                     </p>
                 </div>

@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <a href="{{ route('freelancer.jasa.create') }}" class="block w-full text-center bg-brand-primary hover:bg-brand-secondary text-white text-xs font-bold py-2.5 rounded-xl transition-colors shadow-lg shadow-indigo-900/30">
-                        Mulai Proyek
+                        Mulai Layanan
                     </a>
                 </div>
 

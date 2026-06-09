@@ -1,13 +1,13 @@
 @extends('layouts.admin')
-@section('title', 'Admin - Katalog Jasa')
+@section('title', 'Admin - Katalog Layanan')
 
 @section('content')
 <div class="p-8 lg:p-10 transition-colors duration-300">
 
     {{-- ── Header ── --}}
     <div class="mb-8">
-        <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight">Katalog Jasa</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Pantau dan kelola status semua jasa yang terdaftar oleh freelancer.</p>
+        <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight">Katalog Layanan</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Pantau dan kelola status semua layanan yang terdaftar oleh pekerja lepas.</p>
     </div>
 
     {{-- ── Flash Message ── --}}
@@ -35,7 +35,7 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <div class="bg-white dark:bg-brand-darksurface rounded-3xl p-6 border border-indigo-100 dark:border-indigo-900/50 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl"></div>
-            <p class="text-[11px] font-extrabold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 mb-2 relative z-10">Total Jasa</p>
+            <p class="text-[11px] font-extrabold uppercase tracking-widest text-indigo-500 dark:text-indigo-400 mb-2 relative z-10">Total Layanan</p>
             <p class="text-4xl font-black text-brand-dark dark:text-white relative z-10">{{ $stats['total'] }}</p>
         </div>
         <div class="bg-white dark:bg-brand-darksurface rounded-3xl p-6 border border-green-100 dark:border-green-900/50 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
@@ -67,7 +67,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                     <input id="search-input" type="text" name="search" value="{{ request('search') }}"
-                           placeholder="Judul jasa atau nama freelancer…"
+                           placeholder="Judul layanan atau nama pekerja lepas…"
                            class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 dark:border-gray-700 rounded-xl outline-none focus:ring-2 focus:ring-brand-primary dark:focus:ring-indigo-500 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 transition-colors">
                 </div>
             </div>
@@ -127,15 +127,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                     </svg>
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 font-bold">Tidak ada jasa yang ditemukan.</p>
+                <p class="text-gray-600 dark:text-gray-400 font-bold">Tidak ada layanan yang ditemukan.</p>
                 <p class="text-gray-500 dark:text-gray-500 text-xs mt-1 font-medium">Coba ubah filter pencarian Anda.</p>
             </div>
         @else
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
                     <thead>
-                        <tr class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-widest border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/30">
-                            <th class="px-6 py-5 whitespace-nowrap">Jasa</th>
+                        <tr class="text-[10px] font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/30">
+                            <th class="px-6 py-5 whitespace-nowrap">Layanan</th>
                             <th class="px-6 py-5 whitespace-nowrap">Pekerja Lepas</th>
                             <th class="px-6 py-5 whitespace-nowrap">Kategori</th>
                             <th class="px-6 py-5 whitespace-nowrap">Tipe</th>
@@ -147,7 +147,7 @@
                     <tbody class="divide-y divide-gray-50 dark:divide-gray-800">
                         @foreach($services as $service)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors {{ !$service->is_active ? 'opacity-60 grayscale-[30%]' : '' }}">
-                            {{-- Jasa --}}
+                            {{-- Layanan --}}
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-4">
                                     @if($service->image)
@@ -253,7 +253,7 @@
             @if($services->hasPages())
                 <div class="px-6 py-5 border-t border-gray-100 dark:border-gray-800 bg-gray-50/30 dark:bg-gray-900/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500 dark:text-gray-400 font-medium">
                     <p class="text-xs">
-                        Menampilkan {{ $services->firstItem() }}–{{ $services->lastItem() }} dari <strong class="text-brand-dark dark:text-white font-black">{{ $services->total() }}</strong> jasa
+                        Menampilkan {{ $services->firstItem() }}–{{ $services->lastItem() }} dari <strong class="text-brand-dark dark:text-white font-black">{{ $services->total() }}</strong> layanan
                     </p>
                     <div>
                         {{ $services->links() }}

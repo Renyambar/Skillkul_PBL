@@ -11,7 +11,7 @@
         </a>
         <div>
             <h1 class="text-3xl font-extrabold text-brand-dark dark:text-white tracking-tight">Tambah Kategori Baru</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium">Buat kategori jasa baru untuk marketplace.</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium">Buat kategori layanan baru untuk lokapasar.</p>
         </div>
     </div>
 
@@ -52,7 +52,7 @@
                 <div>
                     <label for="description" class="block text-xs font-extrabold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-widest">Deskripsi</label>
                     <textarea id="description" name="description" rows="3"
-                              placeholder="Jelaskan jenis jasa apa yang termasuk dalam kategori ini..."
+                              placeholder="Jelaskan jenis layanan apa yang termasuk dalam kategori ini..."
                               class="w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-brand-primary dark:focus:ring-indigo-500 transition-colors @error('description') border-red-400 dark:border-red-500 ring-red-400 dark:ring-red-500 @enderror">{{ old('description') }}</textarea>
                     @error('description')
                         <p class="text-red-500 dark:text-red-400 text-xs mt-2 font-medium">{{ $message }}</p>

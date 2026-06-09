@@ -11,7 +11,7 @@ use Illuminate\View\View;
 /**
  * Admin\CategoryController
  *
- * CRUD untuk kategori jasa layanan marketplace.
+ * CRUD untuk kategori jasa layanan lokapasar.
  * Soft delete digunakan agar data historis tidak hilang.
  */
 class CategoryController extends Controller

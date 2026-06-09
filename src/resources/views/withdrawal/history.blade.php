@@ -1,22 +1,22 @@
 @extends('layouts.' . (auth()->user()->role === 'freelancer' ? 'freelancer' : 'client'))
-@section('title', 'Riwayat Penarikan - SkillKul')
+@section('title', 'Riwayat Pencairan Saldo - SkillKul')
 @section('content')
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <div class="flex items-center justify-between mb-8">
         <div>
-            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Riwayat Penarikan</h1>
-            <p class="text-sm text-gray-500 mt-1">Semua request penarikan saldo Anda.</p>
+            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Riwayat Pencairan Saldo</h1>
+            <p class="text-sm text-gray-500 mt-1">Semua permintaan pencairan saldo Anda.</p>
         </div>
         <a href="{{ route('withdrawal.create') }}"
            class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-colors shadow-sm">
-            + Penarikan Baru
+            + Pencairan Baru
         </a>
     </div>
 
     {{-- Saldo --}}
     <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 mb-6 flex items-center justify-between">
         <p class="text-sm text-indigo-600 font-medium">Saldo tersedia</p>
-        <p class="text-xl font-extrabold text-indigo-700">Rp {{ number_format($balance, 0, ',', '.') }}</p>
+        <p class="text-xl font-extrabold text-indigo-700">Rp{{ number_format($balance, 0, ',', '.') }}</p>
     </div>
 
     @if(session('success'))
@@ -34,8 +34,8 @@
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                 </div>
-                <h4 class="text-base font-bold text-gray-900 mb-1">Belum ada penarikan</h4>
-                <p class="text-sm text-gray-500">Riwayat penarikan saldo akan muncul di sini.</p>
+                <h4 class="text-base font-bold text-gray-900 mb-1">Belum ada pencairan saldo</h4>
+                <p class="text-sm text-gray-500">Riwayat pencairan saldo akan muncul di sini.</p>
             </div>
         @else
             <div class="overflow-x-auto">
@@ -62,7 +62,7 @@
                             </td>
                             <td class="px-6 py-4 text-gray-600">{{ $w->account_holder }}</td>
                             <td class="px-6 py-4 text-right font-extrabold text-gray-900 whitespace-nowrap">
-                                Rp {{ number_format($w->amount, 0, ',', '.') }}
+                                Rp{{ number_format($w->amount, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-4 text-center">
                                 @php

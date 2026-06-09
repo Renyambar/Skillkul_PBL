@@ -12,7 +12,7 @@
         'penipuan'              => ['label' => 'Penipuan',             'bg' => 'bg-red-50 dark:bg-red-900/20',    'text' => 'text-red-700 dark:text-red-400', 'border' => 'border-red-100 dark:border-red-800/30'],
         'tidak_selesai'         => ['label' => 'Tidak Diselesaikan',   'bg' => 'bg-orange-50 dark:bg-orange-900/20', 'text' => 'text-orange-700 dark:text-orange-400', 'border' => 'border-orange-100 dark:border-orange-800/30'],
         'kualitas_buruk'        => ['label' => 'Kualitas Buruk',       'bg' => 'bg-yellow-50 dark:bg-yellow-900/20', 'text' => 'text-yellow-700 dark:text-yellow-400', 'border' => 'border-yellow-100 dark:border-yellow-800/30'],
-        'perilaku_tidak_pantas' => ['label' => 'Perilaku Tdk Pantas', 'bg' => 'bg-purple-50 dark:bg-purple-900/20', 'text' => 'text-purple-700 dark:text-purple-400', 'border' => 'border-purple-100 dark:border-purple-800/30'],
+        'perilaku_tidak_pantas' => ['label' => 'Perilaku Tidak Pantas', 'bg' => 'bg-purple-50 dark:bg-purple-900/20', 'text' => 'text-purple-700 dark:text-purple-400', 'border' => 'border-purple-100 dark:border-purple-800/30'],
         'lainnya'               => ['label' => 'Lainnya',              'bg' => 'bg-gray-50 dark:bg-gray-800',   'text' => 'text-gray-600 dark:text-gray-400', 'border' => 'border-gray-200 dark:border-gray-700'],
     ];
 @endphp
@@ -159,7 +159,7 @@
                             <p class="text-[11px] text-gray-600 dark:text-gray-400 line-clamp-2 font-medium" title="{{ $report->description }}">{{ $report->description }}</p>
                             @if($report->order_id)
                                 <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-1.5 font-mono font-bold">
-                                    <span class="bg-gray-50 dark:bg-gray-800 px-1.5 py-0.5 rounded border border-gray-100 dark:border-gray-700">Ord: #{{ substr($report->order_id, 0, 8) }}</span>
+                                    <span class="bg-gray-50 dark:bg-gray-800 px-1.5 py-0.5 rounded border border-gray-100 dark:border-gray-700">Psn: #{{ substr($report->order_id, 0, 8) }}</span>
                                 </p>
                             @endif
                         </td>

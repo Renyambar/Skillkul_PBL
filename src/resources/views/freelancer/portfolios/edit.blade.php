@@ -13,7 +13,7 @@
 
     <div class="mb-6">
         <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">Edit Portofolio</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Perbarui informasi tambahan untuk project ini.</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Perbarui informasi tambahan untuk proyek ini.</p>
     </div>
 
     {{-- Proyek Info (readonly) --}}
@@ -39,7 +39,7 @@
         {{-- Pekerja Lepas Role --}}
         <div>
             <label for="freelancer_role" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5">
-                Role Anda di Proyek Ini
+                Peran Anda di Proyek Ini
                 <span class="text-gray-400 dark:text-gray-500 font-normal">(Opsional)</span>
             </label>
             <input type="text"
@@ -56,7 +56,7 @@
         {{-- Cloud Link --}}
         <div>
             <label for="cloud_link" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5">
-                Link Hasil Kerja
+                Tautan Hasil Pekerjaan
                 <span class="text-gray-400 dark:text-gray-500 font-normal">(Opsional)</span>
             </label>
             <input type="url"

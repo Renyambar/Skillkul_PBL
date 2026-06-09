@@ -20,11 +20,11 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
             <h1 class="text-2xl font-extrabold text-brand-dark dark:text-white tracking-tight">Pesanan Saya</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Pantau status dan hasil kerja freelancer.</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Pantau status dan hasil pekerjaan pekerja lepas.</p>
         </div>
         <a href="{{ route('katalog') }}" class="inline-flex items-center gap-2 bg-brand-primary dark:bg-indigo-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-brand-dark dark:hover:bg-indigo-500 transition-all shadow-sm">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Cari Jasa Baru
+            Cari Layanan Baru
         </a>
     </div>
 
@@ -61,7 +61,7 @@
                     <p class="text-xs text-gray-500 dark:text-gray-400">Pekerja Lepas: {{ $order->freelancer->name ?? '—' }}</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <p class="font-extrabold text-brand-primary dark:text-indigo-400">Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
+                    <p class="font-extrabold text-brand-primary dark:text-indigo-400">Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
                     <a href="{{ route('checkout', $order->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-bold px-4 py-2 rounded-xl transition-all shadow-sm whitespace-nowrap">
                         Bayar Sekarang
                     </a>
@@ -80,7 +80,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
             </svg>
             <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Belum ada pesanan</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Telusuri jasa freelancer mahasiswa dan mulai pesanan pertamamu.</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Telusuri layanan pekerja lepas mahasiswa dan mulai pesanan pertama Anda.</p>
             <a href="{{ route('katalog') }}" class="inline-flex items-center px-6 py-2.5 bg-brand-primary dark:bg-indigo-600 text-white text-sm font-bold rounded-xl hover:bg-brand-dark dark:hover:bg-indigo-500 transition-all shadow-md">
                 Cari Layanan
             </a>
@@ -117,7 +117,7 @@
                         <div class="flex items-center gap-4">
                             <div class="text-right">
                                 <p class="text-xs text-gray-400 dark:text-gray-500">Total</p>
-                                <p class="font-extrabold text-brand-primary dark:text-indigo-400">Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
+                                <p class="font-extrabold text-brand-primary dark:text-indigo-400">Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
                             </div>
                             <svg class="w-5 h-5 text-gray-300 dark:text-gray-600 group-hover:text-brand-primary dark:group-hover:text-indigo-400 transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
