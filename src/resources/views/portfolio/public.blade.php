@@ -8,148 +8,153 @@
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .hero-gradient {
-            background: linear-gradient(135deg, #0b0c54 0%, #1e1b6e 40%, #312e81 70%, #4338ca 100%);
+        .hero-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        .featured-glow {
-            box-shadow: 0 0 0 2px #f59e0b, 0 20px 40px rgba(245, 158, 11, 0.15);
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .card-hover {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
         }
         .card-hover:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        .badge-featured {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased">
 
 {{-- ══════════════════════════════════════════════════════════════
-     HERO — PROFIL FREELANCER
+     HERO SECTION
 ══════════════════════════════════════════════════════════════ --}}
-<section class="hero-gradient relative overflow-hidden">
-    {{-- Decorative circles --}}
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute -top-20 -right-20 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-indigo-400/10 rounded-full blur-3xl"></div>
-    </div>
-
-    <div class="relative max-w-5xl mx-auto px-6 py-20">
-        {{-- Brand --}}
-        <div class="flex items-center gap-2 mb-10">
-            <a href="{{ route('home') }}" class="text-indigo-300 text-sm font-semibold hover:text-white transition-colors">SkillKul</a>
-            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            <span class="text-white/60 text-sm">Portofolio</span>
+<section class="hero-bg relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-6 py-16 lg:py-24 relative z-10">
+        
+        {{-- Breadcrumb Navigation --}}
+        <div class="flex items-center gap-2 mb-8">
+            <a href="{{ route('home') }}" class="text-blue-300 text-sm font-medium hover:text-white transition-colors">SkillKul</a>
+            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-slate-300 text-sm">Portofolio</span>
         </div>
 
-        <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
-            {{-- Avatar --}}
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12">
+            {{-- Avatar Profile --}}
             <div class="shrink-0">
                 @if($freelancer->profile_photo_path)
                 <img src="{{ Storage::url($freelancer->profile_photo_path) }}"
                      alt="{{ $freelancer->name }}"
-                     class="w-28 h-28 rounded-2xl object-cover ring-4 ring-white/20">
+                     class="w-32 h-32 rounded-2xl object-cover ring-4 ring-white/10 shadow-xl">
                 @else
-                <div class="w-28 h-28 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center ring-4 ring-white/20">
-                    <span class="text-4xl font-extrabold text-white">{{ strtoupper(substr($freelancer->name, 0, 1)) }}</span>
+                <div class="w-32 h-32 rounded-2xl bg-blue-600 flex items-center justify-center ring-4 ring-white/10 shadow-xl">
+                    <span class="text-5xl font-bold text-white">{{ strtoupper(substr($freelancer->name, 0, 1)) }}</span>
                 </div>
                 @endif
             </div>
 
-            {{-- Info --}}
+            {{-- Freelancer Details --}}
             <div class="flex-1 text-center md:text-left">
-                <span class="inline-block text-[10px] font-extrabold text-indigo-300 uppercase tracking-widest mb-2">Pekerja Lepas Mahasiswa</span>
-                <h1 class="text-4xl font-extrabold text-white mb-2">{{ $freelancer->name }}</h1>
-
+                <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-200 text-xs font-semibold uppercase tracking-wider rounded-full mb-3">
+                    Freelancer Mahasiswa
+                </span>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">{{ $freelancer->name }}</h1>
+                
                 @if($freelancer->profile_description)
-                <p class="text-indigo-200 text-base leading-relaxed max-w-xl mb-4">{{ $freelancer->profile_description }}</p>
+                <p class="text-slate-300 text-base md:text-lg leading-relaxed max-w-2xl mb-6">
+                    {{ $freelancer->profile_description }}
+                </p>
                 @endif
 
-                {{-- Skills Tags --}}
+                {{-- Skills/Tags --}}
                 @if($skills->isNotEmpty())
                 <div class="flex flex-wrap gap-2 justify-center md:justify-start">
                     @foreach($skills as $skill)
-                    <span class="glass-card px-3 py-1 rounded-full text-xs font-semibold text-indigo-200">{{ $skill }}</span>
+                    <span class="glass-panel px-4 py-1.5 rounded-full text-xs font-medium text-slate-100">
+                        {{ $skill }}
+                    </span>
                     @endforeach
                 </div>
                 @endif
             </div>
 
-            {{-- Quick Stats --}}
-            <div class="glass-card rounded-2xl p-5 text-center min-w-[160px]">
-                <div class="text-3xl font-extrabold text-white">{{ number_format($stats['avg_rating'], 1) }}</div>
-                <div class="flex justify-center my-1">
+            {{-- High-Level Stats Panel --}}
+            <div class="glass-panel rounded-2xl p-6 text-center min-w-[180px] shrink-0">
+                <div class="text-4xl font-extrabold text-white mb-1">{{ number_format($stats['avg_rating'], 1) }}</div>
+                <div class="flex justify-center gap-1 mb-2">
                     @for($i = 1; $i <= 5; $i++)
-                    <svg class="w-4 h-4 {{ $i <= round($stats['avg_rating']) ? 'text-yellow-400' : 'text-white/20' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-5 h-5 {{ $i <= round($stats['avg_rating']) ? 'text-yellow-400' : 'text-slate-500/50' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     @endfor
                 </div>
-                <div class="text-xs text-indigo-300">Penilaian Rata-rata</div>
-                <div class="mt-3 pt-3 border-t border-white/10">
-                    <div class="text-2xl font-extrabold text-white">{{ $stats['total_completed'] }}</div>
-                    <div class="text-xs text-indigo-300">Proyek Selesai</div>
+                <div class="text-xs text-blue-200 font-medium uppercase tracking-wide">Rating Klien</div>
+                
+                <div class="mt-4 pt-4 border-t border-white/10">
+                    <div class="text-2xl font-bold text-white">{{ $stats['total_completed'] }}</div>
+                    <div class="text-xs text-blue-200 font-medium">Proyek Diselesaikan</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<div class="max-w-5xl mx-auto px-6 py-10 space-y-14">
+{{-- Main Content Container --}}
+<div class="max-w-5xl mx-auto px-6 py-12 space-y-16">
 
     {{-- ══════════════════════════════════════════════════════════════
-         STATISTICS
+         PERFORMANCE STATISTICS
     ══════════════════════════════════════════════════════════════ --}}
     <section>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             @php
                 $pubStats = [
-                    ['label' => 'Proyek Selesai',  'value' => $stats['total_completed'],  'color' => 'indigo'],
-                    ['label' => 'Portofolio Publik',  'value' => $stats['total_portfolio'],  'color' => 'purple'],
-                    ['label' => 'Total Klien',      'value' => $stats['total_clients'],    'color' => 'blue'],
-                    ['label' => 'Tingkat Penyelesaian',   'value' => $stats['completion_rate'] . '%', 'color' => 'green'],
+                    ['label' => 'Total Proyek', 'value' => $stats['total_completed'], 'color' => 'text-blue-600'],
+                    ['label' => 'Portofolio', 'value' => $stats['total_portfolio'], 'color' => 'text-indigo-600'],
+                    ['label' => 'Klien Unik', 'value' => $stats['total_clients'], 'color' => 'text-emerald-600'],
+                    ['label' => 'Sukses Rate', 'value' => $stats['completion_rate'] . '%', 'color' => 'text-slate-800'],
                 ];
             @endphp
             @foreach($pubStats as $stat)
-            <div class="bg-white rounded-2xl border border-gray-100 p-6 text-center shadow-sm card-hover">
-                <div class="text-3xl font-extrabold text-{{ $stat['color'] }}-600 mb-1">{{ $stat['value'] }}</div>
-                <div class="text-xs text-gray-500 font-medium">{{ $stat['label'] }}</div>
+            <div class="bg-white rounded-xl border border-slate-200 p-6 text-center card-hover">
+                <div class="text-3xl font-extrabold {{ $stat['color'] }} mb-2">{{ $stat['value'] }}</div>
+                <div class="text-sm text-slate-500 font-medium">{{ $stat['label'] }}</div>
             </div>
             @endforeach
         </div>
     </section>
 
     {{-- ══════════════════════════════════════════════════════════════
-         ACHIEVEMENTS
+         ACHIEVEMENTS BADGES
     ══════════════════════════════════════════════════════════════ --}}
     @if($achievements->isNotEmpty())
     <section>
         <div class="flex items-center gap-3 mb-6">
-            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
             </div>
             <div>
-                <h2 class="text-xl font-extrabold text-gray-900">Pencapaian</h2>
-                <p class="text-sm text-gray-500">Lencana yang telah diraih melalui layanan berbasis proyek</p>
+                <h2 class="text-xl font-bold text-slate-900">Pencapaian</h2>
+                <p class="text-sm text-slate-500">Lencana yang diraih dari performa luar biasa</p>
             </div>
         </div>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-4">
             @foreach($achievements as $achievement)
-            <div class="bg-white border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-sm card-hover">
-                <span class="text-2xl">{{ $achievement->badge_icon }}</span>
+            <div class="bg-white border border-slate-200 rounded-xl px-5 py-3 flex items-center gap-4 card-hover">
+                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                </div>
                 <div>
-                    <p class="text-sm font-bold text-gray-900">{{ $achievement->badge_label }}</p>
-                    <p class="text-[10px] text-gray-400">{{ $achievement->earned_at->format('d M Y') }}</p>
+                    <p class="text-sm font-bold text-slate-800">{{ $achievement->badge_label }}</p>
+                    <p class="text-[11px] text-slate-400 font-medium">{{ $achievement->earned_at->format('M Y') }}</p>
                 </div>
             </div>
             @endforeach
@@ -158,62 +163,60 @@
     @endif
 
     {{-- ══════════════════════════════════════════════════════════════
-         FEATURED PROJECTS
+         FEATURED PORTFOLIO
     ══════════════════════════════════════════════════════════════ --}}
     @if($featuredPortfolios->isNotEmpty())
     <section>
         <div class="flex items-center gap-3 mb-6">
-            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <svg class="w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
             </div>
             <div>
-                <h2 class="text-xl font-extrabold text-gray-900">Proyek Unggulan</h2>
-                <p class="text-sm text-gray-500">Karya terbaik yang dipilih pekerja lepas</p>
+                <h2 class="text-xl font-bold text-slate-900">Karya Unggulan</h2>
+                <p class="text-sm text-slate-500">Proyek terbaik pilihan freelancer</p>
             </div>
         </div>
-        <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($featuredPortfolios as $portfolio)
-            <div class="bg-white rounded-2xl overflow-hidden featured-glow card-hover">
-                <div class="bg-gradient-to-r from-yellow-400 to-orange-400 px-4 py-2 flex items-center gap-2">
-                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <span class="text-white text-xs font-extrabold uppercase tracking-wider">Unggulan</span>
+            <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 card-hover flex flex-col h-full">
+                <div class="badge-featured px-5 py-2.5 flex items-center gap-2">
+                    <span class="text-white text-[11px] font-bold uppercase tracking-wider">Unggulan</span>
                 </div>
-                <div class="p-5">
+                
+                <div class="p-6 flex flex-col flex-1">
                     @if($portfolio->project_category)
-                    <span class="inline-block text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full mb-2">{{ $portfolio->project_category }}</span>
+                    <span class="inline-block text-[11px] font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-md mb-3 self-start">
+                        {{ $portfolio->project_category }}
+                    </span>
                     @endif
-                    <h3 class="text-base font-bold text-gray-900 mb-1">{{ $portfolio->project_title }}</h3>
+                    
+                    <h3 class="text-lg font-bold text-slate-900 mb-1 leading-tight">{{ $portfolio->project_title }}</h3>
+                    
                     @if($portfolio->freelancer_role)
-                    <p class="text-xs text-indigo-600 font-semibold mb-2">{{ $portfolio->freelancer_role }}</p>
+                    <p class="text-sm text-slate-500 font-medium mb-3">{{ $portfolio->freelancer_role }}</p>
                     @endif
+                    
                     @if($portfolio->project_description)
-                    <p class="text-sm text-gray-500 line-clamp-3 mb-4">{{ $portfolio->project_description }}</p>
+                    <p class="text-sm text-slate-600 line-clamp-3 mb-5 flex-1">{{ $portfolio->project_description }}</p>
                     @endif
-                    <div class="flex flex-wrap gap-3 text-[10px] text-gray-500 mb-4">
-                        <span class="flex items-center gap-1">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            {{ $portfolio->completed_date?->format('d M Y') }}
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            {{ $portfolio->duration_label }}
-                        </span>
+                    
+                    <div class="mt-auto">
+                        <div class="flex items-center justify-between border-t border-slate-100 pt-4 mt-4">
+                            <div class="flex items-center gap-4 text-xs text-slate-500">
+                                <span class="flex items-center gap-1.5">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    {{ $portfolio->completed_date?->format('M Y') }}
+                                </span>
+                            </div>
+                            
+                            @if($portfolio->cloud_link)
+                            <a href="{{ $portfolio->cloud_link }}" target="_blank" rel="noopener" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                                Lihat Detail &rarr;
+                            </a>
+                            @endif
+                        </div>
                     </div>
-                    @if($portfolio->client_rating)
-                    <div class="flex items-center gap-1 mb-3">
-                        @foreach($portfolio->rating_stars as $filled)
-                        <svg class="w-4 h-4 {{ $filled ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        @endforeach
-                        <span class="text-xs font-bold text-gray-700 ml-1">{{ $portfolio->client_rating }}/5</span>
-                    </div>
-                    @endif
-                    @if($portfolio->cloud_link)
-                    <a href="{{ $portfolio->cloud_link }}" target="_blank" rel="noopener"
-                       class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:underline">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                        Lihat Hasil Kerja
-                    </a>
-                    @endif
                 </div>
             </div>
             @endforeach
@@ -227,106 +230,54 @@
     @if($allPortfolios->isNotEmpty())
     <section>
         <div class="flex items-center gap-3 mb-6">
-            <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
             </div>
             <div>
-                <h2 class="text-xl font-extrabold text-gray-900">Proyek Portofolio</h2>
-                <p class="text-sm text-gray-500">Semua proyek yang telah diselesaikan</p>
+                <h2 class="text-xl font-bold text-slate-900">Riwayat Proyek</h2>
+                <p class="text-sm text-slate-500">Semua pekerjaan yang telah dipublikasikan</p>
             </div>
         </div>
-        <div class="grid md:grid-cols-3 gap-5">
-            @foreach($allPortfolios as $portfolio)
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden card-hover">
-                <div class="p-5">
-                    @if($portfolio->project_category)
-                    <span class="inline-block text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full mb-2">{{ $portfolio->project_category }}</span>
-                    @endif
-                    <h3 class="text-sm font-bold text-gray-900 mb-1 line-clamp-2">{{ $portfolio->project_title }}</h3>
-                    @if($portfolio->freelancer_role)
-                    <p class="text-[11px] text-indigo-600 font-semibold mb-2">{{ $portfolio->freelancer_role }}</p>
-                    @endif
-                    @if($portfolio->project_description)
-                    <p class="text-xs text-gray-500 line-clamp-2 mb-3">{{ $portfolio->project_description }}</p>
-                    @endif
-                    <div class="flex flex-wrap gap-2 text-[10px] text-gray-400 mb-3">
-                        <span class="flex items-center gap-1">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            {{ $portfolio->completed_date?->format('d M Y') }}
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            {{ $portfolio->duration_label }}
-                        </span>
-                    </div>
-                    @if($portfolio->client_rating)
-                    <div class="flex items-center gap-0.5 mb-2">
-                        @foreach($portfolio->rating_stars as $filled)
-                        <svg class="w-3.5 h-3.5 {{ $filled ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        @endforeach
-                        <span class="text-xs text-gray-500 ml-1">{{ $portfolio->client_rating }}/5</span>
-                    </div>
-                    @endif
-                    @if($portfolio->cloud_link)
-                    <a href="{{ $portfolio->cloud_link }}" target="_blank" rel="noopener"
-                       class="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-600 hover:underline">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                        Lihat Hasil Kerja
-                    </a>
-                    @endif
-                </div>
-            </div>
-            @endforeach
-        </div>
-        @if($allPortfolios->hasPages())
-        <div class="mt-8 flex justify-center">{{ $allPortfolios->links() }}</div>
-        @endif
-    </section>
-    @endif
 
-    {{-- ══════════════════════════════════════════════════════════════
-         CLIENT TESTIMONIALS
-    ══════════════════════════════════════════════════════════════ --}}
-    @if($testimonials->isNotEmpty())
-    <section>
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-            </div>
-            <div>
-                <h2 class="text-xl font-extrabold text-gray-900">Testimoni Klien</h2>
-                <p class="text-sm text-gray-500">Apa kata klien tentang pekerjaan pekerja lepas ini</p>
-            </div>
-        </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            @foreach($testimonials as $testimonial)
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 card-hover">
-                {{-- Quote --}}
-                <div class="text-3xl text-indigo-200 font-serif leading-none mb-2">"</div>
-                <p class="text-sm text-gray-700 italic leading-relaxed mb-4">{{ $testimonial->client_testimonial }}</p>
-
-                {{-- Rating --}}
-                @if($testimonial->client_rating)
-                <div class="flex items-center gap-0.5 mb-3">
-                    @foreach($testimonial->rating_stars as $filled)
-                    <svg class="w-3.5 h-3.5 {{ $filled ? 'text-yellow-400' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    @endforeach
+            @foreach($allPortfolios as $portfolio)
+            <div class="bg-white rounded-xl border border-slate-200 p-5 card-hover flex flex-col">
+                <div class="flex justify-between items-start mb-3">
+                    @if($portfolio->project_category)
+                    <span class="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-1 rounded">
+                        {{ $portfolio->project_category }}
+                    </span>
+                    @endif
+                    <span class="text-[11px] text-slate-400 font-medium">
+                        {{ $portfolio->completed_date?->format('M Y') }}
+                    </span>
                 </div>
+                
+                <h3 class="text-base font-bold text-slate-800 mb-1 line-clamp-2">{{ $portfolio->project_title }}</h3>
+                <p class="text-xs text-blue-600 font-medium mb-3">{{ $portfolio->freelancer_role ?? 'Freelancer' }}</p>
+                
+                @if($portfolio->project_description)
+                <p class="text-sm text-slate-600 line-clamp-2 mb-4 flex-1">{{ $portfolio->project_description }}</p>
                 @endif
-
-                {{-- Klien info --}}
-                <div class="flex items-center gap-2 pt-3 border-t border-gray-50">
-                    <div class="w-7 h-7 bg-indigo-100 rounded-full flex items-center justify-center text-xs font-bold text-indigo-600">
-                        {{ strtoupper(substr($testimonial->order?->client?->name ?? '?', 0, 1)) }}
-                    </div>
-                    <div>
-                        <p class="text-xs font-bold text-gray-700">{{ $testimonial->order?->client?->name ?? 'Klien' }}</p>
-                        <p class="text-[10px] text-gray-400">{{ $testimonial->project_title }}</p>
-                    </div>
+                
+                <div class="mt-auto border-t border-slate-100 pt-3">
+                    @if($portfolio->cloud_link)
+                    <a href="{{ $portfolio->cloud_link }}" target="_blank" rel="noopener" class="text-xs font-semibold text-blue-600 hover:underline">
+                        Tautan Proyek
+                    </a>
+                    @else
+                    <span class="text-xs text-slate-400">Tautan tidak tersedia</span>
+                    @endif
                 </div>
             </div>
             @endforeach
         </div>
+
+        @if($allPortfolios->hasPages())
+        <div class="mt-8 flex justify-center">
+            {{ $allPortfolios->links() }}
+        </div>
+        @endif
     </section>
     @endif
 
@@ -334,30 +285,27 @@
          EMPTY STATE
     ══════════════════════════════════════════════════════════════ --}}
     @if($allPortfolios->isEmpty() && $featuredPortfolios->isEmpty())
-    <div class="text-center py-20">
-        <div class="flex justify-center mb-4">
-            <svg class="w-20 h-20 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"/></svg>
-        </div>
-        <h3 class="text-xl font-bold text-gray-700 mb-2">Portofolio Masih Kosong</h3>
-        <p class="text-gray-400 text-sm">Pekerja lepas ini belum menambahkan proyek ke portofolio publik.</p>
+    <div class="text-center py-24 bg-white rounded-2xl border border-slate-200">
+        <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        <h3 class="text-lg font-bold text-slate-700 mb-1">Belum Ada Portofolio</h3>
+        <p class="text-slate-500 text-sm">Freelancer ini belum menambahkan riwayat proyek ke publik.</p>
     </div>
     @endif
 
 </div>
 
 {{-- ══════════════════════════════════════════════════════════════
-     FOOTER
+     FOOTER CTA
 ══════════════════════════════════════════════════════════════ --}}
-<footer class="bg-white border-t border-gray-100 py-8 mt-14">
-    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div class="flex items-center gap-2">
-            <span class="text-indigo-600 font-extrabold text-lg">SkillKul</span>
-            <span class="text-gray-400 text-sm">— Lokapasar Jasa Mahasiswa</span>
+<footer class="bg-white border-t border-slate-200 py-8 mt-12">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="text-center sm:text-left">
+            <span class="text-blue-700 font-bold text-xl block sm:inline">SkillKul</span>
+            <span class="text-slate-500 text-sm hidden sm:inline ml-2 border-l border-slate-300 pl-2">Marketplace Jasa Mahasiswa</span>
         </div>
-        <a href="{{ route('katalog') }}"
-           class="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-colors">
-            Pesan Jasa Ini
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        <a href="{{ route('katalog') }}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm">
+            Mulai Pesan Jasa
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
     </div>
 </footer>
