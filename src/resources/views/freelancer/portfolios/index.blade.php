@@ -63,11 +63,11 @@
     <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
         @php
             $statItems = [
-                ['label' => 'Proyek Selesai',    'value' => $stats['total_completed'],  'icon' => '✅', 'color' => 'green'],
-                ['label' => 'Di Portofolio',        'value' => $stats['total_portfolio'],  'icon' => '📁', 'color' => 'indigo'],
-                ['label' => 'Rata-rata Rating',    'value' => number_format($stats['avg_rating'], 1) . '★', 'icon' => '⭐', 'color' => 'yellow'],
-                ['label' => 'Total Klien',        'value' => $stats['total_clients'],    'icon' => '👤', 'color' => 'blue'],
-                ['label' => 'Completion Rate',     'value' => $stats['completion_rate'] . '%', 'icon' => '📈', 'color' => 'purple'],
+                ['label' => 'Proyek Selesai',    'value' => $stats['total_completed'],  'icon' => '', 'color' => 'green'],
+                ['label' => 'Di Portofolio',        'value' => $stats['total_portfolio'],  'icon' => '', 'color' => 'indigo'],
+                ['label' => 'Rata-rata Rating',    'value' => number_format($stats['avg_rating'], 1) . '★', 'icon' => '', 'color' => 'yellow'],
+                ['label' => 'Total Klien',        'value' => $stats['total_clients'],    'icon' => '', 'color' => 'blue'],
+                ['label' => 'Completion Rate',     'value' => $stats['completion_rate'] . '%', 'icon' => '', 'color' => 'purple'],
             ];
         @endphp
         @foreach($statItems as $stat)
@@ -84,7 +84,7 @@
     ══════════════════════════════════════════════════════════════ --}}
     <div class="bg-white dark:bg-brand-darksurface rounded-2xl border border-gray-100 dark:border-brand-darkborder shadow-sm p-6 transition-colors">
         <h3 class="text-sm font-extrabold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-            <span>🏅</span> Pencapaian
+            <span></span> Pencapaian
             <span class="text-xs font-normal text-gray-400 dark:text-gray-500">(Hanya dari project-based services)</span>
         </h3>
         <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
@@ -155,7 +155,7 @@
 
         @if($portfolios->isEmpty())
         <div class="bg-white dark:bg-brand-darksurface rounded-2xl border border-dashed border-gray-200 dark:border-gray-700 p-16 text-center transition-colors">
-            <div class="text-5xl mb-4">📂</div>
+            <div class="text-5xl mb-4"></div>
             <h3 class="text-base font-bold text-gray-700 dark:text-gray-300 mb-1">Belum Ada Portofolio</h3>
             <p class="text-sm text-gray-400 dark:text-gray-500 max-w-sm mx-auto">Selesaikan pesanan proyek dan tambahkan ke portofolio dari daftar di atas.</p>
         </div>

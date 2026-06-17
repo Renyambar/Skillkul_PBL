@@ -3,370 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Portofolio &mdash; {{ $freelancer->name }}</title>
+    <title>Portofolio — {{ $freelancer->name }}</title>
+
+    {{--
+        PENTING: DomPDF tidak mendukung external CSS (Tailwind, Bootstrap, dll).
+        Seluruh styling harus menggunakan INLINE CSS di sini.
+        Hindari: flexbox, CSS grid, dan properti CSS modern lainnya.
+        Gunakan: float, table layout, position absolute/relative.
+    --}}
 
     <style>
-        /* Reset & Base */
+        /* ─── Reset & Base ─────────────────────────────────────── */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
-            font-size: 10pt;
-            color: #334155; /* Slate 700 */
+            font-family: 'DejaVu Sans', 'Arial', sans-serif;
+            font-size: 11px;
+            color: #1e1b4b;
             line-height: 1.6;
             background: #ffffff;
         }
 
-        /* Container */
-        .container {
-            width: 100%;
-            padding: 40px 50px;
+        /* ─── Header ────────────────────────────────────────────── */
+        .header {
+            background: #0b0c54;
+            color: #ffffff;
+            padding: 28px 36px;
         }
+        .header-brand { font-size: 22px; font-weight: bold; letter-spacing: 1px; color: #c7d2fe; }
+        .header-brand span { color: #818cf8; }
+        .header-title { font-size: 15px; font-weight: bold; margin-top: 10px; color: #ffffff; }
+        .header-meta { font-size: 10px; color: #a5b4fc; margin-top: 4px; }
+        .accent-bar { height: 4px; background: #818cf8; }
 
-        /* Header */
-        .header-table {
-            width: 100%;
-            border-bottom: 3px solid #1d4ed8; /* Blue 700 */
-            padding-bottom: 25px;
-            margin-bottom: 35px;
-        }
-        .header-table td {
-            vertical-align: bottom;
-        }
-        .name-title {
-            font-size: 26pt;
-            font-weight: 800;
-            color: #0f172a; /* Slate 900 */
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-        .job-title {
-            font-size: 13pt;
-            color: #1d4ed8; /* Blue 700 */
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        .contact-info {
-            text-align: right;
-            font-size: 9.5pt;
-            color: #475569; /* Slate 600 */
-            line-height: 1.6;
-        }
-        .contact-info strong {
-            color: #0f172a;
-        }
+        /* ─── Kontainer ─────────────────────────────────────────── */
+        .container { padding: 28px 36px; }
 
-        /* Sections */
-        .section {
-            margin-bottom: 35px;
-        }
+        /* ─── Section Title ─────────────────────────────────────── */
         .section-title {
-            font-size: 13pt;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e2e8f0; /* Slate 200 */
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 10px; font-weight: bold; text-transform: uppercase;
+            letter-spacing: 2px; color: #6366f1;
+            border-bottom: 1.5px solid #e0e7ff;
+            padding-bottom: 5px; margin-bottom: 14px; margin-top: 22px;
         }
 
-        /* Profile & Stats Table */
-        .summary-table {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .summary-table td {
-            vertical-align: top;
-        }
-        .profile-desc {
-            width: 62%;
-            padding-right: 35px;
-            text-align: justify;
-        }
-        .stats-box {
-            width: 38%;
-            background-color: #f8fafc;
-            border-top: 3px solid #1d4ed8;
-            border-radius: 6px;
-            padding: 20px;
-        }
-        .stats-box .section-title {
-            font-size: 10.5pt;
-            border-bottom: none;
-            margin-bottom: 12px;
-            padding-bottom: 0;
-            color: #1d4ed8;
-        }
-        .stat-item {
-            margin-bottom: 10px;
-            font-size: 9.5pt;
-        }
-        .stat-label {
-            color: #64748b;
-            display: inline-block;
-            width: 125px;
-        }
-        .stat-value {
-            font-weight: 700;
-            color: #0f172a;
-        }
+        /* ─── Info Table (Profil) ───────────────────────────────── */
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 6px; }
+        .info-table td { padding: 3px 0; font-size: 11px; vertical-align: top; }
+        .info-label { color: #6b7280; width: 140px; }
+        .info-value { font-weight: bold; color: #1e1b4b; }
 
-        /* Badges / Penghargaan */
-        .badge-list {
-            margin-top: 15px;
+        /* ─── Statistik ─────────────────────────────────────────── */
+        .stats-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+        .stats-table td {
+            width: 20%; text-align: center; padding: 12px 6px;
+            border: 1px solid #e0e7ff; background: #f0f4ff;
         }
-        .badge-item {
-            display: inline-block;
-            background-color: #f1f5f9; /* Slate 100 */
-            border: 1px solid #cbd5e1; /* Slate 300 */
-            border-radius: 20px;
-            padding: 6px 14px;
-            margin-right: 8px;
-            margin-bottom: 12px;
-            font-size: 9pt;
-            color: #334155;
-        }
-        .badge-title {
-            font-weight: 700;
-            color: #1d4ed8;
-        }
+        .stats-number { font-size: 18px; font-weight: bold; color: #4338ca; display: block; }
+        .stats-label { font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* Projects */
-        .project-item {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #e2e8f0;
+        /* ─── Achievement Badges ────────────────────────────────── */
+        .badge-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+        .badge-table td { padding: 6px 8px; border: 1px solid #e0e7ff; background: #f8f9ff; }
+        .badge-icon { font-size: 16px; vertical-align: middle; }
+        .badge-name { font-size: 10px; font-weight: bold; color: #1e1b4b; vertical-align: middle; margin-left: 4px; }
+        .badge-date { font-size: 9px; color: #6b7280; }
+
+        /* ─── Proyek Card ──────────────────────────────────────── */
+        .project-card {
+            border: 1px solid #e0e7ff;
+            border-left: 4px solid #6366f1;
+            border-radius: 4px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            background: #f8f9ff;
             page-break-inside: avoid;
         }
-        .project-item:last-child {
-            border-bottom: none;
-        }
-        .project-header {
-            width: 100%;
-            margin-bottom: 8px;
-        }
-        .project-header td {
-            vertical-align: top;
-        }
-        .project-title {
-            font-size: 13pt;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 3px;
-        }
-        .featured-tag {
-            display: inline-block;
-            background-color: #10b981; /* Emerald 500 for a pop of color */
-            color: white;
-            font-size: 7.5pt;
+        .project-featured-bar {
+            background: #f59e0b;
+            color: #fff;
+            font-size: 8px;
             font-weight: bold;
-            padding: 3px 8px;
-            border-radius: 12px;
-            margin-left: 8px;
-            vertical-align: middle;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .project-role {
-            font-size: 10pt;
-            font-weight: 600;
-            color: #3b82f6; /* Blue 500 */
+            letter-spacing: 1px;
+            padding: 2px 8px;
             margin-bottom: 8px;
+            display: inline-block;
+            border-radius: 2px;
         }
-        .project-meta {
-            text-align: right;
-            font-size: 9pt;
-            color: #64748b;
-            font-weight: 600;
-        }
-        .project-desc {
-            font-size: 9.5pt;
-            color: #475569;
-            text-align: justify;
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-        .project-details {
-            font-size: 9pt;
-            color: #64748b;
-            background-color: #f8fafc;
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
-        .project-details strong {
-            color: #334155;
-        }
-        .project-details a {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        /* Testimonial */
-        .testimonial-box {
-            margin-top: 15px;
-            padding: 12px 18px;
-            background-color: #fefce8; /* Soft yellow hint for distinction */
-            border-left: 4px solid #facc15; /* Yellow 400 */
-            border-radius: 0 6px 6px 0;
-            font-style: italic;
-            color: #475569;
-            font-size: 9.5pt;
-        }
-        .testimonial-author {
-            margin-top: 6px;
-            font-size: 8.5pt;
-            color: #0f172a;
-            font-weight: 700;
-            font-style: normal;
-        }
+        .project-title { font-size: 13px; font-weight: bold; color: #1e1b4b; margin-bottom: 3px; }
+        .project-role { font-size: 10px; color: #6366f1; font-weight: bold; margin-bottom: 5px; }
+        .project-meta { font-size: 9px; color: #6b7280; margin-bottom: 8px; }
+        .project-description { font-size: 10px; color: #4b5563; margin-bottom: 10px; line-height: 1.5; }
 
-        /* Footer */
-        .footer {
-            position: fixed;
-            bottom: 30px;
-            left: 50px;
-            right: 50px;
-            text-align: center;
-            font-size: 8.5pt;
-            color: #94a3b8;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 15px;
+        /* ─── Rating ────────────────────────────────────────────── */
+        .star { color: #fbbf24; font-size: 13px; }
+        .star-empty { color: #d1d5db; font-size: 13px; }
+        .rating-text { font-size: 9px; color: #6b7280; vertical-align: middle; margin-left: 4px; }
+
+        /* ─── Testimonial ───────────────────────────────────────── */
+        .comment-box {
+            background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 3px;
+            padding: 8px 10px; font-size: 10px; color: #1d4ed8; font-style: italic; margin-top: 6px;
         }
-        .page-number:before {
-            content: "Halaman " counter(page);
-            font-weight: 600;
+        .comment-client { font-size: 9px; color: #6b7280; margin-top: 4px; }
+
+        /* ─── Cloud Link ────────────────────────────────────────── */
+        .cloud-link { font-size: 9px; color: #4338ca; margin-top: 6px; }
+
+        /* ─── Footer ────────────────────────────────────────────── */
+        .footer {
+            margin-top: 30px; padding-top: 12px;
+            border-top: 1px solid #e0e7ff; text-align: center;
+            font-size: 9px; color: #9ca3af;
+        }
+        .footer-brand { font-weight: bold; color: #6366f1; }
+
+        /* ─── Nomor Halaman ─────────────────────────────────────── */
+        .page-number {
+            position: fixed; bottom: 20px; right: 36px;
+            font-size: 9px; color: #9ca3af;
         }
     </style>
 </head>
 <body>
 
+    {{-- ── Header ── --}}
+    <div class="header">
+        <div class="header-brand">Skill<span>Kul</span></div>
+        <div class="header-title">Portofolio Pekerja Lepas Mahasiswa</div>
+        <div class="header-meta">Dokumen ini di-generate secara otomatis oleh sistem SkillKul &bull; {{ $generated_at }}</div>
+    </div>
+    <div class="accent-bar"></div>
+
     <div class="container">
-        <table class="header-table">
+
+        {{-- ── Informasi Pekerja Lepas ── --}}
+        <div class="section-title">Profil Pekerja Lepas</div>
+        <table class="info-table">
+            <tr>
+                <td class="info-label">Nama Lengkap</td>
+                <td class="info-value">{{ $freelancer->name }}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Email</td>
+                <td class="info-value">{{ $freelancer->email }}</td>
+            </tr>
+            @if($freelancer->phone_number)
+            <tr>
+                <td class="info-label">No. Telepon</td>
+                <td class="info-value">{{ $freelancer->phone_number }}</td>
+            </tr>
+            @endif
+            <tr>
+                <td class="info-label">Tanggal Generate</td>
+                <td class="info-value">{{ $generated_at }}</td>
+            </tr>
+            @if($freelancer->profile_description)
+            <tr>
+                <td class="info-label">Deskripsi Profil</td>
+                <td class="info-value" style="font-weight: normal; color: #4b5563;">{{ $freelancer->profile_description }}</td>
+            </tr>
+            @endif
+        </table>
+
+        {{-- ── Statistik Ringkasan ── --}}
+        <div class="section-title">Ringkasan Pencapaian</div>
+        <table class="stats-table">
             <tr>
                 <td>
-                    <div class="name-title">{{ $freelancer->name }}</div>
-                    <div class="job-title">Professional Freelancer</div>
+                    <span class="stats-number">{{ $stats['total_completed'] }}</span>
+                    <span class="stats-label">Proyek Selesai</span>
                 </td>
-                <td class="contact-info">
-                    {{ $freelancer->email }}<br>
-                    @if($freelancer->phone_number) {{ $freelancer->phone_number }}<br> @endif
-                    <strong>SkillKul Portfolio</strong><br>
-                    Diperbarui: {{ $generated_at }}
+                <td>
+                    <span class="stats-number">{{ $stats['total_portfolio'] }}</span>
+                    <span class="stats-label">Di Portofolio</span>
+                </td>
+                <td>
+                    <span class="stats-number">{{ number_format($stats['avg_rating'], 1) }}</span>
+                    <span class="stats-label">Avg Rating</span>
+                </td>
+                <td>
+                    <span class="stats-number">{{ $stats['total_clients'] }}</span>
+                    <span class="stats-label">Total Klien</span>
+                </td>
+                <td>
+                    <span class="stats-number">{{ $stats['completion_rate'] }}%</span>
+                    <span class="stats-label">Completion Rate</span>
                 </td>
             </tr>
         </table>
 
-        <div class="section">
-            <table class="summary-table">
-                <tr>
-                    <td class="profile-desc">
-                        <div class="section-title">Profil Singkat</div>
-                        @if($freelancer->profile_description)
-                            <p>{{ $freelancer->profile_description }}</p>
-                        @else
-                            <p>Freelancer profesional yang berdedikasi tinggi dalam memberikan hasil kerja berkualitas bagi klien. Berpengalaman menyelesaikan berbagai proyek dengan tingkat kepuasan yang sangat baik, tepat waktu, dan komunikatif.</p>
-                        @endif
-                    </td>
-                    <td class="stats-box">
-                        <div class="section-title">Ringkasan Pencapaian</div>
-                        <div class="stat-item">
-                            <span class="stat-label">Total Proyek:</span>
-                            <span class="stat-value">{{ $stats['total_completed'] }} selesai</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Rating Rata-rata:</span>
-                            <span class="stat-value">{{ number_format($stats['avg_rating'], 1) }} / 5.0</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Total Klien:</span>
-                            <span class="stat-value">{{ $stats['total_clients'] }} klien</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Penyelesaian:</span>
-                            <span class="stat-value">{{ $stats['completion_rate'] }}%</span>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        @php $achievements = $freelancer->achievements ?? collect(); @endphp
+        {{-- ── Achievement Badges ── --}}
+        @php $achievements = $freelancer->achievements; @endphp
         @if($achievements->isNotEmpty())
-        <div class="section">
-            <div class="section-title">Penghargaan & Pencapaian</div>
-            <div class="badge-list">
-                @foreach($achievements as $achievement)
-                <div class="badge-item">
-                    <span class="badge-title">{{ $achievement->badge_label }}</span>
-                    <span style="color: #94a3b8; margin-left: 5px;">| {{ $achievement->earned_at->format('M Y') }}</span>
-                </div>
-                @endforeach
-            </div>
-        </div>
+        <div class="section-title">Pencapaian (Badges)</div>
+        <table class="badge-table">
+            <tr>
+            @foreach($achievements as $index => $achievement)
+                <td style="width: 20%;">
+                    <div class="badge-icon">{{ $achievement->badge_icon }}</div>
+                    <div class="badge-name">{{ $achievement->badge_label }}</div>
+                    <div class="badge-date">{{ $achievement->earned_at->format('d M Y') }}</div>
+                </td>
+                @if(($index + 1) % 5 === 0 && !$loop->last)
+                </tr><tr>
+                @endif
+            @endforeach
+            </tr>
+        </table>
         @endif
 
-        <div class="section">
-            <div class="section-title">Pengalaman Proyek</div>
-            
-            @forelse($portfolios as $portfolio)
-            <div class="project-item">
-                <table class="project-header">
-                    <tr>
-                        <td>
-                            <div class="project-title">
-                                {{ $portfolio->project_title }}
-                                @if($portfolio->is_featured)
-                                <span class="featured-tag">Unggulan</span>
-                                @endif
-                            </div>
-                            @if($portfolio->freelancer_role)
-                            <div class="project-role">{{ $portfolio->freelancer_role }}</div>
-                            @endif
-                        </td>
-                        <td class="project-meta">
-                            {{ $portfolio->completed_date?->format('M Y') ?? 'Selesai' }}<br>
-                            <span style="font-weight: normal; font-size: 8.5pt;">Durasi: {{ $portfolio->duration_label }}</span>
-                        </td>
-                    </tr>
-                </table>
+        {{-- ── Daftar Proyek ── --}}
+        <div class="section-title">Proyek Experience ({{ $portfolios->count() }} Proyek)</div>
 
-                @if($portfolio->project_description)
-                <div class="project-desc">
-                    {{ \Illuminate\Support\Str::limit($portfolio->project_description, 350) }}
-                </div>
-                @endif
+        @forelse($portfolios as $index => $portfolio)
+        <div class="project-card">
+            @if($portfolio->is_featured)
+            <div class="project-featured-bar">&#9733; Featured Proyek</div>
+            @endif
 
-                <div class="project-details">
-                    @if($portfolio->project_category)<strong>Kategori:</strong> {{ $portfolio->project_category }} &nbsp;|&nbsp; @endif
-                    @if($portfolio->client_rating)<strong>Rating Klien:</strong> {{ $portfolio->client_rating }}/5 &nbsp;|&nbsp; @endif
-                    @if($portfolio->order?->client)<strong>Klien:</strong> {{ $portfolio->order->client->name }} @endif
-                    @if($portfolio->cloud_link)<br><br><strong>Tautan Referensi:</strong> <a href="{{ $portfolio->cloud_link }}" target="_blank">{{ $portfolio->cloud_link }}</a>@endif
-                </div>
+            {{-- Judul & Role --}}
+            <div class="project-title">{{ ($index + 1) }}. {{ $portfolio->project_title }}</div>
+            @if($portfolio->freelancer_role)
+            <div class="project-role">{{ $portfolio->freelancer_role }}</div>
+            @endif
 
-                @if($portfolio->client_testimonial)
-                <div class="testimonial-box">
-                    "{{ $portfolio->client_testimonial }}"
-                    <div class="testimonial-author">&mdash; {{ $portfolio->order?->client?->name ?? 'Klien' }}</div>
-                </div>
-                @endif
+            {{-- Meta --}}
+            <div class="project-meta">
+                @if($portfolio->project_category){{ $portfolio->project_category }} &bull; @endif
+                Selesai: {{ $portfolio->completed_date?->format('d F Y') ?? '—' }}
+                &nbsp;&bull;&nbsp;
+                Durasi: {{ $portfolio->duration_label }}
+                @if($portfolio->order?->client)&nbsp;&bull;&nbsp;Klien: {{ $portfolio->order->client->name }}@endif
             </div>
-            @empty
-            <p style="color: #94a3b8; font-style: italic; text-align: center; padding: 20px;">Belum ada riwayat proyek yang ditambahkan saat ini.</p>
-            @endforelse
+
+            {{-- Deskripsi --}}
+            @if($portfolio->project_description)
+            <div class="project-description">
+                {{ \Illuminate\Support\Str::limit($portfolio->project_description, 250) }}
+            </div>
+            @endif
+
+            {{-- Rating Bintang --}}
+            @if($portfolio->client_rating)
+            <div style="margin-top: 4px;">
+                @for($i = 1; $i <= 5; $i++)
+                    @if($i <= $portfolio->client_rating)
+                        <span class="star">&#9733;</span>
+                    @else
+                        <span class="star-empty">&#9733;</span>
+                    @endif
+                @endfor
+                <span class="rating-text">{{ $portfolio->client_rating }}/5 — Dinilai oleh client</span>
+            </div>
+            @endif
+
+            {{-- Testimonial --}}
+            @if($portfolio->client_testimonial)
+            <div class="comment-box">
+                &ldquo;{{ $portfolio->client_testimonial }}&rdquo;
+            </div>
+            <div class="comment-client">
+                — {{ $portfolio->order?->client?->name ?? 'Klien' }}
+            </div>
+            @endif
+
+            {{-- Cloud Link --}}
+            @if($portfolio->cloud_link)
+            <div class="cloud-link">
+                Link Hasil Kerja: {{ $portfolio->cloud_link }}
+            </div>
+            @endif
         </div>
+        @empty
+        <p style="color: #6b7280; font-style: italic; font-size: 11px;">Belum ada project yang ditambahkan ke portfolio.</p>
+        @endforelse
 
     </div>
 
+    {{-- ── Footer ── --}}
     <div class="footer">
-        <table style="width: 100%;">
-            <tr>
-                <td style="text-align: left; font-weight: 600;">SkillKul - Platform Pekerja Lepas Mahasiswa</td>
-                <td style="text-align: right;"><span class="page-number"></span></td>
-            </tr>
-        </table>
+        <p>Dokumen ini diterbitkan oleh <span class="footer-brand">SkillKul — Marketplace Jasa Mahasiswa</span></p>
+        <p style="margin-top: 3px;">Generated on {{ $generated_at }} &bull; Verifikasi keaslian di <strong>skillkul.id</strong></p>
     </div>
+
+    {{-- Nomor Halaman DomPDF --}}
+    <div class="page-number">Halaman <span class="pagenum"></span></div>
 
 </body>
 </html>
